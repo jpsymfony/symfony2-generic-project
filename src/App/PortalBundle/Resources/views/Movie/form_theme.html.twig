@@ -1,0 +1,61 @@
+{% block hashtags_row %}
+    {{- form_label(form) -}}
+    {% if prototype is defined %}
+        {%- set attr = attr|merge({'data-prototype': form_row(prototype) }) -%}
+    {% endif %}
+
+    {% if max_limit is defined %}
+        {%- set attr = attr|merge({'data-max-limit': max_limit }) -%}
+    {% endif %}
+
+    <table {{ block('widget_container_attributes') }}>
+        <thead>
+        <tr>
+            <th>-</th>
+            <th>Num</th>
+            <th>Name</th>
+        </tr>
+        <tr>
+            <td colspan="8">
+                <a href="#" class="button add-line">{{ 'Rajouter un hashtag' | trans }}</a>
+            </td>
+        </tr>
+        </thead>
+        <tbody>
+        {{ block('form_rows') }}
+        </tbody>
+    </table>
+
+{% endblock hashtags_row %}
+
+{% block app_portal_hashtag_row %}
+    <tr>
+        <td>
+            <button type="button" class="close remove-line" aria-label="Remove">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </td>
+        <td>{{ form.vars.name + 1 }}</td>
+        <td>
+            {{ form_errors(form.name) }}
+            {{ form_widget(form.name) }}
+        </td>
+        {{ form_widget(form) }}
+    </tr>
+{% endblock app_portal_hashtag_row %}
+
+{% block app_portal_image_row %}
+    {{ form_errors(form) }}
+    {{ form_widget(form) }}
+    {% if form.vars.value is not null %}
+        <div class="form-group">
+            <label class="col-sm-2 control-label">Aperçu</label>
+            <div class="col-sm-10">
+                <img
+                    src="{{ asset(form.vars.value.getWebPath | apply_filter('movie_thumbnail')) }}"
+                    alt="{{ form.vars.value.alt }}"
+                />
+            </div>
+        </div>
+    {% endif %}
+{% endblock app_portal_image_row %}

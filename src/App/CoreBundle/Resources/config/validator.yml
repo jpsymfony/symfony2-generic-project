@@ -1,0 +1,9 @@
+parameters:
+    app_core.unique_attribute_validator.class: App\CoreBundle\Validator\Constraints\UniqueAttributeValidator
+
+services:
+    app_core.unique_attribute_validator:
+        class: %app_core.unique_attribute_validator.class%
+        arguments: ["@doctrine.orm.entity_manager"]
+        tags:
+            - { name: validator.constraint_validator, alias: unique_attribute_validator }

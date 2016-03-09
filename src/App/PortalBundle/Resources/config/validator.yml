@@ -1,0 +1,10 @@
+parameters:
+    app_portal.email_blackList.validator.class: App\PortalBundle\Validator\Constraints\EmailBlackListValidator
+
+services:
+    app_portal.email_blackList_validator:
+        class: %app_portal.email_blackList.validator.class%
+        calls:
+            - [ setBlackList, [ %mail_blacklist% ] ]
+        tags:
+            - { name: validator.constraint_validator, alias: email_black_list }

@@ -1,0 +1,57 @@
+<?xml version="1.0" ?>
+
+<container xmlns="http://symfony.com/schema/dic/services"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+    
+    <parameters>
+        <parameter key="app_user.form.type.change_password.class">App\UserBundle\Form\Type\ChangePasswordType</parameter>
+        <parameter key="app_user.form.type.request_password.class">App\UserBundle\Form\Type\RequestPasswordType</parameter>
+        <parameter key="app_user.form.type.reset_password.class">App\UserBundle\Form\Type\ResetPasswordType</parameter>
+        <parameter key="app_user.registration.handler.class">App\UserBundle\Form\Handler\RegistrationFormHandler</parameter>
+        <parameter key="app_user.change_password.handler.class">App\UserBundle\Form\Handler\ChangePasswordFormHandler</parameter>
+        <parameter key="app_user.request_password.handler.class">App\UserBundle\Form\Handler\RequestPasswordFormHandler</parameter>
+        <parameter key="app_user.reset_password.handler.class">App\UserBundle\Form\Handler\ResetPasswordFormHandler</parameter>
+    </parameters>
+    
+    <services>
+        <service id="app_user.registration.handler"
+                 class="%app_user.registration.handler.class%">
+            <argument type="service" id="app_user_manager" />
+        </service>
+
+        <service id="app_user.change_password.handler"
+                 class="%app_user.change_password.handler.class%">
+            <argument type="service" id="app_user_manager" />
+        </service>
+
+        <service id="app_user.request_password.handler"
+                 class="%app_user.request_password.handler.class%">
+            <argument type="service" id="app_user_manager" />
+        </service>
+
+        <service id="app_user.reset_password.handler"
+                 class="%app_user.reset_password.handler.class%">
+            <argument type="service" id="app_user_manager" />
+        </service>
+
+        <service id="form.type.change_password"
+                 class="%app_user.form.type.change_password.class%">
+            <argument type="service" id="app_user_manager" />
+            <tag name="form.type" alias="change_password_form" />
+        </service>
+        
+        <service id="form.type.request_password"
+                 class="%app_user.form.type.request_password.class%">
+            <argument type="service" id="app_user_manager" />
+            <tag name="form.type" alias="request_password_form" />
+        </service>
+
+        <service id="form.type.reset_password"
+                 class="%app_user.form.type.reset_password.class%" scope="request" >
+            <argument type="service" id="app_user_manager" />
+            <argument type="service" id="request" />
+            <tag name="form.type" alias="reset_password_form" />
+        </service>
+    </services>
+</container>

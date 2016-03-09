@@ -1,0 +1,88 @@
+# Acteur
+acteur:
+      label: Acteur
+      nom: Nom
+      prenom: Prénom
+      dateNaissance: Date de naissance
+      sexe: Sexe
+      liste: Liste des acteurs
+      trouve: %count% acteur a été trouvé|]1,+Inf]%count% acteurs ont été trouvés
+      liste.retour: Retour à la liste des acteurs
+      ajouter: Ajouter un acteur
+      modifier: Modifier l'acteur %prenom% %nom%
+      ajouter.succes: L'acteur %prenom% %nom% a été ajouté avec succès !
+      modifier.succes: L'acteur %prenom% %nom% a été modifié avec succès !
+      aucun: Aucun acteur n’a été trouvé
+      top.jeunes: Top des acteurs les plus jeunes
+      chercher: Chercher
+
+# Film
+film:
+      label: Film
+      titre: Titre
+      description: Description
+      categorie: Catégorie
+      acteurs: Acteurs
+      hashtags: HashTags
+      liste: Liste des films
+      liste.retour: Retour à la liste des films
+      ajouter: Ajouter un film
+      modifier: Modifier le film %titre%
+      ajouter.succes: Le film %titre% a été ajouté avec succès !
+      modifier.succes: Le film %titre% a été modifié avec succès !
+      modifier.erreur: Vous ne pouvez pas modifier le film "%movie%" parce que vous ne l'avez pas créé.
+      aucun: Aucun film n'a été trouvé
+      fiche: Fiche du film %titre%
+      top: Top films
+      dateSortieDebut: Est sorti entre le
+      dateSortieFin: Et le
+      categories.toutes: Toutes les catégories
+      enregistrer: Enregistrer
+
+# Menu
+menu:
+      accueil: Accueil
+      films: Films
+      acteurs: Acteurs
+      contact: Contactez-nous
+      connexion: Connexion
+      deconnexion: Déconnexion
+      inscription: Inscription
+      changement_password: Changement de mot de passe
+      choisir_langue: Choisir la langue
+      monolog: Monolog
+      user: Utilisateurs
+      user.list: Liste des Utilisateurs
+      user.new: Création d'un nouveau Utilisateur
+      user.edit: Modification d'un Utilisateur
+      group: Groupes
+      group.list: Liste des Groupes
+      group.new: Création d'un nouveau groupe
+      group.edit: Modification du groupe
+
+# Divers
+voir: Voir
+modifier: Modifier
+supprimer: Supprimer
+motcle: "Mot-clé :"
+rechercher: Rechercher
+copyright: Tous droits réservés
+
+contact:
+    suggestion_newsletter: Avez-vous des compléments d'informations dont vous voudriez nous faire part ? Par exemple mobilité réduite,<br/>problèmes d'audition ou de vue, difficultés en station assise...
+    center_discover: Comment avez-vous connu notre site ?
+    internet.knowledge: Recherche sur internet
+    facebook.knowledge: Facebook
+    pubpapier.knowledge: Publicité papier
+    boucheaoreille.knowledge: Bouche à oreille
+    newspaper: Presse
+    network: Réseaux sociaux
+    autre.knowledge: Autre
+    first_name: Prénom
+    last_name: Nom
+    phone: Téléphone
+    email: Adresse mail
+    additional_information: Renseignements complémentaires
+    validation_button: envoyer
+    pub_papier: prospectus
+    message_subject: Message de %name%

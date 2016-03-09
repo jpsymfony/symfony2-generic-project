@@ -1,0 +1,34 @@
+<div class="container">
+	{% if nbActorsFound %}
+		<h2>{{ 'acteur.trouve' | transchoice(actors|length) }}</h2>
+	{% endif %}
+	<table class="table table-striped">
+		<thead>
+		<tr>
+			<th>Firstname</th>
+			<th>Lastname</th>
+			<th>Birthday</th>
+			<th>Sex</th>
+		</tr>
+		</thead>
+		<tbody>
+		{% for a in actors %}
+			<tr>
+			<td>{{ a.firstName }}</td>
+			<td>{{ a.lastName }}</td>
+			<td>{{ a.birthday|date('d/m/Y') }}</td>
+			<td>{{ a.sex }}</td>
+			{% if is_granted('ROLE_EDITOR') %}
+				<td><a href="{{ path('actor_edit', { 'id': a.id }) }}">{{ 'modifier'|trans }}</a></td>
+			{% endif %}
+			{% if is_granted('ROLE_ADMIN') %}
+				<td><a href="{{ path('actor_delete', { 'id': a.id }) }}">{{ 'supprimer'|trans }}</a></td>
+			{% endif %}
+		{% else %}
+			<tr>
+				<td>{{ 'acteur.aucun'|trans }}</td>
+			</tr>
+		{% endfor %}
+		</tbody>
+	</table>
+</div>

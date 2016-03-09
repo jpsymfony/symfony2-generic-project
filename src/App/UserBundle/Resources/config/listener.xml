@@ -1,0 +1,49 @@
+<?xml version="1.0" ?>
+
+<container xmlns="http://symfony.com/schema/dic/services"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <parameters>
+        <parameter key="app_user.send_confirmation_mail_listener.class">App\UserBundle\EventListener\SendConfirmationMailListener</parameter>
+        <parameter key="app_user.send_request_password_mail_listener.class">App\UserBundle\EventListener\SendRequestPasswordMailListener</parameter>
+    </parameters>
+
+    <services>
+        <service id="app_user.send_confirmation_mail_listener"
+                 class="%app_user.send_confirmation_mail_listener.class%">
+            <argument type="service" id="mailer"/>
+            <argument type="service" id="twig" />
+            <argument>AppUserBundle:Mail:confirmation_mail.html.twig</argument>
+            <argument>%email_from%</argument>
+            <tag name="kernel.event_listener" event="app_user.new_account_created" method="onNewAccountCreated" />
+        </service>
+
+        <service id="app_user.send_request_password_mail_listener"
+                 class="%app_user.send_request_password_mail_listener.class%">
+            <argument type="service" id="mailer"/>
+            <argument type="service" id="twig" />
+            <argument type="service" id="router" />
+            <argument type="service" id="security.csrf.token_generator" />
+            <argument type="service" id="app_user_manager" />
+            <argument>AppUserBundle:Mail:request_password_mail.html.twig</argument>
+            <argument>%email_from%</argument>
+            <tag name="kernel.event_listener" event="app_user.new_password_requested" method="onRequestedPassword" />
+        </service>
+
+        <service id="app_user.kernel_exception"
+                 class="App\UserBundle\EventListener\KernelException" scope="request">
+            <argument type="service" id="router"/>
+            <argument type="service" id="session"/>
+            <argument type="service" id="request"/>
+            <tag name="kernel.event_listener" event="kernel.exception" />
+        </service>
+
+        <service id="app_user.kernel_controller" class="App\UserBundle\EventListener\KernelController">
+            <argument type="service" id="security.authorization_checker"/>
+            <argument type="service" id="security.token_storage"/>
+            <argument type="service" id="router"/>
+            <tag name="kernel.event_listener" event="kernel.controller" method="onKernelController" />
+        </service>
+    </services>
+</container>
