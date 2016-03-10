@@ -5,7 +5,6 @@ use App\PortalBundle\AppPortalEvents;
 use App\PortalBundle\Entity\Manager\MovieManager;
 use App\PortalBundle\Event\MovieEvent;
 use App\PortalBundle\Form\Type\MovieType;
-use App\PortalBundle\Repository\Interfaces\MovieRepositoryInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Form\FormFactoryInterface;
