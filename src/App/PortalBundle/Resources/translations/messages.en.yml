@@ -35,7 +35,7 @@ film.top: Top movies
 film.dateSortieDebut: Release date between
 film.dateSortieFin: And
 film.categories.toutes: All categories
-film.enregistrer: Save
+film.image: Picture
 
 # Menu
 menu.accueil: Home
@@ -61,6 +61,7 @@ menu.group.edit: Group Edit
 voir: View
 modifier: Edit
 supprimer: Delete
+valider: Save
 motcle: "Keyword :"
 rechercher: Search
 copyright: Copyright

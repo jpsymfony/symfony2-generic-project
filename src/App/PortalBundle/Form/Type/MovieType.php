@@ -82,7 +82,7 @@ class MovieType extends AbstractType
 
         $builder->add('Valider', 'submit', array(
             'attr' => ['class' => 'btn btn-primary btn-lg btn-block'],
-            'label' => 'film.enregistrer'
+            'label' => 'valider'
         ));
 
        $builder->addEventListener(

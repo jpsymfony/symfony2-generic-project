@@ -37,7 +37,7 @@ film:
       dateSortieDebut: Est sorti entre le
       dateSortieFin: Et le
       categories.toutes: Toutes les catégories
-      enregistrer: Enregistrer
+      image: Visuel
 
 # Menu
 menu:
@@ -64,6 +64,7 @@ menu:
 voir: Voir
 modifier: Modifier
 supprimer: Supprimer
+valider: Valider
 motcle: "Mot-clé :"
 rechercher: Rechercher
 copyright: Tous droits réservés

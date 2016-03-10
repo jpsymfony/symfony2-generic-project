@@ -64,10 +64,10 @@ class Movie implements TraitDatetimeInterface, TraitSimpleInterface, TraitEnable
     private $category;
 
     /**
-     * @ORM\ManyToMany(targetEntity="Actor", cascade={"persist"})
+     * @ORM\ManyToMany(targetEntity="Actor", cascade={"persist", "remove"})
      * @ORM\JoinTable(name="movie_actor",
-     *      joinColumns={@ORM\JoinColumn(name="movie_id", referencedColumnName="id")},
-     *      inverseJoinColumns={@ORM\JoinColumn(name="actor_id", referencedColumnName="id")}
+     *      joinColumns={@ORM\JoinColumn(name="movie_id", referencedColumnName="id", onDelete="CASCADE")},
+     *      inverseJoinColumns={@ORM\JoinColumn(name="actor_id", referencedColumnName="id", onDelete="CASCADE")}
      *      )
      */
     private $actors;
