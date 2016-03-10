@@ -15,7 +15,7 @@ class ContactFormHandler implements FormHandlerInterface
     private $manager;
 
     /**
-     * @param ContactManagerInterface
+     * @param ContactManagerInterface $contactManager
      */
     public function __construct(ContactManagerInterface $contactManager)
     {

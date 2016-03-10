@@ -1,9 +1,9 @@
 <?php
 namespace App\PortalBundle\Form\Handler\Movie;
 
-use App\PortalBundle\Entity\Manager\ActorManagerInterface;
-use App\PortalBundle\Entity\Manager\CategoryManagerInterface;
-use App\PortalBundle\Entity\Manager\HashTagManagerInterface;
+use App\PortalBundle\Entity\Manager\Interfaces\ActorManagerInterface;
+use App\PortalBundle\Entity\Manager\Interfaces\CategoryManagerInterface;
+use App\PortalBundle\Entity\Manager\Interfaces\HashTagManagerInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
