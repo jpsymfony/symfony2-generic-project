@@ -53,7 +53,7 @@ $("#app_portal_actor_birthday").datepicker({
     changeYear: true,
     showButtonPanel: true,
     dateFormat: 'dd/mm/yy',
-    yearRange: "-50:+0",
+    yearRange: "-100:+0",
     onClose: function(dateText, inst) {
         $(this).datepicker('setDate', new Date(inst.selectedYear, inst.selectedMonth, 1));
     }
@@ -66,7 +66,7 @@ $('#app_portal_movie_filter_releaseDateFrom').datepicker( {
     changeYear: true,
     showButtonPanel: true,
     dateFormat: 'yy-mm-dd',
-    yearRange: "-20:+0",
+    yearRange: "-50:+0",
     onClose: function(dateText, inst) {
         $(this).datepicker('setDate', new Date(inst.selectedYear, inst.selectedMonth, 1));
     }
@@ -77,7 +77,7 @@ $('#app_portal_movie_filter_releaseDateTo').datepicker( {
     changeYear: true,
     showButtonPanel: true,
     dateFormat: 'yy-mm-dd',
-    yearRange: "-20:+0",
+    yearRange: "-50:+0",
     onClose: function(dateText, inst) {
         $(this).datepicker('setDate', new Date(inst.selectedYear, inst.selectedMonth, 1));
     }

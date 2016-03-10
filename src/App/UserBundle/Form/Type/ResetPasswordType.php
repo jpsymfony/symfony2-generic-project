@@ -40,9 +40,16 @@ class ResetPasswordType extends AbstractType
             'first_name'  => 'password',
             'second_name' => 'confirm',
             'type'        => 'password',
+            'first_options' => [
+                'label' => 'user.reset_password.new_password',
+            ],
+            'second_options' => [
+                'label' => 'user.reset_password.repeat_new_password',
+            ]
         ));
         $builder->add('Reset Password', 'submit', array(
-            'attr' => ['class' => 'btn btn-primary btn-lg btn-block']
+            'attr' => ['class' => 'btn btn-primary btn-lg btn-block'],
+            'label' => 'user.reset_password.button'
         ));
 
         $builder->addEventListener(

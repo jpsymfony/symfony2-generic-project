@@ -22,11 +22,11 @@ class ContactType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('firstName', 'text', array('required' => true))
-            ->add('lastName', 'text', array('required' => true))
-            ->add('cellphone', 'text')
+            ->add('firstName', 'text', array('required' => true, 'label' => 'contact.first_name'))
+            ->add('lastName', 'text', array('required' => true, 'label' => 'contact.last_name'))
+            ->add('cellphone', 'text', array('label' => 'contact.phone'))
             ->add('email', 'email', array('required' => true))
-            ->add('additionnalInformation', 'textarea')
+            ->add('additionnalInformation', 'textarea', array('label' => 'contact.additional_information'))
             ->add('knowledge', 'choice', array(
                 'choices'     => array(
                     'internet'         => 'contact.internet.knowledge',
@@ -42,7 +42,7 @@ class ContactType extends AbstractType
                 'multiple'    => false,
                 'empty_value' => false
             ))
-            ->add('other')
+            ->add('other', 'text', array('label' => 'contact.autre'))
             ->add('Envoyer', 'submit', array(
                 'attr' => ['class' => 'btn btn-primary btn-lg btn-block'],
                 'label' => 'contact.validation_button'
