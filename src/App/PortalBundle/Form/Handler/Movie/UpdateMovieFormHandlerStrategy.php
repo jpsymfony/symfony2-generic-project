@@ -2,8 +2,8 @@
 namespace App\PortalBundle\Form\Handler\Movie;
 
 use App\PortalBundle\AppPortalEvents;
-use App\PortalBundle\Entity\Manager\HashTagManager;
-use App\PortalBundle\Entity\Manager\MovieManager;
+use App\PortalBundle\Entity\Manager\HashTagManagerInterface;
+use App\PortalBundle\Entity\Manager\MovieManagerInterface;
 use App\PortalBundle\Event\MovieEvent;
 use App\PortalBundle\Form\Type\MovieType;
 use App\UserBundle\Security\MovieVoter;
@@ -25,12 +25,12 @@ class UpdateMovieFormHandlerStrategy extends AbstractMovieFormHandlerStrategy
     protected $translator;
 
     /**
-     * @var MovieManager
+     * @var MovieManagerInterface
      */
     protected $movieManager;
 
     /**
-     * @var HashTagManager
+     * @var HashTagManagerInterface
      */
     protected $hashTagManager;
 
@@ -58,8 +58,8 @@ class UpdateMovieFormHandlerStrategy extends AbstractMovieFormHandlerStrategy
      * Constructor.
      *
      * @param TranslatorInterface $translator Service of translation
-     * @param MovieManager $movieManager
-     * @param HashTagManager $hashTagManager
+     * @param MovieManagerInterface $movieManager
+     * @param HashTagManagerInterface $hashTagManager
      * @param AuthorizationCheckerInterface $authorizationChecker
      * @param FormFactoryInterface $formFactory
      * @param RouterInterface $router
@@ -68,8 +68,8 @@ class UpdateMovieFormHandlerStrategy extends AbstractMovieFormHandlerStrategy
     public function __construct
     (
         TranslatorInterface $translator,
-        MovieManager $movieManager,
-        HashTagManager $hashTagManager,
+        MovieManagerInterface $movieManager,
+        HashTagManagerInterface $hashTagManager,
         AuthorizationCheckerInterface $authorizationChecker,
         FormFactoryInterface $formFactory,
         RouterInterface $router,

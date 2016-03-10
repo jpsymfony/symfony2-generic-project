@@ -1,9 +1,9 @@
 <?php
 namespace App\PortalBundle\Form\Handler\Movie;
 
-use App\PortalBundle\Entity\Manager\ActorManager;
-use App\PortalBundle\Entity\Manager\CategoryManager;
-use App\PortalBundle\Entity\Manager\HashTagManager;
+use App\PortalBundle\Entity\Manager\ActorManagerInterface;
+use App\PortalBundle\Entity\Manager\CategoryManagerInterface;
+use App\PortalBundle\Entity\Manager\HashTagManagerInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -30,16 +30,16 @@ class MovieFormHandler
     protected $movieFormHandlerStrategy;
 
     /**
-     * @var CategoryManager
+     * @var CategoryManagerInterface
      */
     protected $categoryManager;
 
     /**
-     * @var ActorManager
+     * @var ActorManagerInterface
      */
     protected $actorManager;
 
-    /** @var HashTagManager
+    /** @var HashTagManagerInterface
      */
     protected $hashTagManager;
 
@@ -59,7 +59,7 @@ class MovieFormHandler
     }
 
     /**
-     * @param CategoryManager $categoryManager
+     * @param CategoryManagerInterface $categoryManager
      */
     public function setCategoryManager($categoryManager)
     {
@@ -67,7 +67,7 @@ class MovieFormHandler
     }
 
     /**
-     * @param ActorManager $actorManager
+     * @param ActorManagerInterface $actorManager
      */
     public function setActorManager($actorManager)
     {
@@ -75,7 +75,7 @@ class MovieFormHandler
     }
 
     /**
-     * @param HashTagManager $hashTagManager
+     * @param HashTagManagerInterface $hashTagManager
      */
     public function setHashTagManager($hashTagManager)
     {

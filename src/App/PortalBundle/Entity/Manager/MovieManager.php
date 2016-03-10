@@ -3,7 +3,7 @@ namespace App\PortalBundle\Entity\Manager;
 
 use App\PortalBundle\Repository\Interfaces\MovieRepositoryInterface;
 
-class MovieManager
+class MovieManager implements MovieManagerInterface
 {
     /**
      * @var MovieRepositoryInterface

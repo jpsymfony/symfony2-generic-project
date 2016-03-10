@@ -3,7 +3,7 @@ namespace App\PortalBundle\Entity\Manager;
 
 use App\PortalBundle\Repository\Interfaces\HashTagRepositoryInterface;
 
-class HashTagManager
+class HashTagManager implements HashTagManagerInterface
 {
     /**
      * @var HashTagRepositoryInterface

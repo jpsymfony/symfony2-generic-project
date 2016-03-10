@@ -4,7 +4,7 @@ namespace App\PortalBundle\Form\Handler\Contact;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 use App\CoreBundle\Form\Handler\FormHandlerInterface;
-use App\PortalBundle\Entity\Manager\ContactManagerInterface;
+use App\PortalBundle\Entity\Manager\Interfaces\ContactManagerInterface;
 
 class ContactFormHandler implements FormHandlerInterface
 {
