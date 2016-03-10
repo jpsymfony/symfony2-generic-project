@@ -33,7 +33,7 @@ class ActorType extends AbstractType
 
         ->add('Valider', 'submit', array(
             'attr' => ['class' => 'btn btn-primary btn-lg btn-block'],
-            'label' => 'acteur.chercher'
+            'label' => 'valider'
         ));
     }
 

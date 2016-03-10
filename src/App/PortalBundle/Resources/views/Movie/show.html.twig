@@ -42,30 +42,32 @@
             </table>
 
             <p class="movie-description">{{ movie.description }}</p>
-            <div class="panel-group" id="accordion">
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <h4 class="panel-title">
-                            <a data-toggle="collapse" data-parent="#accordion" href="#collapseActors">
-                                {{ 'film.acteurs'|trans }} <span class="glyphicon glyphicon-chevron-down pull-right"></span>
-                            </a>
-                        </h4>
-                    </div>
-                    <div id="collapseActors" class="panel-collapse collapse">
-                        <div class="panel-body">
-                            <table class="table table-striped">
-                                {% for actor in movie.actors %}
-                                    <tr>
-                                        <td>
-                                            {{ actor }}
-                                        </td>
-                                    </tr>
-                                {% endfor %}
-                            </table>
+            {% if movie.actors|length > 0 %}
+                <div class="panel-group" id="accordion">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">
+                                <a data-toggle="collapse" data-parent="#accordion" href="#collapseActors">
+                                    {{ 'film.acteurs'|trans }} <span class="glyphicon glyphicon-chevron-down pull-right"></span>
+                                </a>
+                            </h4>
+                        </div>
+                        <div id="collapseActors" class="panel-collapse collapse">
+                            <div class="panel-body">
+                                <table class="table table-striped">
+                                    {% for actor in movie.actors %}
+                                        <tr>
+                                            <td>
+                                                {{ actor }}
+                                            </td>
+                                        </tr>
+                                    {% endfor %}
+                                </table>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
+            {% endif %}
         </div>
 
         <br/>
