@@ -83,7 +83,8 @@ class User implements UserInterface, Serializable
     private $confirmationToken = null;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\PortalBundle\Entity\Movie", mappedBy="author", cascade={"all"})
+     * // cascade remove otherwise if an author would be removed from database, associated movies would be removed too
+     * @ORM\OneToMany(targetEntity="App\PortalBundle\Entity\Movie", mappedBy="author")
      */
     private $movies;
 

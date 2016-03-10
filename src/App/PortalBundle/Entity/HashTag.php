@@ -26,8 +26,8 @@ class HashTag implements TraitDatetimeInterface, TraitSimpleInterface, TraitEnab
     use TraitEnabled;
 
     /**
+     * onDelete CASCADE useless because orphanRemoval in Movie entity
      * @ORM\ManyToOne(targetEntity="Movie", inversedBy="hashTags")
-     * @ORM\JoinColumn(onDelete="CASCADE")
      */
     private $movie;
 
