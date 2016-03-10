@@ -1,7 +1,7 @@
 <?php
 namespace App\PortalBundle\Form\Handler\Actor;
 
-use App\PortalBundle\Entity\Manager\ActorManagerInterface;
+use App\PortalBundle\Entity\Manager\Interfaces\ActorManagerInterface;
 use App\PortalBundle\Form\Type\ActorType;
 use Symfony\Component\HttpFoundation\Request;
 use App\PortalBundle\Entity\Actor;

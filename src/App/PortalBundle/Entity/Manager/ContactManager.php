@@ -2,11 +2,11 @@
 namespace App\PortalBundle\Entity\Manager;
 
 use App\PortalBundle\Entity\Contact;
+use App\PortalBundle\Entity\Manager\Interfaces\ContactManagerInterface;
 use Symfony\Component\Translation\TranslatorInterface;
 
 class ContactManager implements ContactManagerInterface
 {
-
     /**
      * @var \Swift_Mailer
      */
