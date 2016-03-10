@@ -41,6 +41,7 @@ film:
     image: Picture
     supprime : The movie %title% has successfully been deleted
     dateSortie: Released at
+    file: File
 
 # Menu
 menu:
@@ -53,15 +54,6 @@ menu:
     inscription: Sign in
     changement_password: Password Changement
     choisir_langue: Choose a language
-    monolog: Monolog
-    user: Users
-    user.list: User list
-    user.new: New User
-    user.edit: User Edit
-    group: Groups
-    group.list: Group list
-    group.new: New Group
-    group.edit: Group Edit
 
 # Divers
 voir: View
@@ -71,6 +63,8 @@ valider: Save
 motcle: "Keyword :"
 rechercher: Search
 copyright: Copyright
+filtrer: Search
+reinitialiser: Reset
 
 contact:
     suggestion_newsletter: Do you have some extra information you wished to tell us ? For instance reduced mobility, <br/> hearing problems or sight difficulties in sitting position...
@@ -91,34 +85,3 @@ contact:
     pub_papier: prospectus
     message_subject: Message de %name%
     autre: Other
-
-user:
-    connexion:
-            new_password: Nouveau mot de passe
-            confirmation: Répétez le mot de passe
-            label: Connexion
-            username: Identifiant
-            password: Mot de passe
-            password_forgotten: Mot de passe oublié
-    registration:
-            username: Identifiant
-            email: Email
-            password: Mot de passe
-            confirm: Répéter le mot de passe
-            register: Envoyer
-    change_password:
-            old_password: Ancien mot de passe
-            new_password: Nouveau mot de passe
-            repeat_new_password: Répéter le nouveau mot de passe
-            button: Envoyer
-    reset_password:
-            identifier: Identifiant
-            button: Envoyer
-            title: Réinitialisation du mot de passe
-            new_password: Nouveau mot de passe
-            repeat_new_password: Répéter le nouveau mot de passe
-            successful_reset: Votre mot de passe a été réinitialisé. Vous pouvez vous reconnecter
-    request_password:
-            button: Envoyer la demande
-            title: Demande de changement de mot de passe
-            mail_sent: A mail has been sent to your mailbox to reset your password

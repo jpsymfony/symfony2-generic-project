@@ -41,6 +41,7 @@ film:
       image: Visuel
       supprime : Le film %title% a bien été supprimé
       dateSortie: Date de sortie
+      file: Image
 
 # Menu
 menu:
@@ -53,15 +54,6 @@ menu:
       inscription: Inscription
       changement_password: Changement de mot de passe
       choisir_langue: Choisir la langue
-      monolog: Monolog
-      user: Utilisateurs
-      user.list: Liste des Utilisateurs
-      user.new: Création d'un nouveau Utilisateur
-      user.edit: Modification d'un Utilisateur
-      group: Groupes
-      group.list: Liste des Groupes
-      group.new: Création d'un nouveau groupe
-      group.edit: Modification du groupe
 
 # Divers
 voir: Voir
@@ -71,6 +63,8 @@ valider: Valider
 motcle: "Mot-clé :"
 rechercher: Rechercher
 copyright: Tous droits réservés
+filtrer: Filtrer
+reinitialiser: Reinitialiser
 
 contact:
     suggestion_newsletter: Avez-vous des compléments d'informations dont vous voudriez nous faire part ? Par exemple mobilité réduite,<br/>problèmes d'audition ou de vue, difficultés en station assise...
@@ -91,34 +85,3 @@ contact:
     pub_papier: prospectus
     message_subject: Message de %name%
     autre: Autre
-
-user:
-    connexion:
-            new_password: Nouveau mot de passe
-            confirmation: Répétez le mot de passe
-            label: Connexion
-            username: Identifiant
-            password: Mot de passe
-            password_forgotten: Mot de passe oublié
-    registration:
-            username: Identifiant
-            email: Email
-            password: Mot de passe
-            confirm: Répéter le mot de passe
-            register: Envoyer
-    change_password:
-            old_password: Ancien mot de passe
-            new_password: Nouveau mot de passe
-            repeat_new_password: Répéter le nouveau mot de passe
-            button: Envoyer
-    reset_password:
-            identifier: Identifiant
-            button: Confirmer le changement
-            title: Réinitialisation du mot de passe
-            new_password: Nouveau mot de passe
-            repeat_new_password: Répéter le nouveau mot de passe
-            successful_reset: Your password has been resetted. You can login now.
-    request_password:
-            button: Envoyer la demande
-            title: Demande de changement de mot de passe
-            mail_sent: Un email vient de vous être envoyé pour modifier votre mot de passe
