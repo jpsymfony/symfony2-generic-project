@@ -3,7 +3,6 @@
 {% trans_default_domain 'FOSUserBundle' %}
 
 {% block fos_user_content %}
-
 <body id="login">
 
     <div id="login-wrapper" class="png_bg">
@@ -19,9 +18,7 @@
                 <input type="hidden" name="_csrf_token" value="{{ csrf_token }}" />
                 <div class="notification information png_bg">
                     {% if error %}
-                        <div>
-                            {{ error|trans }}
-                        </div>
+                        {{ error.messageKey|trans(error.messageData, 'security') }}
                     {% endif %}
                 </div>
 
