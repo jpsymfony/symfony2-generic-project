@@ -25,7 +25,6 @@ class HashTagCollectionType extends AbstractType
                 'allow_delete' => true,
                 'max_hashtag_limit' => $this->configMaxLimitHashTag,
                 'by_reference' => false,
-                'type' => 'goal',
                 'prototype' => true,
                 'delete_empty' => true,
                 'attr' => [
