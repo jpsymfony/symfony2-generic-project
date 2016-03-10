@@ -31,7 +31,7 @@ class ControllerGeneratorCommand extends ContainerAwareCommand
         $dialog = $this->getQuestionHelper ();
         $output->writeln(array(
             '',
-            '      Bienvenue dans le générateur de controlleurs',
+            '      Bienvenue dans le générateur de controleurs',
             '',
             'Cet outil va vous permettre de générer rapidement votre contrôleur',
             '',
@@ -41,7 +41,7 @@ class ControllerGeneratorCommand extends ContainerAwareCommand
         $controller = $dialog->ask(
             $input,
             $output,
-            new Question('Nom du controlleur: ', $input->getOption('controller'))
+            new Question('Nom du controleur: ', $input->getOption('controller'))
         );
 
         $basecontroller = $input->getOption('basecontroller');
@@ -94,10 +94,10 @@ class ControllerGeneratorCommand extends ContainerAwareCommand
         $path = $bundle->getPath();
         $target = $path.'/Controller/'.$controller.'Controller.php';
 
-        // On génère le contenu du controlleur
-        $twig = $this->getContainer()->get ('templating');
+        // On génère le contenu du controleur
+        $twig = $this->getContainer()->get('templating');
 
-        $controller_code = $twig->render ('controllerCommand/controller.php.twig',
+        $controller_code = $twig->render('controllerCommand/controller.php.twig',
             array (
                 'controller' => $controller,
                 'basecontroller' => $basecontroller,
