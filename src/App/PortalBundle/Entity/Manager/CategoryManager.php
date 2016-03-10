@@ -3,7 +3,7 @@ namespace App\PortalBundle\Entity\Manager;
 
 use App\PortalBundle\Repository\Interfaces\CategoryRepositoryInterface;
 
-class CategoryManager
+class CategoryManager implements CategoryManagerInterface
 {
     /**
      * @var CategoryRepositoryInterface

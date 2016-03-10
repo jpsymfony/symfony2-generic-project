@@ -3,7 +3,7 @@ namespace App\PortalBundle\Entity\Manager;
 
 use App\PortalBundle\Repository\Interfaces\ActorRepositoryInterface;
 
-class ActorManager
+class ActorManager implements ActorManagerInterface
 {
     /**
      * @var ActorRepositoryInterface

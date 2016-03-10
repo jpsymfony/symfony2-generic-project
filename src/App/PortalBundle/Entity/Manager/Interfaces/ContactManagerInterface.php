@@ -1,6 +1,6 @@
 <?php
 
-namespace App\PortalBundle\Entity\Manager;
+namespace App\PortalBundle\Entity\Manager\Interfaces;
 
 use App\PortalBundle\Entity\Contact;
 

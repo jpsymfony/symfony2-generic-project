@@ -2,7 +2,7 @@
 namespace App\PortalBundle\Form\Handler\Movie;
 
 use App\PortalBundle\AppPortalEvents;
-use App\PortalBundle\Entity\Manager\MovieManager;
+use App\PortalBundle\Entity\Manager\MovieManagerInterface;
 use App\PortalBundle\Event\MovieEvent;
 use App\PortalBundle\Form\Type\MovieType;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -23,7 +23,7 @@ class NewMovieFormHandlerStrategy extends AbstractMovieFormHandlerStrategy
     protected $translator;
 
     /**
-     * @var MovieManager
+     * @var MovieManagerInterface
      */
     protected $movieManager;
 
@@ -51,7 +51,7 @@ class NewMovieFormHandlerStrategy extends AbstractMovieFormHandlerStrategy
      * Constructor.
      *
      * @param TranslatorInterface $translator Service of translation
-     * @param MovieManager $movieManager
+     * @param MovieManagerInterface $movieManager
      * @param FormFactoryInterface $formFactory
      * @param RouterInterface $router
      * @param TokenStorageInterface $securityTokenStorage
@@ -60,7 +60,7 @@ class NewMovieFormHandlerStrategy extends AbstractMovieFormHandlerStrategy
     public function __construct
     (
         TranslatorInterface $translator,
-        MovieManager $movieManager,
+        MovieManagerInterface $movieManager,
         FormFactoryInterface $formFactory,
         RouterInterface $router,
         TokenStorageInterface $securityTokenStorage,

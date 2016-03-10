@@ -1,9 +1,8 @@
 <?php
 namespace App\PortalBundle\Form\Handler\Actor;
 
-use App\PortalBundle\Entity\Manager\ActorManager;
+use App\PortalBundle\Entity\Manager\ActorManagerInterface;
 use App\PortalBundle\Form\Type\ActorType;
-use App\PortalBundle\Repository\Interfaces\ActorRepositoryInterface;
 use Symfony\Component\HttpFoundation\Request;
 use App\PortalBundle\Entity\Actor;
 use Symfony\Component\Routing\RouterInterface;
@@ -18,7 +17,7 @@ class NewActorFormHandlerStrategy extends AbstractActorFormHandlerStrategy
     protected $translator;
 
     /**
-     * @var ActorManager
+     * @var ActorManagerInterface
      */
     protected $actorManager;
 
@@ -36,14 +35,14 @@ class NewActorFormHandlerStrategy extends AbstractActorFormHandlerStrategy
      * Constructor.
      *
      * @param TranslatorInterface $translator Service of translation
-     * @param ActorManager $actorManager
+     * @param ActorManagerInterface $actorManager
      * @param FormFactoryInterface $formFactory
      * @param RouterInterface $router
      */
     public function __construct
     (
         TranslatorInterface $translator,
-        ActorManager $actorManager,
+        ActorManagerInterface $actorManager,
         FormFactoryInterface $formFactory,
         RouterInterface $router
     )
