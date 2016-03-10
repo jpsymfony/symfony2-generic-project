@@ -4,6 +4,7 @@ namespace App\PortalBundle\Form\Handler\Movie;
 use App\PortalBundle\Entity\Manager\ActorManager;
 use App\PortalBundle\Entity\Manager\CategoryManager;
 use App\PortalBundle\Entity\Manager\HashTagManager;
+use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 use App\PortalBundle\Entity\Movie;
@@ -87,13 +88,21 @@ class MovieFormHandler
             (null === $movie->getId() && $request->isMethod('POST'))
             || (null !== $movie->getId() && $request->isMethod('PUT'))
         ) {
-            $form->submit($request);
+
+            $originalHashTags = new ArrayCollection();
+
+            // Create an ArrayCollection of the current Tag objects in the database
+            foreach ($movie->getHashTags() as $tag) {
+                $originalHashTags->add($tag);
+            }
+
+            $form->handleRequest($request);
 
             if (!$form->isValid()) {
                 return false;
             }
 
-            $this->message = $this->movieFormHandlerStrategy->handle($request, $movie);
+            $this->message = $this->movieFormHandlerStrategy->handle($request, $movie, $originalHashTags);
 
             return true;
         }

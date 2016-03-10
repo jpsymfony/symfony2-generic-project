@@ -35,7 +35,7 @@ class ActorRepository extends \Doctrine\ORM\EntityRepository implements ActorRep
             ->from('AppPortalBundle:Actor', 'a')
             ->where("a.firstName LIKE :motcle OR a.lastName LIKE :motcle")
             ->orderBy('a.lastName', 'ASC')
-            ->setParameter('motcle', '%'.$motcle.'%');
+            ->setParameter('motcle', '%' . $motcle . '%');
         $query = $qb->getQuery();
 
         return $query->getResult();

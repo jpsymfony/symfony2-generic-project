@@ -28,4 +28,9 @@ class HashTagManager
     {
         return $this->hashTagRepository->find($hashTag);
     }
+
+    public function save($entity, $persist = false, $flush = true)
+    {
+        return $this->hashTagRepository->save($entity, $persist, $flush);
+    }
 }

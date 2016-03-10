@@ -2,6 +2,9 @@
 namespace App\PortalBundle\Form\Handler\Movie;
 
 use App\PortalBundle\AppPortalEvents;
+use App\PortalBundle\Entity\HashTag;
+use App\PortalBundle\Entity\Manager\HashTagManager;
+use App\PortalBundle\Entity\Manager\MovieManager;
 use App\PortalBundle\Event\MovieEvent;
 use App\PortalBundle\Form\Type\MovieType;
 use App\PortalBundle\Repository\Interfaces\MovieRepositoryInterface;
@@ -15,7 +18,6 @@ use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 use Symfony\Component\Translation\TranslatorInterface;
 use App\PortalBundle\Entity\Movie;
-use App\PortalBundle\Entity\Manager\HashTagManager;
 
 class UpdateMovieFormHandlerStrategy extends AbstractMovieFormHandlerStrategy
 {
@@ -25,9 +27,9 @@ class UpdateMovieFormHandlerStrategy extends AbstractMovieFormHandlerStrategy
     protected $translator;
 
     /**
-     * @var MovieRepositoryInterface
+     * @var MovieManager
      */
-    protected $movieRepository;
+    protected $movieManager;
 
     /**
      * @var HashTagManager
@@ -58,7 +60,7 @@ class UpdateMovieFormHandlerStrategy extends AbstractMovieFormHandlerStrategy
      * Constructor.
      *
      * @param TranslatorInterface $translator Service of translation
-     * @param MovieRepositoryInterface $movieRepository
+     * @param MovieManager $movieManager
      * @param HashTagManager $hashTagManager
      * @param AuthorizationCheckerInterface $authorizationChecker
      * @param FormFactoryInterface $formFactory
@@ -68,7 +70,7 @@ class UpdateMovieFormHandlerStrategy extends AbstractMovieFormHandlerStrategy
     public function __construct
     (
         TranslatorInterface $translator,
-        MovieRepositoryInterface $movieRepository,
+        MovieManager $movieManager,
         HashTagManager $hashTagManager,
         AuthorizationCheckerInterface $authorizationChecker,
         FormFactoryInterface $formFactory,
@@ -77,8 +79,8 @@ class UpdateMovieFormHandlerStrategy extends AbstractMovieFormHandlerStrategy
     )
     {
         $this->translator = $translator;
-        $this->movieRepository = $movieRepository;
-        $this->hashtagManager = $hashTagManager;
+        $this->movieManager = $movieManager;
+        $this->hashTagManager = $hashTagManager;
         $this->authorizationChecker = $authorizationChecker;
         $this->formFactory = $formFactory;
         $this->router = $router;
@@ -99,7 +101,7 @@ class UpdateMovieFormHandlerStrategy extends AbstractMovieFormHandlerStrategy
         return $this->form;
     }
 
-    public function handle(Request $request, Movie $movie)
+    public function handle(Request $request, Movie $movie, ArrayCollection $originalHashTags = null)
     {
         if (!$this->authorizationChecker->isGranted(MovieVoter::EDIT, $movie)) {
             $errorMessage = $this->translator->trans('film.modifier.erreur', ['%movie%' => $movie->getTitle()]);
@@ -107,22 +109,14 @@ class UpdateMovieFormHandlerStrategy extends AbstractMovieFormHandlerStrategy
             throw new AccessDeniedException($errorMessage);
         }
 
-        $originalHashTags = new ArrayCollection();
-
-        // we get hashTags for selected movie
-        foreach ($movie->getHashTags() as $hashTag) {
-            $originalHashTags->add($hashTag);
-        }
-
         foreach ($originalHashTags as $hashTag) {
-            // we check if hashTags from request are the same than edited movie to remove them if necessary
             if (false === $movie->getHashTags()->contains($hashTag)) {
-                $hashTag->getMovie()->removeHashTag($hashTag);
+                $movie->removeHashTag($hashTag);
                 $this->hashTagManager->remove($hashTag);
             }
         }
 
-        $this->movieRepository->save($movie, false, true);
+        $this->movieManager->save($movie, false, true);
 
         $movieEvent = new MovieEvent($movie);
         $this->dispatcher->dispatch(AppPortalEvents::EVENT_MOVIE_1, $movieEvent);

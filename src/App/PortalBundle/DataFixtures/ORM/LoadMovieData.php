@@ -21,12 +21,12 @@ class LoadMovieData extends AbstractFixture implements OrderedFixtureInterface
         $actor3 = $manager->getRepository("AppPortalBundle:Actor")->findOneByLastName("Dujardin");
         $actor4 = $manager->getRepository("AppPortalBundle:Actor")->findOneByLastName("Portman");
 
-        $hashTag1 = $manager->getRepository("AppPortalBundle:HashTag")->findOneBySlug("hashtag-1");
-        $hashTag2 = $manager->getRepository("AppPortalBundle:HashTag")->findOneBySlug("hashtag-2");
-        $hashTag3 = $manager->getRepository("AppPortalBundle:HashTag")->findOneBySlug("hashtag-3");
-        $hashTag4 = $manager->getRepository("AppPortalBundle:HashTag")->findOneBySlug("hashtag-4");
-        $hashTag5 = $manager->getRepository("AppPortalBundle:HashTag")->findOneBySlug("hashtag-5");
-        $hashTag6 = $manager->getRepository("AppPortalBundle:HashTag")->findOneBySlug("hashtag-6");
+        $hashTag1 = $manager->getRepository("AppPortalBundle:HashTag")->findOneByName("#HashTag 1");
+        $hashTag2 = $manager->getRepository("AppPortalBundle:HashTag")->findOneByName("#HashTag 2");
+        $hashTag3 = $manager->getRepository("AppPortalBundle:HashTag")->findOneByName("#HashTag 3");
+        $hashTag4 = $manager->getRepository("AppPortalBundle:HashTag")->findOneByName("#HashTag 4");
+        $hashTag5 = $manager->getRepository("AppPortalBundle:HashTag")->findOneByName("#HashTag 5");
+        $hashTag6 = $manager->getRepository("AppPortalBundle:HashTag")->findOneByName("#HashTag 6");
 
         $author1 = $manager->getRepository("AppUserBundle:User")->findOneByEmail("editor1@symfony.com");
         $author2 = $manager->getRepository("AppUserBundle:User")->findOneByEmail("editor2@symfony.com");

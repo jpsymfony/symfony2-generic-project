@@ -26,8 +26,8 @@ class HashTag implements TraitDatetimeInterface, TraitSimpleInterface, TraitEnab
     use TraitEnabled;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Movie", inversedBy="hashTags", cascade={ "persist", "remove"})
-     * @ORM\JoinColumn(name="movie_id", referencedColumnName="id", nullable=true, onDelete="CASCADE")
+     * @ORM\ManyToOne(targetEntity="Movie", inversedBy="hashTags")
+     * @ORM\JoinColumn(onDelete="CASCADE")
      */
     private $movie;
 
@@ -37,12 +37,6 @@ class HashTag implements TraitDatetimeInterface, TraitSimpleInterface, TraitEnab
      * @Assert\Length(min = 3)
      */
     private $name;
-
-    /**
-     * @Gedmo\Slug(fields={"name"})
-     * @ORM\Column(length=255, unique=true)
-     */
-    private $slug;
 
     /**
      * Set nom
@@ -87,26 +81,8 @@ class HashTag implements TraitDatetimeInterface, TraitSimpleInterface, TraitEnab
         return $this->movie;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getSlug()
-    {
-        return $this->slug;
-    }
-
-    /**
-     * @param mixed $slug
-     * @return HashTag
-     */
-    public function setSlug($slug)
-    {
-        $this->slug = $slug;
-        return $this;
-    }
-
     public function __toString()
     {
-        return $this->name;
+        return (string)$this->name;
     }
 }

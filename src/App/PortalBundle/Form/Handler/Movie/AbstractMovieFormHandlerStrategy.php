@@ -3,6 +3,7 @@
 namespace App\PortalBundle\Form\Handler\Movie;
 
 use App\PortalBundle\Entity\Movie;
+use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Form\Form;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -19,7 +20,7 @@ abstract class AbstractMovieFormHandlerStrategy implements MovieFormHandlerStrat
         return $this->form->createView();
     }
 
-    abstract public function handle(Request $request, Movie $movie);
+    abstract public function handle(Request $request, Movie $movie, ArrayCollection $originalTags = null);
 
     abstract public function createForm(Movie $movie);
 

@@ -12,7 +12,7 @@ $('table').delegate('.remove-line', 'click', function (e) {
     reindexCollection(table.attr('id'));
 });
 
-$('.add-line').click(function (e) {
+$('.add_tag_link').click(function (e) {
     e.preventDefault();
     var table = $(this).closest('table');
     var maxLimit = table.attr('data-max-limit');
@@ -28,7 +28,6 @@ $('.add-line').click(function (e) {
     // create a new list element and add it to the list
     table.find('tbody').prepend(prototype);
     reindexCollection(table.attr('id'));
-
 });
 
 $("#form_recherche").submit(function (e) {

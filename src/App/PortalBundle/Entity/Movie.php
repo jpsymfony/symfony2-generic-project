@@ -47,6 +47,12 @@ class Movie implements TraitDatetimeInterface, TraitSimpleInterface, TraitEnable
     private $title;
 
     /**
+     * @Gedmo\Slug(fields={"title"})
+     * @ORM\Column(length=255, unique=true)
+     */
+    private $slug;
+
+    /**
      * @ORM\Column(type="text")
      */
     private $description;
@@ -67,15 +73,9 @@ class Movie implements TraitDatetimeInterface, TraitSimpleInterface, TraitEnable
     private $actors;
 
     /**
-     * @ORM\OneToMany(targetEntity="HashTag", mappedBy="movie", cascade={"all"}, orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity="HashTag", mappedBy="movie", fetch="EAGER", cascade={"persist"})
      */
     private $hashTags;
-
-    /**
-     * @Gedmo\Slug(fields={"title"})
-     * @ORM\Column(length=255, unique=true)
-     */
-    private $slug;
 
     /**
      * @ORM\OneToOne(targetEntity="Image", cascade={"persist", "remove"})
@@ -140,35 +140,6 @@ class Movie implements TraitDatetimeInterface, TraitSimpleInterface, TraitEnable
     }
 
     /**
-     * Add hashtags
-     *
-     * @param HashTag $hashTag
-     * @return Movie
-     */
-    public function addHashTag(HashTag $hashTag)
-    {
-        $this->hashTags[] = $hashTag;
-        $hashTag->setMovie($this);
-
-        return $this;
-    }
-
-    /**
-     * Remove hashtag
-     *
-     * @param HashTag $hashTag
-     *
-     * @return Movie
-     */
-    public function removeHashTag(HashTag $hashTag)
-    {
-        $this->hashTags->removeElement($hashTag);
-        $hashTag->setMovie(null);
-
-        return $this;
-    }
-
-    /**
      * Get hashTags
      *
      * @return \Doctrine\Common\Collections\Collection
@@ -176,25 +147,6 @@ class Movie implements TraitDatetimeInterface, TraitSimpleInterface, TraitEnable
     public function getHashTags()
     {
         return $this->hashTags;
-    }
-
-    /**
-     * Set hashtags
-     *
-     * @param Hashtag $hashtags
-     * @return Doctrine\Common\Collections\Collection
-     */
-    public function setHashTags($hashTags)
-    {
-        foreach ($this->getHashTags() as $hashTag) {
-            $this->removeHashTag($hashTag);
-        }
-
-        foreach ($hashTags as $hashTag) {
-            $this->addHashTag(($hashTag));
-        }
-
-        return $this;
     }
 
     /**
@@ -218,6 +170,30 @@ class Movie implements TraitDatetimeInterface, TraitSimpleInterface, TraitEnable
     public function getTitle()
     {
         return $this->title;
+    }
+
+
+    /**
+     * Set slug
+     *
+     * @param string $slug
+     * @return Movie
+     */
+    public function setSlug($slug)
+    {
+        $this->slug = $slug;
+
+        return $this;
+    }
+
+    /**
+     * Get slug
+     *
+     * @return string
+     */
+    public function getSlug()
+    {
+        return $this->slug;
     }
 
     /**
@@ -307,22 +283,29 @@ class Movie implements TraitDatetimeInterface, TraitSimpleInterface, TraitEnable
     }
 
     /**
-     * @return mixed
+     * Add hashTags
+     *
+     * @param \App\PortalBundle\Entity\HashTag $hashTag
+     * @return Movie
      */
-    public function getSlug()
+    public function addHashTag(\App\PortalBundle\Entity\HashTag $hashTag)
     {
-        return $this->slug;
+        if (!$this->hashTags->contains($hashTag)) {
+            $this->hashTags->add($hashTag);
+            $hashTag->setMovie($this);
+        }
     }
 
     /**
-     * @param string $slug
-     * @return Price
+     * Remove hashTags
+     *
+     * @param \App\PortalBundle\Entity\HashTag $hashTag
      */
-    public function setSlug($slug)
+    public function removeHashTag(\App\PortalBundle\Entity\HashTag $hashTag)
     {
-        $this->slug = $slug;
-
-        return $this;
+        if ($this->hashTags->contains($hashTag)) {
+            $this->hashTags->removeElement($hashTag);
+        }
     }
 
     /**
@@ -466,9 +449,9 @@ class Movie implements TraitDatetimeInterface, TraitSimpleInterface, TraitEnable
         if (array_key_exists($keys[4], $arr)) {
             $this->setActors($arr[$keys[4]]);
         }
-        if (array_key_exists($keys[5], $arr)) {
+        /*if (array_key_exists($keys[5], $arr)) {
             $this->setHashTags($arr[$keys[5]]);
-        }
+        }*/
     }
 
     /**

@@ -33,4 +33,9 @@ class ActorManager
     {
         return $this->actorRepository->find($actor);
     }
+
+    public function save($entity, $persist = false, $flush = true)
+    {
+        return $this->actorRepository->save($entity, $persist, $flush);
+    }
 }
