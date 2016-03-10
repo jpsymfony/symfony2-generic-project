@@ -1,6 +1,6 @@
 {
-    "name": "johnsaulnier/alterway.demo",
-    "description": "Alterway demo",
+    "name": "jpsymfony/generic-project",
+    "description": "Generic project",
     "license": "proprietary",
     "type": "project",
     "autoload": {

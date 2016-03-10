@@ -85,20 +85,4 @@ class CollectionConverter implements \Sensio\Bundle\FrameworkExtraBundle\Request
         // Map found village to the route's parameter
         $request->attributes->set($name, $collection);
     }
-    
-    /**
-     * @return \Doctrine\ORM\EntityManager
-     */
-    protected function getEntityManager()
-    {
-        return $this->container->get('doctrine.orm.default_entity_manager');
-    }
-
-    /**
-     * @return \Symfony\Component\Security\Core\SecurityContext
-     */
-    protected function getSecurityContext()
-    {
-        return $this->container->get('security.token_storage');
-    }
 }
