@@ -1,6 +1,7 @@
 <?php
 namespace App\PortalBundle\Entity\Manager;
 
+use App\PortalBundle\Entity\Manager\Interfaces\CategoryManagerInterface;
 use App\PortalBundle\Repository\Interfaces\CategoryRepositoryInterface;
 
 class CategoryManager implements CategoryManagerInterface

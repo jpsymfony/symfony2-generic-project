@@ -2,8 +2,8 @@
 namespace App\PortalBundle\Form\Handler\Movie;
 
 use App\PortalBundle\AppPortalEvents;
-use App\PortalBundle\Entity\Manager\HashTagManagerInterface;
-use App\PortalBundle\Entity\Manager\MovieManagerInterface;
+use App\PortalBundle\Entity\Manager\Interfaces\HashTagManagerInterface;
+use App\PortalBundle\Entity\Manager\Interfaces\MovieManagerInterface;
 use App\PortalBundle\Event\MovieEvent;
 use App\PortalBundle\Form\Type\MovieType;
 use App\UserBundle\Security\MovieVoter;

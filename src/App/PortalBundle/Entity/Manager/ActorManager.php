@@ -1,6 +1,7 @@
 <?php
 namespace App\PortalBundle\Entity\Manager;
 
+use App\PortalBundle\Entity\Manager\Interfaces\ActorManagerInterface;
 use App\PortalBundle\Repository\Interfaces\ActorRepositoryInterface;
 
 class ActorManager implements ActorManagerInterface

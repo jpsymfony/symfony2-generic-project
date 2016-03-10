@@ -1,6 +1,7 @@
 <?php
 namespace App\PortalBundle\Entity\Manager;
 
+use App\PortalBundle\Entity\Manager\Interfaces\MovieManagerInterface;
 use App\PortalBundle\Repository\Interfaces\MovieRepositoryInterface;
 
 class MovieManager implements MovieManagerInterface

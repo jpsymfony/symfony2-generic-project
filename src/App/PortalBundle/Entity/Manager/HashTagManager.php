@@ -1,6 +1,7 @@
 <?php
 namespace App\PortalBundle\Entity\Manager;
 
+use App\PortalBundle\Entity\Manager\Interfaces\HashTagManagerInterface;
 use App\PortalBundle\Repository\Interfaces\HashTagRepositoryInterface;
 
 class HashTagManager implements HashTagManagerInterface
