@@ -29,7 +29,7 @@ class RequestPasswordType extends AbstractType
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('identifier');
+        $builder->add('identifier', 'text', array('label' => 'user.reset_password.identifier'));
 
         $builder->addEventListener(
             FormEvents::POST_SUBMIT,
