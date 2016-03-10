@@ -1,6 +1,7 @@
 <?php
 namespace App\PortalBundle\Form\Handler\Actor;
 
+use App\PortalBundle\Entity\Manager\ActorManager;
 use App\PortalBundle\Form\Type\ActorType;
 use App\PortalBundle\Repository\Interfaces\ActorRepositoryInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -17,9 +18,9 @@ class NewActorFormHandlerStrategy extends AbstractActorFormHandlerStrategy
     protected $translator;
 
     /**
-     * @var ActorRepositoryInterface
+     * @var ActorManager
      */
-    protected $actorRepository;
+    protected $actorManager;
 
     /**
      * @var FormFactoryInterface
@@ -35,20 +36,20 @@ class NewActorFormHandlerStrategy extends AbstractActorFormHandlerStrategy
      * Constructor.
      *
      * @param TranslatorInterface $translator Service of translation
-     * @param ActorRepositoryInterface $actorRepository
+     * @param ActorManager $actorManager
      * @param FormFactoryInterface $formFactory
      * @param RouterInterface $router
      */
     public function __construct
     (
         TranslatorInterface $translator,
-        ActorRepositoryInterface $actorRepository,
+        ActorManager $actorManager,
         FormFactoryInterface $formFactory,
         RouterInterface $router
     )
     {
         $this->translator = $translator;
-        $this->actorRepository = $actorRepository;
+        $this->actorManager = $actorManager;
         $this->formFactory = $formFactory;
         $this->router = $router;
     }
@@ -65,7 +66,7 @@ class NewActorFormHandlerStrategy extends AbstractActorFormHandlerStrategy
 
     public function handle(Request $request, Actor $actor)
     {
-        $this->actorRepository->save($actor, true, true);
+        $this->actorManager->save($actor, true, true);
 
         return $this->translator
             ->trans('acteur.ajouter.succes', array(

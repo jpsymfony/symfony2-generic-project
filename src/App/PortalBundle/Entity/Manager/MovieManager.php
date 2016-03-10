@@ -28,4 +28,9 @@ class MovieManager
     {
         return $this->movieRepository->findAllByEntity($result, $MaxResults, $orderby);
     }
+
+    public function save($entity, $persist = false, $flush = true)
+    {
+        return $this->movieRepository->save($entity, $persist, $flush);
+    }
 }

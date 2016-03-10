@@ -21,7 +21,7 @@ services:
         class: %app_portal.new_actor.form.handler.strategy.class%
         arguments:
             - "@translator"
-            - "@app_portal.actor.repository"
+            - "@app_portal.actor.manager"
             - "@form.factory"
             - "@router"
 
@@ -29,7 +29,7 @@ services:
         class: %app_portal.update_actor.form.handler.strategy.class%
         arguments:
             - "@translator"
-            - "@app_portal.actor.repository"
+            - "@app_portal.actor.manager"
             - "@form.factory"
             - "@router"
 
@@ -44,7 +44,7 @@ services:
         class: %app_portal.new_movie.form.handler.strategy.class%
         arguments:
             - "@translator"
-            - "@app_portal.movie.repository"
+            - "@app_portal.movie.manager"
             - "@form.factory"
             - "@router"
             - "@security.token_storage"
@@ -54,7 +54,7 @@ services:
         class: %app_portal.update_movie.form.handler.strategy.class%
         arguments:
             - "@translator"
-            - "@app_portal.movie.repository"
+            - "@app_portal.movie.manager"
             - "@app_portal.hashtag.manager"
             - "@security.authorization_checker"
             - "@form.factory"

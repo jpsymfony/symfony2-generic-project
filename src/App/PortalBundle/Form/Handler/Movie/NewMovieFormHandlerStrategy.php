@@ -2,9 +2,11 @@
 namespace App\PortalBundle\Form\Handler\Movie;
 
 use App\PortalBundle\AppPortalEvents;
+use App\PortalBundle\Entity\Manager\MovieManager;
 use App\PortalBundle\Event\MovieEvent;
 use App\PortalBundle\Form\Type\MovieType;
 use App\PortalBundle\Repository\Interfaces\MovieRepositoryInterface;
+use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -22,9 +24,9 @@ class NewMovieFormHandlerStrategy extends AbstractMovieFormHandlerStrategy
     protected $translator;
 
     /**
-     * @var MovieRepositoryInterface
+     * @var MovieManager
      */
-    protected $movieRepository;
+    protected $movieManager;
 
     /**
      * @var FormFactoryInterface
@@ -50,7 +52,7 @@ class NewMovieFormHandlerStrategy extends AbstractMovieFormHandlerStrategy
      * Constructor.
      *
      * @param TranslatorInterface $translator Service of translation
-     * @param MovieRepositoryInterface $movieRepository
+     * @param MovieManager $movieManager
      * @param FormFactoryInterface $formFactory
      * @param RouterInterface $router
      * @param TokenStorageInterface $securityTokenStorage
@@ -59,7 +61,7 @@ class NewMovieFormHandlerStrategy extends AbstractMovieFormHandlerStrategy
     public function __construct
     (
         TranslatorInterface $translator,
-        MovieRepositoryInterface $movieRepository,
+        MovieManager $movieManager,
         FormFactoryInterface $formFactory,
         RouterInterface $router,
         TokenStorageInterface $securityTokenStorage,
@@ -68,7 +70,7 @@ class NewMovieFormHandlerStrategy extends AbstractMovieFormHandlerStrategy
     )
     {
         $this->translator = $translator;
-        $this->movieRepository = $movieRepository;
+        $this->movieManager = $movieManager;
         $this->formFactory = $formFactory;
         $this->router = $router;
         $this->securityTokenStorage = $securityTokenStorage;
@@ -88,10 +90,10 @@ class NewMovieFormHandlerStrategy extends AbstractMovieFormHandlerStrategy
         return $this->form;
     }
 
-    public function handle(Request $request, Movie $movie)
+    public function handle(Request $request, Movie $movie, ArrayCollection $originalHashTags = null)
     {
         $movie->setAuthor($this->securityTokenStorage->getToken()->getUser());
-        $this->movieRepository->save($movie, true, true);
+        $this->movieManager->save($movie, true, true);
 
         $movieEvent = new MovieEvent($movie);
         $this->dispatcher->dispatch(AppPortalEvents::EVENT_MOVIE_1, $movieEvent);
@@ -101,4 +103,6 @@ class NewMovieFormHandlerStrategy extends AbstractMovieFormHandlerStrategy
                 '%titre%' => $movie->getTitle()
             ));
     }
+
+
 }

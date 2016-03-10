@@ -139,4 +139,4 @@ fos_user:
     user_class: App\BackUserBundle\Entity\User
 
 app_portal:
-    max_hashtag_limit: 2
+    max_hashtag_limit: 5

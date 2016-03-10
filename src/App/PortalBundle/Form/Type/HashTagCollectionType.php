@@ -20,11 +20,17 @@ class HashTagCollectionType extends AbstractType
     {
         $resolver->setDefaults(
             array(
-                'type' => 'app_portal_hashtag',
+                'entry_type' => 'app_portal_hashtag',
                 'allow_add' => true,
                 'allow_delete' => true,
                 'max_hashtag_limit' => $this->configMaxLimitHashTag,
                 'by_reference' => false,
+                'type' => 'goal',
+                'prototype' => true,
+                'delete_empty' => true,
+                'attr' => [
+                    'class' => 'table table-stripped',
+                ],
             )
         );
 
