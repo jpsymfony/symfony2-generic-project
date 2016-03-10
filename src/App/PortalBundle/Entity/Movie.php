@@ -58,13 +58,18 @@ class Movie implements TraitDatetimeInterface, TraitSimpleInterface, TraitEnable
     private $description;
 
     /**
+     * nullable=false to prevent a movie from not having a category
+     * notBlank forces the validation form to raise an exception if no category is selected
+     * no remove annotation otherwise if a category would be deleted, all associated movies would be deleted too
      * @ORM\ManyToOne(targetEntity="Category")
+     * @ORM\JoinColumn(nullable=false)
      * @Assert\NotBlank()
      */
     private $category;
 
     /**
-     * @ORM\ManyToMany(targetEntity="Actor", cascade={"persist", "remove"})
+     * onDelete CASCADE so when an actor is deleted, the association is removed from database
+     * @ORM\ManyToMany(targetEntity="Actor")
      * @ORM\JoinTable(name="movie_actor",
      *      joinColumns={@ORM\JoinColumn(name="movie_id", referencedColumnName="id", onDelete="CASCADE")},
      *      inverseJoinColumns={@ORM\JoinColumn(name="actor_id", referencedColumnName="id", onDelete="CASCADE")}
@@ -73,18 +78,25 @@ class Movie implements TraitDatetimeInterface, TraitSimpleInterface, TraitEnable
     private $actors;
 
     /**
-     * @ORM\OneToMany(targetEntity="HashTag", mappedBy="movie", fetch="EAGER", cascade={"persist"})
+     * persist => when the movie form is submitted, the hashTags are persisted
+     * no remove annotation here because when a hashTag is deleted in a movie form, associated hashTags are removed from database in UpdateMovieFormHandlerStrategy handle method
+     * orphanRemoval=true => when a movie is deleted, associated hashTags are removed from database
+     * @ORM\OneToMany(targetEntity="HashTag", mappedBy="movie", cascade={"persist"}, orphanRemoval=true)
      */
     private $hashTags;
 
     /**
+     * persist => when the movie form is submitted, the image is persisted
+     * remove => if a movie is deleted, the attached image is deleted too
+     * onDelete SET NULL => if the image is removed from database, the image_id field is set to null
      * @ORM\OneToOne(targetEntity="Image", cascade={"persist", "remove"})
-     * @ORM\JoinColumn(name="image_id", referencedColumnName="id",  onDelete="SET NULL", nullable=true)
+     * @ORM\JoinColumn(name="image_id", referencedColumnName="id", onDelete="SET NULL", nullable=true)
      */
     private $image;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\UserBundle\Entity\User", inversedBy="movies", cascade={ "persist"})
+     * no cascade remove annotation otherwise when a movie is deleted, the author is deleted too from database
+     * @ORM\ManyToOne(targetEntity="App\UserBundle\Entity\User", inversedBy="movies")
      */
     private $author;
 
