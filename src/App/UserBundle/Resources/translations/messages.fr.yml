@@ -7,12 +7,14 @@ user:
             password: Mot de passe
             password_forgotten: Mot de passe oublié
     registration:
+            label: Enregistrement
             username: Identifiant
             email: Email
             password: Mot de passe
             confirm: Répéter le mot de passe
             register: Envoyer
     change_password:
+            title: Changement de mot de passe
             old_password: Ancien mot de passe
             new_password: Nouveau mot de passe
             repeat_new_password: Répéter le nouveau mot de passe

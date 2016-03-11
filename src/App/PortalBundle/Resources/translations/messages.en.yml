@@ -42,6 +42,7 @@ film:
     supprime : The movie %title% has successfully been deleted
     dateSortie: Released at
     file: File
+    horaires: Begins at
 
 # Menu
 menu:
