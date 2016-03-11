@@ -42,6 +42,7 @@ film:
       supprime : Le film %title% a bien été supprimé
       dateSortie: Date de sortie
       file: Image
+      horaire: Horaires
 
 # Menu
 menu:

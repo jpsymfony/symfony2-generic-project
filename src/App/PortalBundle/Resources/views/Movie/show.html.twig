@@ -10,8 +10,8 @@
         <p>(mis à jour le {{ movie.updatedAt | localizeddate('medium', 'none')}} à {{ formatTime(movie.updatedAt|date("h:i")) }})</p>
         <div class="movie-metadata">
             <table class="metadata table table-bordered">
-                <tr><th>Séance</th><td> {{ formatSingleDayPart('14-16') }} {{ '5.5'|price }}</td></tr>
-                <tr><th>Release</th><td>{{ movie.releaseAt | date("d/m/Y") }}</td></tr>
+                <tr><th>{{ 'film.horaire' | trans }}</th><td> {{ formatSingleDayPart('14-16') }} {{ '5.5'|price }}</td></tr>
+                <tr><th>{{ 'film.dateSortie' | trans }}</th><td>{{ movie.releaseAt | date("d/m/Y") }}</td></tr>
                 <tr>
                     <th>{{ 'film.categorie'|trans }}</th>
                     <td>{{ movie.category.title }}</td>
