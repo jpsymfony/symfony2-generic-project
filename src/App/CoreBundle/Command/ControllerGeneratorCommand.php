@@ -16,19 +16,19 @@ class ControllerGeneratorCommand extends ContainerAwareCommand
     {
         $this->setName('mywebsite:generate-controller')
             ->setDefinition(array(
-                new InputOption('controller', '', InputOption::VALUE_REQUIRED, 'Le nom du controller a creer'),
-                new InputOption('bundle', '', InputOption::VALUE_REQUIRED, 'Le bundle dans lequel créer le controlleur'),
+                new InputOption('controller', '', InputOption::VALUE_REQUIRED, 'Le nom du contrôler a creer'),
+                new InputOption('bundle', '', InputOption::VALUE_REQUIRED, 'Le bundle dans lequel créer le contrôleur'),
                 new InputOption('basecontroller', '', InputOption::VALUE_REQUIRED, 'S\'il faut ou non heriter du controlleur de base de Symfony2')
             ))
-            ->setDescription('Genere le code de base pour commencer a utiliser un controlleur')
-            ->setHelp('Cette commande vous permet de facilement generer le code necessaire pour commencer a travailler avec un controlleur. N\'hesitez pas a vous en servir quand vous avez besoin d\'en creer un !');
+            ->setDescription('Genere le code de base pour commencer a utiliser un contrôleur')
+            ->setHelp('Cette commande vous permet de facilement generer le code necessaire pour commencer a travailler avec un controlleur.');
 
     }
 
     protected function interact(InputInterface $input, OutputInterface $output)
     {
         // On affiche quelques infos
-        $dialog = $this->getQuestionHelper ();
+        $dialog = $this->getQuestionHelper();
         $output->writeln(array(
             '',
             '      Bienvenue dans le générateur de controleurs',
@@ -52,7 +52,7 @@ class ControllerGeneratorCommand extends ContainerAwareCommand
         $bundleName = $dialog->ask(
             $input,
             $output,
-            new Question ('bundle', $input->getOption('bundle'))
+            new Question ('bundle: ', $input->getOption('bundle'))
         );
 
         // On sauvegarde les paramètres
@@ -76,7 +76,7 @@ class ControllerGeneratorCommand extends ContainerAwareCommand
         $dialog = $this->getQuestionHelper();
 
         if ($input->isInteractive()) {
-            if (!$dialog->ask($input, $output, new Question('Do you confirm generation', 'yes', '?'))) {
+            if (!$dialog->ask($input, $output, new Question('Do you confirm generation? ', 'yes', '?'))) {
                 $output->writeln('<error>Command aborted</error>');
 
                 return 1;
@@ -89,16 +89,16 @@ class ControllerGeneratorCommand extends ContainerAwareCommand
 
         // On recupere les infos sur le bundle nécessaire à la génération du controller
         $kernel = $this->getContainer()->get('kernel');
-        $bundle = $kernel->getBundle ($bundleName);
+        $bundle = $kernel->getBundle($bundleName);
         $namespace = $bundle->getNamespace();
         $path = $bundle->getPath();
-        $target = $path.'/Controller/'.$controller.'Controller.php';
+        $target = $path . '/Controller/' . $controller . 'Controller.php';
 
         // On génère le contenu du controleur
         $twig = $this->getContainer()->get('templating');
 
         $controller_code = $twig->render('controllerCommand/controller.php.twig',
-            array (
+            array(
                 'controller' => $controller,
                 'basecontroller' => $basecontroller,
                 'namespace' => $namespace
@@ -111,7 +111,7 @@ class ControllerGeneratorCommand extends ContainerAwareCommand
         }
         file_put_contents($target, $controller_code);
 
-        $logger= $this->getContainer()->get('logger');
+        $logger = $this->getContainer()->get('logger');
 
         $logger->debug('This is a debug message');
         $logger->info('This is an info message');
