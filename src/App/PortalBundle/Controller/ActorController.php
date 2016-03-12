@@ -36,16 +36,16 @@ class ActorController extends Controller
 
         return array(
             'actors' => $actors,
-            'nbActorsFound' => true,
+            'displayActorsFound' => true,
             'form' => $form->createView()
         );
     }
 
     /**
-     * @Template("@AppPortal/Actor/partials/actors.html.twig", vars={"actors", "nbActorsFound"})
+     * @Template("@AppPortal/Actor/partials/actors.html.twig", vars={"actors", "displayActorsFound"})
      * @ParamConverter("actors", converter="project_collection_converter", options={"manager":"app_portal.actor.manager", "orderby":"birthday"})
      */
-    public function topAction(ArrayCollection $actors, $max = 5, $nbActorsFound = false)
+    public function topAction(ArrayCollection $actors, $max = 5, $displayActorsFound = false)
     {
     }
 
@@ -70,7 +70,7 @@ class ActorController extends Controller
                 '@AppPortal/Actor/partials/actors.html.twig',
                 array(
                     'actors' => $actors,
-                    'nbActorsFound' => true
+                    'displayActorsFound' => true
                 )
             );
         }

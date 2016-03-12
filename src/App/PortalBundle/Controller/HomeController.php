@@ -14,6 +14,6 @@ class HomeController extends Controller
      */
     public function indexAction()
     {
-        return ['nbActorsFound' => false];
+        return ['displayActorsFound' => false];
     }
 }

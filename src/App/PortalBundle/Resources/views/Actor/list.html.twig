@@ -10,7 +10,7 @@
     {{ form(form, { attr: { novalidate: 'novalidate' } }) }}
 <div class="loading"></div>
 <div id="resultats_recherche">
-    {% include '@AppPortal/Actor/partials/actors.html.twig' with {'actors' : actors, 'nbActorsFound': nbActorsFound}  %}
+    {% include '@AppPortal/Actor/partials/actors.html.twig' with {'actors' : actors, 'displayActorsFound': displayActorsFound}  %}
 </div>
 
     {% if is_granted('ROLE_EDITOR') %}

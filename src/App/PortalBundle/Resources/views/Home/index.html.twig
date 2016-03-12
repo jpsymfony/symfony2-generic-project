@@ -7,7 +7,7 @@
 {% block content %}
 
     <h3>{{ 'acteur.top.jeunes'|trans }}</h3>
-    {{ render(controller('AppPortalBundle:Actor:top', {'max': 3, 'nbActorsFound': nbActorsFound})) }}
+    {{ render(controller('AppPortalBundle:Actor:top', {'max': 3, 'displayActorsFound': displayActorsFound})) }}
 
     <h3>{{ 'film.top'|trans }}</h3>
     {{ render(controller('AppPortalBundle:Movie:top', {'max': 3})) }}
