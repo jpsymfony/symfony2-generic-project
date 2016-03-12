@@ -7,10 +7,10 @@
 {% block content %}
     <div class="movie-details">
         <h2 class="movie-title">{{ movie.title }}</h2>
-        <p>(mis à jour le {{ movie.updatedAt | localizeddate('medium', 'none')}} à {{ formatTime(movie.updatedAt|date("h:i")) }})</p>
+        <p>(mis à jour le {{ movie.updatedAt | localizeddate('medium', 'none')}} à {{ movie.updatedAt|date("h:i")|formatTime }})</p>
         <div class="movie-metadata">
             <table class="metadata table table-bordered">
-                <tr><th>{{ 'film.horaire' | trans }}</th><td> {{ formatSingleDayPart('14-16') }} {{ '5.5'|price }}</td></tr>
+                <tr><th>{{ 'film.horaire' | trans }}</th><td> {{ '14-16'|formatSingleDayPart }} {{ '5.5'|price }}</td></tr>
                 <tr><th>{{ 'film.dateSortie' | trans }}</th><td>{{ movie.releaseAt | date("d/m/Y") }}</td></tr>
                 <tr>
                     <th>{{ 'film.categorie'|trans }}</th>

@@ -10,18 +10,12 @@ class I18nExtension extends \Twig_Extension
         'fr'    => 'h',
     );
 
-    public function getFunctions()
-    {
-        return array(
-            new \Twig_SimpleFunction('formatTime', array($this ,'formatTime')),
-            new \Twig_SimpleFunction('formatSingleDayPart', array($this ,'formatSingleDayPart')),
-        );
-    }
-
     public function getFilters()
     {
         return array(
+            new \Twig_SimpleFilter('formatTime', array($this, 'formatTime')),
             new \Twig_SimpleFilter('price', array($this, 'priceFilter')),
+            new \Twig_SimpleFilter('formatSingleDayPart', array($this, 'formatSingleDayPart')),
         );
     }
 
