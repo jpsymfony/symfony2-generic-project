@@ -4,6 +4,7 @@ namespace App\UserBundle\EventListener;
 
 use App\CoreBundle\Services\EntityManagementGuesser;
 use App\PortalBundle\Controller\ContactController;
+use Avalanche\Bundle\ImagineBundle\Controller\ImagineController;
 use Symfony\Bundle\AsseticBundle\Controller\AsseticController;
 use Symfony\Bundle\FrameworkBundle\Controller\RedirectController;
 use Symfony\Bundle\WebProfilerBundle\Controller\ProfilerController;
@@ -62,6 +63,7 @@ class KernelController
             && !$controllers[0] instanceof RedirectController
             && !$controllers[0] instanceof ExceptionController
             && !$controllers[0] instanceof AsseticController
+            && !$controllers[0] instanceof ImagineController
         ) {
             $this->entityManagementGuesser->inizialize($controllers[0]);
             $bundle = $this->entityManagementGuesser->getBundleShortName();

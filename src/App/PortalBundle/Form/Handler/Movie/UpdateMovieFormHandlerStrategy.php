@@ -3,7 +3,6 @@ namespace App\PortalBundle\Form\Handler\Movie;
 
 use App\PortalBundle\AppPortalEvents;
 use App\PortalBundle\Entity\Manager\Interfaces\HashTagManagerInterface;
-use App\PortalBundle\Entity\Manager\Interfaces\MovieManagerInterface;
 use App\PortalBundle\Event\MovieEvent;
 use App\PortalBundle\Form\Type\MovieType;
 use App\UserBundle\Security\MovieVoter;
@@ -14,21 +13,10 @@ use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
-use Symfony\Component\Translation\TranslatorInterface;
 use App\PortalBundle\Entity\Movie;
 
 class UpdateMovieFormHandlerStrategy extends AbstractMovieFormHandlerStrategy
 {
-    /**
-     * @var TranslatorInterface
-     */
-    protected $translator;
-
-    /**
-     * @var MovieManagerInterface
-     */
-    protected $movieManager;
-
     /**
      * @var HashTagManagerInterface
      */
@@ -42,12 +30,12 @@ class UpdateMovieFormHandlerStrategy extends AbstractMovieFormHandlerStrategy
     /**
      * @var FormFactoryInterface
      */
-    private $formFactory;
+    protected $formFactory;
 
     /**
      * @var RouterInterface
      */
-    private $router;
+    protected $router;
 
     /**
      * @var EventDispatcherInterface
@@ -55,33 +43,22 @@ class UpdateMovieFormHandlerStrategy extends AbstractMovieFormHandlerStrategy
     protected $dispatcher;
 
     /**
+
      * Constructor.
      *
-     * @param TranslatorInterface $translator Service of translation
-     * @param MovieManagerInterface $movieManager
      * @param HashTagManagerInterface $hashTagManager
      * @param AuthorizationCheckerInterface $authorizationChecker
-     * @param FormFactoryInterface $formFactory
-     * @param RouterInterface $router
      * @param EventDispatcherInterface $dispatcher
      */
     public function __construct
     (
-        TranslatorInterface $translator,
-        MovieManagerInterface $movieManager,
         HashTagManagerInterface $hashTagManager,
         AuthorizationCheckerInterface $authorizationChecker,
-        FormFactoryInterface $formFactory,
-        RouterInterface $router,
         EventDispatcherInterface $dispatcher
     )
     {
-        $this->translator = $translator;
-        $this->movieManager = $movieManager;
         $this->hashTagManager = $hashTagManager;
         $this->authorizationChecker = $authorizationChecker;
-        $this->formFactory = $formFactory;
-        $this->router = $router;
         $this->dispatcher = $dispatcher;
     }
 

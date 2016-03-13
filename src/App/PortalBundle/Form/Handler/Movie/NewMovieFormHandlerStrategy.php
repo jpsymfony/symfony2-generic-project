@@ -2,41 +2,18 @@
 namespace App\PortalBundle\Form\Handler\Movie;
 
 use App\PortalBundle\AppPortalEvents;
-use App\PortalBundle\Entity\Manager\Interfaces\MovieManagerInterface;
 use App\PortalBundle\Event\MovieEvent;
 use App\PortalBundle\Form\Type\MovieType;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
-use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\HttpFoundation\Request;
 use App\PortalBundle\Entity\Movie;
 use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
-use Symfony\Component\Translation\TranslatorInterface;
 
 class NewMovieFormHandlerStrategy extends AbstractMovieFormHandlerStrategy
 {
-    /**
-     * @var TranslatorInterface
-     */
-    protected $translator;
-
-    /**
-     * @var MovieManagerInterface
-     */
-    protected $movieManager;
-
-    /**
-     * @var FormFactoryInterface
-     */
-    private $formFactory;
-
-    /**
-     * @var RouterInterface $router
-     */
-    private $router;
-
     /**
      * @var TokenStorageInterface
      */
@@ -50,28 +27,16 @@ class NewMovieFormHandlerStrategy extends AbstractMovieFormHandlerStrategy
     /**
      * Constructor.
      *
-     * @param TranslatorInterface $translator Service of translation
-     * @param MovieManagerInterface $movieManager
-     * @param FormFactoryInterface $formFactory
-     * @param RouterInterface $router
      * @param TokenStorageInterface $securityTokenStorage
      * @param EventDispatcherInterface $dispatcher
      */
     public function __construct
     (
-        TranslatorInterface $translator,
-        MovieManagerInterface $movieManager,
-        FormFactoryInterface $formFactory,
-        RouterInterface $router,
         TokenStorageInterface $securityTokenStorage,
         EventDispatcherInterface $dispatcher
 
     )
     {
-        $this->translator = $translator;
-        $this->movieManager = $movieManager;
-        $this->formFactory = $formFactory;
-        $this->router = $router;
         $this->securityTokenStorage = $securityTokenStorage;
         $this->dispatcher = $dispatcher;
     }

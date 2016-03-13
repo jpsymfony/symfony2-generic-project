@@ -3,6 +3,7 @@ parameters:
     app_portal.new_actor.form.handler.strategy.class: App\PortalBundle\Form\Handler\Actor\NewActorFormHandlerStrategy
     app_portal.update_actor.form.handler.strategy.class: App\PortalBundle\Form\Handler\Actor\UpdateActorFormHandlerStrategy
 
+    app_portal.abstract_movie.form.handler.strategy.class: App\PortalBundle\Form\Handler\Movie\AbstractMovieFormHandlerStrategy
     app_portal.movie.form.handler.class: App\PortalBundle\Form\Handler\Movie\MovieFormHandler
     app_portal.new_movie.form.handler.strategy.class: App\PortalBundle\Form\Handler\Movie\NewMovieFormHandlerStrategy
     app_portal.update_movie.form.handler.strategy.class: App\PortalBundle\Form\Handler\Movie\UpdateMovieFormHandlerStrategy
@@ -33,6 +34,15 @@ services:
             - "@form.factory"
             - "@router"
 
+    app_portal.abstract_movie.form.handler.strategy:
+        abstract:  true
+        class: %app_portal.abstract_movie.form.handler.strategy.class%
+        calls:
+           - [setMovieManager, ['@app_portal.movie.manager']]
+           - [setFormFactory, ['@form.factory']]
+           - [setRouter, ['@router']]
+           - [setTranslator, ['@translator']]
+
     app_portal.movie.form.handler:
         class: %app_portal.movie.form.handler.class%
         calls:
@@ -42,23 +52,17 @@ services:
 
     app_portal.new_movie.form.handler.strategy:
         class: %app_portal.new_movie.form.handler.strategy.class%
+        parent: app_portal.abstract_movie.form.handler.strategy
         arguments:
-            - "@translator"
-            - "@app_portal.movie.manager"
-            - "@form.factory"
-            - "@router"
             - "@security.token_storage"
             - "@event_dispatcher"
 
     app_portal.update_movie.form.handler.strategy:
         class: %app_portal.update_movie.form.handler.strategy.class%
+        parent: app_portal.abstract_movie.form.handler.strategy
         arguments:
-            - "@translator"
-            - "@app_portal.movie.manager"
             - "@app_portal.hashtag.manager"
             - "@security.authorization_checker"
-            - "@form.factory"
-            - "@router"
             - "@event_dispatcher"
 
     app_portal.request_contact.handler:
