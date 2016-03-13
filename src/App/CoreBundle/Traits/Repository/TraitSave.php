@@ -2,14 +2,6 @@
 
 namespace App\CoreBundle\Traits\Repository;
 
-/**
- * Trait Repository
- *
- * @category   Generalisation
- * @package    Trait
- * @subpackage Repository
- * @abstract
- */
 trait TraitSave
 {
     /**

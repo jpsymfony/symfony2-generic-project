@@ -5,14 +5,6 @@ namespace App\CoreBundle\Traits\Repository;
 use Doctrine\ORM\Query;
 use Symfony\Component\Translation\Exception\NotFoundResourceException;
 
-/**
- * Trait Repository
- *
- * @category   Generalisation
- * @package    Trait
- * @subpackage Repository
- * @abstract
- */
 trait TraitRepository
 {
     /**
