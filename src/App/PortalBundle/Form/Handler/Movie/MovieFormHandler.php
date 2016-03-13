@@ -61,7 +61,7 @@ class MovieFormHandler
     /**
      * @param CategoryManagerInterface $categoryManager
      */
-    public function setCategoryManager($categoryManager)
+    public function setCategoryManager(CategoryManagerInterface $categoryManager)
     {
         $this->categoryManager = $categoryManager;
     }
@@ -69,7 +69,7 @@ class MovieFormHandler
     /**
      * @param ActorManagerInterface $actorManager
      */
-    public function setActorManager($actorManager)
+    public function setActorManager(ActorManagerInterface $actorManager)
     {
         $this->actorManager = $actorManager;
     }
@@ -77,7 +77,7 @@ class MovieFormHandler
     /**
      * @param HashTagManagerInterface $hashTagManager
      */
-    public function setHashTagManager($hashTagManager)
+    public function setHashTagManager(HashTagManagerInterface $hashTagManager)
     {
         $this->hashTagManager = $hashTagManager;
     }
