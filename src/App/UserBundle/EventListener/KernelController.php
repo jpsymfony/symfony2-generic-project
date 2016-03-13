@@ -2,11 +2,11 @@
 
 namespace App\UserBundle\EventListener;
 
+use App\CoreBundle\Services\EntityManagementGuesser;
 use App\PortalBundle\Controller\ContactController;
-use App\PortalBundle\Controller\HomeController;
 use Symfony\Bundle\AsseticBundle\Controller\AsseticController;
 use Symfony\Bundle\FrameworkBundle\Controller\RedirectController;
-use Symfony\Bundle\FrameworkBundle\Tests\Functional\Bundle\TestBundle\Controller\ProfilerController;
+use Symfony\Bundle\WebProfilerBundle\Controller\ProfilerController;
 use Symfony\Bundle\TwigBundle\Controller\ExceptionController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpKernel\Event\FilterControllerEvent;
@@ -31,62 +31,64 @@ class KernelController
      */
     private $tokenStorage;
 
+    /**
+     * @var EntityManagementGuesser $entityManagementGuesser
+     */
+    private $entityManagementGuesser;
+
     public function __construct(
         AuthorizationChecker $authorizationChecker,
         TokenStorageInterface $tokenStorage,
-        RouterInterface $router
+        RouterInterface $router,
+        EntityManagementGuesser $entityManagementGuesser
     )
     {
         $this->authorizationChecker = $authorizationChecker;
         $this->tokenStorage = $tokenStorage;
         $this->router = $router;
+        $this->entityManagementGuesser = $entityManagementGuesser;
     }
 
     public function onKernelController(FilterControllerEvent $event)
     {
-        $controllerArray = $event->getController();
+        $controllers = $event->getController();
 
-        if (!is_array($controllerArray)) {
+        if (!is_array($controllers)) {
             return;
         }
 
-        if (!$controllerArray[0] instanceof ProfilerController
-            && !$controllerArray[0] instanceof RedirectController
-            && !$controllerArray[0] instanceof ExceptionController
-            && !$controllerArray[0] instanceof AsseticController
-            && method_exists($controllerArray[0],'getRequest')) {
+        if (
+            !$controllers[0] instanceof ProfilerController
+            && !$controllers[0] instanceof RedirectController
+            && !$controllers[0] instanceof ExceptionController
+            && !$controllers[0] instanceof AsseticController
+        ) {
+            $this->entityManagementGuesser->inizialize($controllers[0]);
+            $bundle = $this->entityManagementGuesser->getBundleShortName();
 
-            $controller = $controllerArray[0]->getRequest()->attributes->get('_controller');
-            preg_match("/\\\\(.*)Bundle\\\\/", $controller, $matches);
-
-            $bundle = trim(current($matches), "\\");
-
-            if ('PortalBundle' == $bundle) {
-                if (
-                !$controllerArray[0] instanceof HomeController
-                    && !$controllerArray[0] instanceof ContactController
-                ) {
-                    $user  = $this->tokenStorage->getToken()->getUser();
-
-                    if (!is_object($user)) {
-                        return;
-                    }
-
-                    $roles = $user->getRoles();
-                    $role  = $roles[0];
-
-                    if ('ROLE_VISITOR' === $role) {
-                        $cgvRead = $user->isCgvRead();
-                        if (!$cgvRead) {
-                            $redirectRoute = 'sales_conditions';
-                            $redirectUrl = $this->router->generate($redirectRoute);
-                            $event->setController(function() use ($redirectUrl) {
-                                return new RedirectResponse($redirectUrl);
-                            });
-                        }
-                    }
-                } else {
+            if ('AppPortalBundle' == $bundle) {
+                if ($controllers[0] instanceof ContactController) {
                     return;
+                }
+
+                $user  = $this->tokenStorage->getToken()->getUser();
+
+                if (!is_object($user)) {
+                    return;
+                }
+
+                $roles = $user->getRoles();
+                $role  = $roles[0];
+
+                if ('ROLE_VISITOR' === $role) {
+                    $cgvRead = $user->isCgvRead();
+                    if (!$cgvRead) {
+                        $redirectRoute = 'sales_conditions';
+                        $redirectUrl = $this->router->generate($redirectRoute);
+                        $event->setController(function() use ($redirectUrl) {
+                            return new RedirectResponse($redirectUrl);
+                        });
+                    }
                 }
             }
         }

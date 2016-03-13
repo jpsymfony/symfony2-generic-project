@@ -6,10 +6,9 @@
     
     <services>
         <service id="app_user.repository"
-                 class="App\UserBundle\Repository\UserRepository"
-                 factory-service="doctrine"
-                 factory-method="getRepository" lazy="true">
-            <argument>App\UserBundle\Entity\User</argument>
+                 class="App\UserBundle\Repository\UserRepository" lazy="true">
+                <factory service="doctrine.orm.default_entity_manager" method="getRepository" />
+                <argument>App\UserBundle\Entity\User</argument>
         </service>
     </services>
 </container>

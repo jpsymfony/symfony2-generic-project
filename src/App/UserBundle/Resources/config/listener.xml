@@ -32,10 +32,10 @@
         </service>
 
         <service id="app_user.kernel_exception"
-                 class="App\UserBundle\EventListener\KernelException" scope="request">
+                 class="App\UserBundle\EventListener\KernelException">
             <argument type="service" id="router"/>
             <argument type="service" id="session"/>
-            <argument type="service" id="request"/>
+            <argument type="service" id="request" strict="false"/>
             <tag name="kernel.event_listener" event="kernel.exception" />
         </service>
 
@@ -43,6 +43,7 @@
             <argument type="service" id="security.authorization_checker"/>
             <argument type="service" id="security.token_storage"/>
             <argument type="service" id="router"/>
+            <argument type="service" id="app_core.entity_management_guesser"/>
             <tag name="kernel.event_listener" event="kernel.controller" method="onKernelController" />
         </service>
     </services>
