@@ -17,6 +17,15 @@ parameters:
 services:
     app_portal.actor.form.handler:
         class: %app_portal.actor.form.handler.class%
+        
+    app_portal.abstract_movie.form.handler.strategy:
+        abstract:  true
+        class: %app_portal.abstract_movie.form.handler.strategy.class%
+        calls:
+           - [setMovieManager, ['@app_portal.movie.manager']]
+           - [setFormFactory, ['@form.factory']]
+           - [setRouter, ['@router']]
+           - [setTranslator, ['@translator']]
 
     app_portal.new_actor.form.handler.strategy:
         class: %app_portal.new_actor.form.handler.strategy.class%
@@ -33,15 +42,6 @@ services:
             - "@app_portal.actor.manager"
             - "@form.factory"
             - "@router"
-
-    app_portal.abstract_movie.form.handler.strategy:
-        abstract:  true
-        class: %app_portal.abstract_movie.form.handler.strategy.class%
-        calls:
-           - [setMovieManager, ['@app_portal.movie.manager']]
-           - [setFormFactory, ['@form.factory']]
-           - [setRouter, ['@router']]
-           - [setTranslator, ['@translator']]
 
     app_portal.movie.form.handler:
         class: %app_portal.movie.form.handler.class%
