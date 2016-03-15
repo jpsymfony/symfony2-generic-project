@@ -19,10 +19,10 @@
 			<td>{{ a.birthday|date('d/m/Y') }}</td>
 			<td>{{ a.sex }}</td>
 			{% if is_granted('ROLE_EDITOR') %}
-				<td><a href="{{ path('actor_edit', { 'id': a.id }) }}">{{ 'modifier'|trans }}</a></td>
+				<td><a href="{{ path('actor_edit', { 'id': a.id }) }}">{{ 'modifier' | trans({}, 'divers') }}</a></td>
 			{% endif %}
 			{% if is_granted('ROLE_ADMIN') %}
-				<td><a href="{{ path('actor_delete', { 'id': a.id }) }}">{{ 'supprimer'|trans }}</a></td>
+				<td><a href="{{ path('actor_delete', { 'id': a.id }) }}">{{ 'supprimer' | trans({}, 'divers') }}</a></td>
 			{% endif %}
 		{% else %}
 			<tr>

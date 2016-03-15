@@ -3,8 +3,8 @@
     {{ form_start(form, { attr: { novalidate: 'novalidate' } }) }}
     {{ form_widget(form) }}
     <div style="text-align: center">
-        <button type="submit" class="btn btn-primary btn-lg">{{ 'filtrer'| trans }}</button>
-        <input type="reset" class="btn btn-warning btn-lg" value="{{ 'reinitialiser'| trans }}" onclick="window.location.href='{{ path('movie_list') }}'"/>
+        <button type="submit" class="btn btn-primary btn-lg">{{ 'filtrer' | trans({}, 'divers') }}</button>
+        <input type="reset" class="btn btn-warning btn-lg" value="{{ 'reinitialiser' | trans({}, 'divers') }}" onclick="window.location.href='{{ path('movie_list') }}'"/>
     </div>
 <hr>
         {{ form_end(form) }}

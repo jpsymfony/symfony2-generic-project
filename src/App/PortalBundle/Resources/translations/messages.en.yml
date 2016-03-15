@@ -56,17 +56,6 @@ menu:
     changement_password: Password Changement
     choisir_langue: Choose a language
 
-# Divers
-voir: View
-modifier: Edit
-supprimer: Delete
-valider: Save
-motcle: "Keyword :"
-rechercher: Search
-copyright: Copyright
-filtrer: Search
-reinitialiser: Reset
-
 contact:
     suggestion_newsletter: Do you have some extra information you wished to tell us ? For instance reduced mobility, <br/> hearing problems or sight difficulties in sitting position...
     center_discover: How did you find our website ?

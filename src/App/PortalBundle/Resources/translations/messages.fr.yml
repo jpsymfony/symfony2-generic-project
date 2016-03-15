@@ -56,17 +56,6 @@ menu:
       changement_password: Changement de mot de passe
       choisir_langue: Choisir la langue
 
-# Divers
-voir: Voir
-modifier: Modifier
-supprimer: Supprimer
-valider: Valider
-motcle: "Mot-clé :"
-rechercher: Rechercher
-copyright: Tous droits réservés
-filtrer: Filtrer
-reinitialiser: Reinitialiser
-
 contact:
     suggestion_newsletter: Avez-vous des compléments d'informations dont vous voudriez nous faire part ? Par exemple mobilité réduite,<br/>problèmes d'audition ou de vue, difficultés en station assise...
     center_discover: Comment avez-vous connu notre site ?
