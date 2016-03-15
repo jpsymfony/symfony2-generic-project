@@ -91,7 +91,7 @@ class MovieController extends Controller
             throw $this->createAccessDeniedException('You cannot access this page!');
         }
         $this->container->get('app_portal.movie.manager')->remove($movie);
-        $this->addFlash('success', $translated = $this->get('translator')->trans('film.supprime', ['%title%' => $movie->getTitle()]));
+        $this->addFlash('success', $this->get('translator')->trans('film.supprime', ['%title%' => $movie->getTitle()]));
 
         return new RedirectResponse($this->container->get('router')->generate('movie_list'));
     }
