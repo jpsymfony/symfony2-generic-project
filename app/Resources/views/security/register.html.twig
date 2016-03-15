@@ -8,5 +8,5 @@
     <div style="text-align: center">
         <h1>{{ 'user.registration.label' | trans }}</h1>
     </div>
-    {{ form(form) }}
+    {{ form(form, { attr: { novalidate: 'novalidate' } }) }}
 {% endblock %}

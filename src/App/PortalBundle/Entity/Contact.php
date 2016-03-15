@@ -14,7 +14,7 @@ class Contact
      * @var string
      *
      * @ORM\Column(name="firstName", type="string", length=255, unique=false)
-     * @Assert\NotBlank
+     * @Assert\NotBlank(message="contact.firstname.notblank")
      */
     private $firstName;
 
@@ -22,7 +22,7 @@ class Contact
      * @var string
      *
      * @ORM\Column(name="lastName", type="string", length=255, unique=false)
-     * @Assert\NotBlank
+     * @Assert\NotBlank(message="contact.lastname.notblank")
      */
     private $lastName;
 
@@ -37,7 +37,7 @@ class Contact
      * @var string
      *
      * @ORM\Column(name="email", type="string", length=255, unique=false)
-     * @Assert\NotBlank
+     * @Assert\NotBlank(message="contact.email.notblank")
      * @Assert\Email()
      * @CoreAssert\EmailBlackList()
      */

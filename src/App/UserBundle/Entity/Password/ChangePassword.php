@@ -21,7 +21,7 @@ class ChangePassword
 
     /**
      * @Assert\NotBlank
-     * @Assert\Length(min=8)
+     * @Assert\Length(min=8, message = "change_password.old_password.minlength")
      */
     private $oldPassword;
 

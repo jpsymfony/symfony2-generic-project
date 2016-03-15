@@ -20,12 +20,12 @@ class Registration
 
     /**
      * @Assert\NotBlank()
-     * @Assert\Length(min=8)
+     * @Assert\Length(min=8, minMessage = "registration.password.minlength")
      */
     private $password;
 
     /**
-     * @Assert\NotBlank()
+     * @Assert\NotBlank(message = "registration.email.notblank")
      * @Assert\Email()
      * @CoreAssert\UniqueAttribute(
      *      repository="App\UserBundle\Entity\User",

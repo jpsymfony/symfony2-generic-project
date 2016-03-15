@@ -25,7 +25,7 @@ class ContactType extends AbstractType
             ->add('firstName', 'text', array('required' => true, 'label' => 'contact.first_name'))
             ->add('lastName', 'text', array('required' => true, 'label' => 'contact.last_name'))
             ->add('cellphone', 'text', array('label' => 'contact.phone'))
-            ->add('email', 'email', array('required' => true))
+            ->add('email', 'email', array('required' => true, 'label' => 'contact.email'))
             ->add('additionnalInformation', 'textarea', array('label' => 'contact.additional_information'))
             ->add('knowledge', 'choice', array(
                 'choices'     => array(
