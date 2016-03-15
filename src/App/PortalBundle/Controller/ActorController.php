@@ -121,7 +121,7 @@ class ActorController extends Controller
             throw $this->createAccessDeniedException('You cannot access this page!');
         }
         $this->container->get('app_portal.actor.manager')->remove($actor);
-        $this->addFlash('success', $translated = $this->get('translator')->trans('acteur.supprime', ['%actor%' => $actor]));
+        $this->addFlash('success', $this->get('translator')->trans('acteur.supprime', ['%actor%' => $actor]));
 
         return new RedirectResponse($this->container->get('router')->generate('actors_list'));
     }
