@@ -9,7 +9,7 @@ parameters:
     locale: fr
 
 framework:
-    esi: { enabled: true } # Pour utiliser les tags ESI dans les templates Twig
+    #esi: ~ # Pour utiliser les tags ESI dans les templates Twig
     translator:      { fallbacks: ["%locale%"] }
     secret:          "%secret%"
     router:

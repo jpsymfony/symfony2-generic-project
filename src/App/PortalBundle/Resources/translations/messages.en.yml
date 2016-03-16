@@ -1,21 +1,21 @@
 # Acteur
-acteur: 
-    label: Actor
-    nom: Last name
-    prenom: First name
-    dateNaissance: Date of birth
-    sexe: Gender
-    liste: Actors list
-    trouve: %count% actor found|]1,+Inf]%count% actors found
-    liste.retour: Back to actors list
-    ajouter: Add an actor
-    modifier: Edit actor %prenom% %nom%
-    ajouter.succes: The actor %prenom% %nom% has successfully been added !
-    modifier.succes: The actor %prenom% %nom% has successfully been updated !
-    aucun: No actor found
-    top.jeunes: Top youngest actors
-    chercher: Search
-    supprime: The actor %actor% has successfully been deleted
+acteur:
+      label: Actor
+      nom: Last Name
+      prenom: First Name
+      dateNaissance: Birthday
+      sexe: Gender
+      liste: Actors list
+      trouve: %count% actor found|]1,+Inf]%count% actors found
+      liste.retour: Back to actors list
+      ajouter: Add an actor
+      modifier: Edit actor %prenom% %nom%
+      ajouter.succes: The actor %prenom% %nom% has successfully been added !
+      modifier.succes: The actor %prenom% %nom% has successfully been updated !
+      aucun: No actor found
+      top.jeunes: Top youngest actors
+      chercher: Search
+      supprime: The actor %actor% has successfully been deleted
 
 # Film
 film: 
