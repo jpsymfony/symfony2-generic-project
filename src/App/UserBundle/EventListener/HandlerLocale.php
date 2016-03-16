@@ -1,5 +1,5 @@
 <?php
-namespace App\UserBundle\Event;
+namespace App\UserBundle\EventListener;
 
 use Symfony\Component\HttpKernel\Event\GetResponseEvent;
 use Symfony\Component\HttpKernel\HttpKernel;
@@ -63,29 +63,23 @@ class HandlerLocale
         }
         $this->request = $event->getRequest($event);
 
-        // we set locale
-        $locale = $this->request->cookies->has('_locale');
+        $islocale = $this->request->cookies->has('_locale');
         $localevalue = $this->request->cookies->get('_locale');
-        $is_switch_language_browser_authorized = $this->switch_language_authorized;
+        $isSwitchLanguageBrowserAuthorized = $this->switch_language_authorized;
         $all_locales = $this->all_locales;
         // Sets the user local value.
-        if ($is_switch_language_browser_authorized && !$locale) {
+        if ($isSwitchLanguageBrowserAuthorized && !$islocale) {
             $lang_value = $this->request->getPreferredLanguage();
             if (in_array($lang_value, $all_locales)) {
                 $this->request->setLocale($lang_value);
-                $_GET['_locale'] = $lang_value;
-
                 return;
             }
         }
-        if ($locale && !empty($localevalue)) {
-            $this->request->attributes->set('_locale', $localevalue);
+
+        if ($islocale && !empty($localevalue)) {
             $this->request->setLocale($localevalue);
-            $_GET['_locale'] = $localevalue;
         } else {
-            $this->request->attributes->set('_locale', $this->defaultLocale);
             $this->request->setLocale($this->defaultLocale);
-            $_GET['_locale'] = $this->defaultLocale;
         }
     }
 }
