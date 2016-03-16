@@ -29,22 +29,22 @@ class HandlerLocale
      */
     protected $request;
 
-    protected $switch_language_authorized;
+    protected $switchLanguageAuthorized;
 
-    protected $all_locales;
+    protected $allLocales;
 
     /**
      * Constructor.
      *
      * @param string $defaultLocale Locale value
-     * @param $switch_language_authorized
-     * @param $all_locales
+     * @param $switchLanguageAuthorized
+     * @param $allLocales
      */
-    public function __construct($defaultLocale = 'fr', $switch_language_authorized, $all_locales)
+    public function __construct($defaultLocale = 'fr', $switchLanguageAuthorized, $allLocales)
     {
         $this->defaultLocale = $defaultLocale;
-        $this->switch_language_authorized = $switch_language_authorized;
-        $this->all_locales = $all_locales;
+        $this->switchLanguageAuthorized = $switchLanguageAuthorized;
+        $this->allLocales = $allLocales;
     }
 
     /**
@@ -65,20 +65,21 @@ class HandlerLocale
 
         $islocale = $this->request->cookies->has('_locale');
         $localevalue = $this->request->cookies->get('_locale');
-        $isSwitchLanguageBrowserAuthorized = $this->switch_language_authorized;
-        $all_locales = $this->all_locales;
+        $isSwitchLanguageBrowserAuthorized = $this->switchLanguageAuthorized;
+        $allLocales = $this->allLocales;
         // Sets the user local value.
         if ($isSwitchLanguageBrowserAuthorized && !$islocale) {
-            $lang_value = $this->request->getPreferredLanguage();
-            if (in_array($lang_value, $all_locales)) {
-                $this->request->setLocale($lang_value);
+            $langValue = $this->request->getPreferredLanguage();
+            if (in_array($langValue, $allLocales)) {
+                $this->request->setLocale($langValue);
                 return;
             }
         }
-
         if ($islocale && !empty($localevalue)) {
+            $this->request->attributes->set('_locale', $localevalue); // for _locale routing parameter
             $this->request->setLocale($localevalue);
         } else {
+            $this->request->attributes->set('_locale', $this->defaultLocale); // for _locale routing parameter
             $this->request->setLocale($this->defaultLocale);
         }
     }
