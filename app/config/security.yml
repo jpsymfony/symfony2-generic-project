@@ -33,11 +33,12 @@ security:
             logout:
                 path:        /back/logout
                 target:      /back
+                invalidate_session: false
             anonymous:    ~
             remember_me:
                 key:      "%secret%"
                 lifetime: 31536000 # 365 jours en secondes
-                path:     /
+                path:     /back
                 domain:   ~ # Prend la valeur par défaut du domaine courant depuis $_SERVER
 
         fo:
@@ -47,6 +48,10 @@ security:
             # but the firewall does not require login on every page
             # denying access is done in access_control or in your controllers
             anonymous: true
+
+            # allows a role to be able to switch
+            # http://symfony.com/doc/2.8/cookbook/security/impersonating_user.html
+            switch_user: { role: ROLE_SUPER_ADMIN, parameter: _switch_user }
 
             # This allows the user to login by submitting a username and password
             # Reference: http://symfony.com/doc/current/cookbook/security/form_login_setup.html
