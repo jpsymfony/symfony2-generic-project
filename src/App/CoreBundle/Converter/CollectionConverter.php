@@ -81,8 +81,7 @@ class CollectionConverter implements \Sensio\Bundle\FrameworkExtraBundle\Request
         if (!($collection instanceof ArrayCollection)) {
             throw new NotFoundHttpException(sprintf('%s objects not found.', $name));
         }
- 
-        // Map found village to the route's parameter
+
         $request->attributes->set($name, $collection);
     }
 }
