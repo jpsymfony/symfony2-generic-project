@@ -1,5 +1,5 @@
 services:
-    kernel.listener.console_exception_dispatch:
+    kernel.listener.console_exception:
             class: App\CoreBundle\EventListener\ConsoleExceptionListener
             arguments:
                 logger: '@logger'
