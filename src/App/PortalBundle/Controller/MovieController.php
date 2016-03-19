@@ -38,7 +38,7 @@ class MovieController extends Controller
      * @Route("/{id}/show", name="movie_show")
      * @ParamConverter("movie", class="AppPortalBundle:Movie")
      * @Security("has_role('ROLE_VISITOR')")
-     * @Cache(lastModified="movie.getUpdatedAt()")
+     * @Cache(lastModified="movie.getUpdatedAt()", expires="+24 hours", maxage=600, smaxage=600)
      */
     public function showAction(Movie $movie)
     {
