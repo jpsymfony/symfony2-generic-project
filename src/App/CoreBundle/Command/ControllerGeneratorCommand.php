@@ -7,6 +7,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Helper\QuestionHelper;
 use Symfony\Component\Console\Question\ChoiceQuestion;
+use Symfony\Component\Console\Question\ConfirmationQuestion;
 use Symfony\Component\Console\Question\Question;
 
 
@@ -21,7 +22,7 @@ class ControllerGeneratorCommand extends ContainerAwareCommand
             ->setDefinition(array(
                 new InputOption('controller', null, InputOption::VALUE_REQUIRED, 'Le nom du contrôler à créer'),
                 new InputOption('bundle', null, InputOption::VALUE_REQUIRED, 'Le bundle dans lequel créer le contrôleur'),
-                new InputOption('baseController', null, InputOption::VALUE_OPTIONAL, 'S\'il faut ou non heriter du controlleur de base de Symfony2')
+                new InputOption('baseController', null, InputOption::VALUE_REQUIRED, 'S\'il faut ou non heriter du controlleur de base de Symfony2')
             ))
             ->setDescription('Genere le code de base pour commencer a utiliser un contrôleur')
             ->setHelp('Cette commande vous permet de facilement generer le code necessaire pour commencer a travailler avec un controlleur.');
@@ -91,13 +92,13 @@ class ControllerGeneratorCommand extends ContainerAwareCommand
     {
         $dialog = $this->getHelper('question');
 
-        if ($input->isInteractive()) {
-            if (!$dialog->ask($input, $output, new Question('Do you confirm generation(yes) ? ', 'yes'))) {
-                $output->writeln('<error>Command aborted</error>');
+        $question = new ConfirmationQuestion('Do you confirm generation(yes)?', true);
 
-                return 1;
-            }
+        if (!$dialog->ask($input, $output, $question)) {
+            $output->writeln('<error>Command aborted</error>');
+            return;
         }
+
         // On recupere les options
         $controller = $input->getOption('controller');
         $baseController = $input->getOption('baseController');
