@@ -6,19 +6,22 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Helper\QuestionHelper;
+use Symfony\Component\Console\Question\ChoiceQuestion;
 use Symfony\Component\Console\Question\Question;
 
 
 class ControllerGeneratorCommand extends ContainerAwareCommand
 {
 
+    private $bundles = ['AppAdminBundle', 'AppBackUserBundle', 'AppCoreBundle', 'AppPortalBundle', 'AppUserBundle'];
+
     protected function configure()
     {
         $this->setName('mywebsite:generate-controller')
             ->setDefinition(array(
-                new InputOption('controller', '', InputOption::VALUE_REQUIRED, 'Le nom du contrôler a creer'),
-                new InputOption('bundle', '', InputOption::VALUE_REQUIRED, 'Le bundle dans lequel créer le contrôleur'),
-                new InputOption('basecontroller', '', InputOption::VALUE_REQUIRED, 'S\'il faut ou non heriter du controlleur de base de Symfony2')
+                new InputOption('controller', null, InputOption::VALUE_REQUIRED, 'Le nom du contrôler à créer'),
+                new InputOption('bundle', null, InputOption::VALUE_REQUIRED, 'Le bundle dans lequel créer le contrôleur'),
+                new InputOption('baseController', null, InputOption::VALUE_OPTIONAL, 'S\'il faut ou non heriter du controlleur de base de Symfony2')
             ))
             ->setDescription('Genere le code de base pour commencer a utiliser un contrôleur')
             ->setHelp('Cette commande vous permet de facilement generer le code necessaire pour commencer a travailler avec un controlleur.');
@@ -28,7 +31,7 @@ class ControllerGeneratorCommand extends ContainerAwareCommand
     protected function interact(InputInterface $input, OutputInterface $output)
     {
         // On affiche quelques infos
-        $dialog = $this->getQuestionHelper();
+        $dialog = $this->getHelper('question');
         $output->writeln(array(
             '',
             '      Bienvenue dans le générateur de controleurs',
@@ -38,45 +41,58 @@ class ControllerGeneratorCommand extends ContainerAwareCommand
         ));
 
         // On récupère les informations de l'utilisateur
-        $controller = $dialog->ask(
-            $input,
-            $output,
-            new Question('Nom du controleur: ', $input->getOption('controller'))
+        $controllerQuestion = new Question('Nom du contrôleur: ');
+        $controllerQuestion->setValidator(function ($answer) {
+            if (empty($answer)) {
+                throw new \RuntimeException(
+                    'The name of the controller cannot be blank'
+                );
+            }
+            if (!preg_match('/^[A-Z]{1}[a-z]+/', $answer)) {
+                throw new \RuntimeException(
+                    'The name of the controller should have a upper first character'
+                );
+            }
+            return $answer;
+        });
+        $controller = $dialog->ask($input, $output, $controllerQuestion);
+
+        $baseControllerQuestion = new ChoiceQuestion(
+            'Voulez vous que le bundle étende le controlleur de base de Symfony2(yes) ?',
+            array('yes', 'no'),
+            '0'
         );
+        $baseControllerQuestion->setErrorMessage('%s is invalid.');
+        $baseController = $dialog->ask($input, $output, $baseControllerQuestion);
 
-        $basecontroller = $input->getOption('basecontroller');
-        if (!$basecontroller && !$dialog->ask($input, $output, new Question('Voulez vous que le bundle étende le controlleur de base de Symfony2 ?', 'yes', '?'))) {
-            $basecontroller = false;
-        }
-
+        $question = new Question ('bundle: ');
+        $question->setAutocompleterValues($this->bundles);
+        $question->setValidator(function ($answer) {
+            if (!in_array($answer, $this->bundles)) {
+                throw new \RuntimeException(
+                    'The name of the bundle is incorrect'
+                );
+            }
+            return $answer;
+        });
         $bundleName = $dialog->ask(
             $input,
             $output,
-            new Question ('bundle: ', $input->getOption('bundle'))
+            $question
         );
 
         // On sauvegarde les paramètres
         $input->setOption('controller', $controller);
-        $input->setOption('basecontroller', $basecontroller);
+        $input->setOption('baseController', $baseController);
         $input->setOption('bundle', $bundleName);
-    }
-
-    protected function getQuestionHelper()
-    {
-        $dialog = $this->getHelper('question');
-        if (!$dialog || get_class($dialog) !== 'Sensio\Bundle\GeneratorBundle\Command\Helper\QuestionHelper') {
-            $this->getHelperSet()->set($dialog = new QuestionHelper());
-        }
-
-        return $dialog;
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $dialog = $this->getQuestionHelper();
+        $dialog = $this->getHelper('question');
 
         if ($input->isInteractive()) {
-            if (!$dialog->ask($input, $output, new Question('Do you confirm generation? ', 'yes', '?'))) {
+            if (!$dialog->ask($input, $output, new Question('Do you confirm generation(yes) ? ', 'yes'))) {
                 $output->writeln('<error>Command aborted</error>');
 
                 return 1;
@@ -84,7 +100,7 @@ class ControllerGeneratorCommand extends ContainerAwareCommand
         }
         // On recupere les options
         $controller = $input->getOption('controller');
-        $basecontroller = $input->getOption('basecontroller');
+        $baseController = $input->getOption('baseController');
         $bundleName = $input->getOption('bundle');
 
         // On recupere les infos sur le bundle nécessaire à la génération du controller
@@ -100,7 +116,7 @@ class ControllerGeneratorCommand extends ContainerAwareCommand
         $controller_code = $twig->render('controllerCommand/controller.php.twig',
             array(
                 'controller' => $controller,
-                'basecontroller' => $basecontroller,
+                'baseController' => $baseController,
                 'namespace' => $namespace
             )
         );
