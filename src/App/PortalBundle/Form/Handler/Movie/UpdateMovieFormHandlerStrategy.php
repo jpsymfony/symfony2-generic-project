@@ -9,7 +9,6 @@ use App\UserBundle\Security\MovieVoter;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Finder\Exception\AccessDeniedException;
-use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
@@ -26,16 +25,6 @@ class UpdateMovieFormHandlerStrategy extends AbstractMovieFormHandlerStrategy
      * @var AuthorizationCheckerInterface
      */
     protected $authorizationChecker;
-
-    /**
-     * @var FormFactoryInterface
-     */
-    protected $formFactory;
-
-    /**
-     * @var RouterInterface
-     */
-    protected $router;
 
     /**
      * @var EventDispatcherInterface

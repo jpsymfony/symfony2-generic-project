@@ -12,21 +12,6 @@ class ActorRepository extends \Doctrine\ORM\EntityRepository implements ActorRep
     use TraitRepository;
     
     use TraitSave;
-    
-    /**
-     * {@inheritdoc}
-     */
-    public function allOrderByName($max)
-    {
-        $qb = $this->_em->createQueryBuilder();
-        $qb->select('f')
-        ->from($this->_entityName, 'f')
-        ->orderBy('f.nom', 'DESC')
-        ->setMaxResults($max);
-        $query = $qb->getQuery();
-        
-        return $query->getResult();
-    }
 
     public function findbyFirstNameOrLastName($motcle)
     {
