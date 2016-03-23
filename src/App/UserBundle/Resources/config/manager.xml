@@ -11,7 +11,6 @@
     <services>
         <service id="app_user_manager"
                  class="%app_user.manager.class%" lazy="true">
-            <argument type="service" id="doctrine.orm.entity_manager" />
             <argument type="service" id="security.encoder_factory" />
             <argument type="service" id="event_dispatcher" />
             <argument type="service" id="security.password_encoder" />

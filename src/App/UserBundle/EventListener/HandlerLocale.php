@@ -20,11 +20,6 @@ class HandlerLocale
     protected $defaultLocale;
 
     /**
-     * @var \Symfony\Component\DependencyInjection\ContainerInterface
-     */
-    protected $container;
-
-    /**
      * @var Request $request The service request
      */
     protected $request;
