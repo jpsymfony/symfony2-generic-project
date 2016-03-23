@@ -18,6 +18,7 @@ class PaymentController extends Controller
             'client_id' => 1,
             'order_id' => 'REF1234567',
             'amount' => 5.0,
+            'description' => 'my description',
         );
 
         return array(

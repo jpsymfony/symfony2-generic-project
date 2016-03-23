@@ -54,7 +54,7 @@ class CollectionConverter implements \Sensio\Bundle\FrameworkExtraBundle\Request
         // http://stackoverflow.com/questions/10904759/symfony2-and-paramconverters
         $name    = $configuration->getName();
         $options = $configuration->getOptions();
-        $serviceClassName = $options['manager'];
+        $serviceClassName = '';
         
         $max = $request->attributes->get('max', null);
         
