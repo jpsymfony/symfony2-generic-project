@@ -1,3 +1,14 @@
+parameters:
+   app_core.param_converter.collection.class: App\CoreBundle\Converter\CollectionConverter
+
 services:
    app_core.entity_management_guesser:
       class: App\CoreBundle\Services\EntityManagementGuesser
+
+   app_core.collection_converter:
+      class: %app_core.param_converter.collection.class%
+      arguments:
+          - "@doctrine"
+          - "@service_container"
+      tags:
+          - { name: request.param_converter, converter: project_collection_converter }
