@@ -2,7 +2,6 @@
 
 namespace App\UserBundle\Entity\Manager;
 
-use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Security\Core\Encoder\EncoderFactoryInterface;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
@@ -14,44 +13,39 @@ use App\UserBundle\Repository\UserRepository;
 class UserManager implements UserManagerInterface
 {
     /**
-     * @var ObjectManager
-     */
-    protected $objectManager;
-
-    /**
-     * @var EncoderFactoryInterface
+     * @var EncoderFactoryInterface $encoderFactory
      */
     protected $encoderFactory;
 
     /**
-     * @var EventDispatcherInterface
+     * @var EventDispatcherInterface $dispatcher
      */
     protected $dispatcher;
 
     /**
-     * @var UserPasswordEncoderInterface
+     * @var UserPasswordEncoderInterface $encoder
      */
     protected $encoder;
 
     /**
      *
-     * @var UserRepository
+     * @var UserRepository $userRepository
      */
     protected $userRepository;
 
     /**
-     * @param ObjectManager                 $manager
      * @param EncoderFactoryInterface       $encoderFactory
      * @param EventDispatcherInterface      $dispatcher
      * @param UserPasswordEncoderInterface  $encoder
      * @param UserRepository                $userRepository
      */
     public function __construct(
-    ObjectManager $manager, EncoderFactoryInterface $encoderFactory, EventDispatcherInterface $dispatcher,
-    UserPasswordEncoderInterface $encoder, UserRepository $userRepository
+        EncoderFactoryInterface $encoderFactory,
+        EventDispatcherInterface $dispatcher,
+        UserPasswordEncoderInterface $encoder,
+        UserRepository $userRepository
     )
     {
-        $this->objectManager = $manager;
         $this->encoderFactory = $encoderFactory;
         $this->dispatcher = $dispatcher;
         $this->encoder = $encoder;
@@ -68,27 +62,18 @@ class UserManager implements UserManagerInterface
         $user->setCgvRead(false);
         $user->setRoles(['ROLE_VISITOR']);
         $user->encodePassword($this->encoderFactory->getEncoder($user));
-        $this->persistAndFlushUser($user);
+        $this->save($user, true, true);
 
         $this->dispatcher->dispatch(
             AppUserEvents::NEW_ACCOUNT_CREATED, new UserDataEvent($user)
         );
     }
 
-    /**
-     * @param UserInterface $user
-     */
-    private function persistAndFlushUser(UserInterface $user)
-    {
-        $this->objectManager->persist($user);
-        $this->objectManager->flush();
-    }
-
     public function updateCredentials(UserInterface $user, $newPassword)
     {
         $user->setPlainPassword($newPassword);
         $user->encodePassword($this->encoderFactory->getEncoder($user));
-        $this->objectManager->flush();
+        $this->save($user, false, true);
     }
 
     public function isPasswordValid(UserInterface $user, $plainPassword)
@@ -111,7 +96,7 @@ class UserManager implements UserManagerInterface
     public function updateConfirmationTokenUser(UserInterface $user, $token) {
         $user->setConfirmationToken($token);
         $user->setIsAlreadyRequested(true);
-        $this->objectManager->flush();
+        $this->save($user, false, true);
     }
 
     public function getUserByConfirmationToken($token)
@@ -122,5 +107,19 @@ class UserManager implements UserManagerInterface
     public function clearConfirmationTokenUser(UserInterface $user) {
         $user->setConfirmationToken(null);
         $user->setIsAlreadyRequested(false);
+    }
+
+    /**
+     * @param UserInterface $user
+     * @param \Datetime $lastConnexion
+     */
+    public function setLastConnexion(UserInterface $user, \Datetime $lastConnexion)
+    {
+        $user->setLastConnexion($lastConnexion);
+    }
+
+    public function save(UserInterface $user, $persist = false, $flush = true)
+    {
+        $this->userRepository->save($user, $persist, $flush);
     }
 }

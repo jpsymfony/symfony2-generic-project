@@ -102,6 +102,12 @@ class User implements UserInterface, Serializable
      */
     private $cgvRead;
 
+    /**
+     * @var \DateTime $lastConnexion
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    private $lastConnexion;
+
     public function __toString()
     {
         return (string) $this->getUsername();
@@ -374,5 +380,21 @@ class User implements UserInterface, Serializable
     {
         $this->movies = $movies;
         return $this;
+    }
+
+    /**
+     * @return \DateTime
+     */
+    public function getLastConnexion()
+    {
+        return $this->lastConnexion;
+    }
+
+    /**
+     * @param \DateTime $lastConnexion
+     */
+    public function setLastConnexion(\DateTime $lastConnexion)
+    {
+        $this->lastConnexion = $lastConnexion;
     }
 }

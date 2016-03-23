@@ -12,4 +12,8 @@ interface UserManagerInterface
      * @return void
      */
     public function createUser(UserInterface $user);
+
+    public function setLastConnexion(UserInterface $user, \Datetime $lastConnexion);
+
+    public function save(UserInterface $user, $persist = false, $flush = true);
 } 

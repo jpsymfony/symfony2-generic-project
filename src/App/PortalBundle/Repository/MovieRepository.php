@@ -13,21 +13,6 @@ class MovieRepository extends \Doctrine\ORM\EntityRepository implements MovieRep
     use TraitRepository;
     
     use TraitSave;
-    
-    /**
-     * {@inheritdoc}
-     */
-    public function allOrderByTitle($max)
-    {
-        $qb = $this->_em->createQueryBuilder();
-        $qb->select('f')
-        ->from($this->_entityName, 'f')
-        ->orderBy('f.title', 'ASC')
-        ->setMaxResults($max);
-        $query = $qb->getQuery();
-        
-        return $query->getResult();
-    }
 
     public function getResultFilterQueryBuilder($requestVal)
     {

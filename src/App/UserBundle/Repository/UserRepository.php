@@ -2,6 +2,7 @@
 
 namespace App\UserBundle\Repository;
 
+use App\CoreBundle\Traits\Repository\Interfaces\TraitRepositoryInterface;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\QueryBuilder;
 use App\CoreBundle\Traits\Repository\TraitRepository;
@@ -10,7 +11,7 @@ use App\CoreBundle\Traits\Repository\TraitSave;
 /**
  * UserRepository
  */
-class UserRepository extends EntityRepository
+class UserRepository extends EntityRepository implements TraitRepositoryInterface
 {
     use TraitRepository;
 

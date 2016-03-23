@@ -18,4 +18,6 @@ interface UserInterface extends SecurityUserInterface
     public function setRoles(array $roles);
 
     public function setCgvRead($cgvRead);
+
+    public function setLastConnexion(\DateTime $lastConnexion);
 } 
