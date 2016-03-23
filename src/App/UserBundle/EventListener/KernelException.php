@@ -5,7 +5,6 @@ namespace App\UserBundle\EventListener;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Event\GetResponseForExceptionEvent;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Finder\Exception\AccessDeniedException;
 use Symfony\Bundle\FrameworkBundle\Routing\Router;
 use Symfony\Component\HttpFoundation\Session\Session;
@@ -29,10 +28,17 @@ class KernelException
      */
     protected $request;
 
-    public function __construct(Router $router, Session $session)
+    /**
+     * @var string $urlRedirectionException
+     */
+    protected $urlRedirectionException;
+
+    public function __construct(Router $router, Session $session, Request $request, $urlRedirectionException)
     {
         $this->router = $router;
         $this->session = $session;
+        $this->request = $request;
+        $this->urlRedirectionException = $urlRedirectionException;
     }
 
     public function onKernelException(GetResponseForExceptionEvent $event)
@@ -46,7 +52,7 @@ class KernelException
 
         if ($exception instanceof AccessDeniedHttpException || $exception instanceof AccessDeniedException) {
             $this->session->getFlashBag()->add('error', $exception->getMessage());
-            $url = $this->router->generate('homepage');
+            $url = $this->router->generate($this->urlRedirectionException);
             $event->setResponse(new RedirectResponse($url));
         }
     }

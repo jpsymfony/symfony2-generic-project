@@ -24,6 +24,11 @@ class Configuration implements ConfigurationInterface
         // configure your bundle. See the documentation linked above for
         // more information on that topic.
 
+        $rootNode
+            ->children()
+               ->variableNode('redirection_url_after_access_denied_exception')
+            ->end();
+
         return $treeBuilder;
     }
 }

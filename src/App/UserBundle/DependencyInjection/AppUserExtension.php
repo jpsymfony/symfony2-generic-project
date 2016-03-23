@@ -31,5 +31,7 @@ class AppUserExtension extends Extension
         $loaderYaml = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loaderYaml->load('authentication.yml');
         $loaderYaml->load('services.yml');
+
+        $container->setParameter('app_user.redirection_url_after_access_denied_exception', $config['redirection_url_after_access_denied_exception']);
     }
 }
