@@ -27,5 +27,5 @@ services:
 
     app_portal.contact.manager:
         class: %app_portal.contact_manager.class%
-        arguments: ['@mailer', '@twig', '@translator','AppPortalBundle:Mail:contact_mail.html.twig', '%email_from%']
+        arguments: ['@mailer', '@twig', '@translator','AppPortalBundle:Mail:contact_mail.html.twig', '%email_from%', '%%mailer_user%%']
         lazy: true
