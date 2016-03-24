@@ -57,7 +57,7 @@ class ResetPasswordType extends AbstractType
             function (FormEvent $event) {
                 $data = $event->getData();
                 if (!$data instanceof ResetPassword) {
-                    throw new \RuntimeException('ChangePassword instance required.');
+                    throw new \RuntimeException('ResetPassword instance required.');
                 }
                 $token = $this->request->query->get('token');
 
