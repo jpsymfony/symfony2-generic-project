@@ -33,19 +33,25 @@ class ContactManager implements ContactManagerInterface
     protected $from;
 
     /**
+     * @var string $from
+     */
+    protected $to;
+
+    /**
      * @param \Swift_Mailer $mailer
      * @param \Twig_Environment $templating
      *
      * @param $template
      * @param $from
      */
-    public function __construct(\Swift_Mailer $mailer, \Twig_Environment $templating, TranslatorInterface $translator, $template, $from)
+    public function __construct(\Swift_Mailer $mailer, \Twig_Environment $templating, TranslatorInterface $translator, $template, $from, $to)
     {
         $this->mailer = $mailer;
         $this->templating = $templating;
         $this->template = $template;
         $this->translator = $translator;
         $this->from = $from;
+        $this->to = $to;
     }
 
     /**
@@ -57,7 +63,7 @@ class ContactManager implements ContactManagerInterface
             ->setCharset('UTF-8')
             ->setSubject($this->translator->trans('contact.message_subject', ['%name%' => $data]))
             ->setFrom($this->from)
-            ->setTo($data->getEmail())
+            ->setTo($this->to)
             ->setBody($this->templating->render($this->template, ['data' => $data])
             )
             ->setContentType('text/html');
