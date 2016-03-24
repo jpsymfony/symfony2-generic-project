@@ -7,7 +7,6 @@
     <parameters>
         <parameter key="app_user.send_confirmation_mail_listener.class">App\UserBundle\EventListener\SendConfirmationMailListener</parameter>
         <parameter key="app_user.send_request_password_mail_listener.class">App\UserBundle\EventListener\SendRequestPasswordMailListener</parameter>
-        <parameter key="app_user.handler.locale_handler.class">App\UserBundle\EventListener\HandlerLocale</parameter>
     </parameters>
 
     <services>
@@ -47,14 +46,6 @@
             <argument type="service" id="router"/>
             <argument type="service" id="app_core.entity_management_guesser"/>
             <tag name="kernel.event_listener" event="kernel.controller" method="onKernelController" />
-        </service>
-
-        <service id="app_user.locale_handler" class="%app_user.handler.locale_handler.class%">
-            <argument>%locale%</argument>
-            <argument>%switch_language_authorized%</argument>
-            <argument>%all_locales%</argument>
-            <tag name="kernel.event_listener" event="kernel.request" method="onKernelRequest" priority="99"/>
-            <!-- priority > 0 to be registered after the default Locale listener => the higher, the earliest -->
         </service>
     </services>
 </container>

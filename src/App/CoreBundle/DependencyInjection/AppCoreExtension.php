@@ -26,5 +26,8 @@ class AppCoreExtension extends Extension
         $loaderYaml = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loaderYaml->load('validator.yml');
         $loaderYaml->load('services.yml');
+
+        $loader = new Loader\XmlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
+        $loader->load('listener.xml');
     }
 }

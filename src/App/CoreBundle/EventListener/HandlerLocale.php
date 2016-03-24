@@ -1,5 +1,5 @@
 <?php
-namespace App\UserBundle\EventListener;
+namespace App\CoreBundle\EventListener;
 
 use Symfony\Component\HttpKernel\Event\GetResponseEvent;
 use Symfony\Component\HttpKernel\HttpKernel;
@@ -66,6 +66,7 @@ class HandlerLocale
         if ($isSwitchLanguageBrowserAuthorized && !$islocale) {
             $langValue = $this->request->getPreferredLanguage();
             if (in_array($langValue, $allLocales)) {
+                $this->request->attributes->set('_locale', $langValue); // for _locale routing parameter
                 $this->request->setLocale($langValue);
                 return;
             }
