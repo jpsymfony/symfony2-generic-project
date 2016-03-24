@@ -1,9 +1,7 @@
 <?php
 namespace App\PortalBundle\Form\Handler\Movie;
 
-use App\PortalBundle\AppPortalEvents;
 use App\PortalBundle\Entity\Manager\Interfaces\HashTagManagerInterface;
-use App\PortalBundle\Event\MovieEvent;
 use App\PortalBundle\Form\Type\MovieType;
 use App\UserBundle\Security\MovieVoter;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -27,28 +25,20 @@ class UpdateMovieFormHandlerStrategy extends AbstractMovieFormHandlerStrategy
     protected $authorizationChecker;
 
     /**
-     * @var EventDispatcherInterface
-     */
-    protected $dispatcher;
-
-    /**
 
      * Constructor.
      *
      * @param HashTagManagerInterface $hashTagManager
      * @param AuthorizationCheckerInterface $authorizationChecker
-     * @param EventDispatcherInterface $dispatcher
      */
     public function __construct
     (
         HashTagManagerInterface $hashTagManager,
-        AuthorizationCheckerInterface $authorizationChecker,
-        EventDispatcherInterface $dispatcher
+        AuthorizationCheckerInterface $authorizationChecker
     )
     {
         $this->hashTagManager = $hashTagManager;
         $this->authorizationChecker = $authorizationChecker;
-        $this->dispatcher = $dispatcher;
     }
 
     public function createForm(Movie $movie)
@@ -81,9 +71,6 @@ class UpdateMovieFormHandlerStrategy extends AbstractMovieFormHandlerStrategy
         }
 
         $this->movieManager->save($movie, false, true);
-
-        $movieEvent = new MovieEvent($movie);
-        $this->dispatcher->dispatch(AppPortalEvents::EVENT_MOVIE_1, $movieEvent);
 
         return $this->translator
             ->trans('film.modifier.succes', array(

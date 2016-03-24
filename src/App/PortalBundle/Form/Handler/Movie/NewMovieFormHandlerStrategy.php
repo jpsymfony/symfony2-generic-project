@@ -1,8 +1,6 @@
 <?php
 namespace App\PortalBundle\Form\Handler\Movie;
 
-use App\PortalBundle\AppPortalEvents;
-use App\PortalBundle\Event\MovieEvent;
 use App\PortalBundle\Form\Type\MovieType;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
@@ -20,25 +18,13 @@ class NewMovieFormHandlerStrategy extends AbstractMovieFormHandlerStrategy
     protected $securityTokenStorage;
 
     /**
-     * @var EventDispatcherInterface
-     */
-    protected $dispatcher;
-
-    /**
      * Constructor.
      *
      * @param TokenStorageInterface $securityTokenStorage
-     * @param EventDispatcherInterface $dispatcher
      */
-    public function __construct
-    (
-        TokenStorageInterface $securityTokenStorage,
-        EventDispatcherInterface $dispatcher
-
-    )
+    public function __construct(TokenStorageInterface $securityTokenStorage)
     {
         $this->securityTokenStorage = $securityTokenStorage;
-        $this->dispatcher = $dispatcher;
     }
 
     public function createForm(Movie $movie)
@@ -58,9 +44,6 @@ class NewMovieFormHandlerStrategy extends AbstractMovieFormHandlerStrategy
     {
         $movie->setAuthor($this->securityTokenStorage->getToken()->getUser());
         $this->movieManager->save($movie, true, true);
-
-        $movieEvent = new MovieEvent($movie);
-        $this->dispatcher->dispatch(AppPortalEvents::EVENT_MOVIE_1, $movieEvent);
 
         return $this->translator
             ->trans('film.ajouter.succes', array(

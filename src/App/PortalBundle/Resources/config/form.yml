@@ -17,7 +17,7 @@ parameters:
 services:
     app_portal.actor.form.handler:
         class: %app_portal.actor.form.handler.class%
-        
+
     app_portal.abstract_movie.form.handler.strategy:
         abstract:  true
         class: %app_portal.abstract_movie.form.handler.strategy.class%
@@ -55,7 +55,6 @@ services:
         parent: app_portal.abstract_movie.form.handler.strategy
         arguments:
             - "@security.token_storage"
-            - "@event_dispatcher"
 
     app_portal.update_movie.form.handler.strategy:
         class: %app_portal.update_movie.form.handler.strategy.class%
@@ -63,7 +62,6 @@ services:
         arguments:
             - "@app_portal.hashtag.manager"
             - "@security.authorization_checker"
-            - "@event_dispatcher"
 
     app_portal.request_contact.handler:
         class: %app_portal.request_contact.handler.class%
