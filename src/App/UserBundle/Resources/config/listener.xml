@@ -35,7 +35,6 @@
                  class="App\UserBundle\EventListener\KernelException">
             <argument type="service" id="router"/>
             <argument type="service" id="session"/>
-            <argument type="service" id="request" strict="false"/>
             <argument>%app_user.redirection_url_after_access_denied_exception%</argument>
             <tag name="kernel.event_listener" event="kernel.exception" />
         </service>
