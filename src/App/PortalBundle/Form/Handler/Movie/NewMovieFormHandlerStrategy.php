@@ -3,7 +3,6 @@ namespace App\PortalBundle\Form\Handler\Movie;
 
 use App\PortalBundle\Form\Type\MovieType;
 use Doctrine\Common\Collections\ArrayCollection;
-use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
 use App\PortalBundle\Entity\Movie;
 use Symfony\Component\HttpFoundation\Session\Session;
