@@ -2,42 +2,30 @@
 
 namespace App\UserBundle\Repository;
 
-use App\CoreBundle\Traits\Repository\Interfaces\TraitRepositoryInterface;
-use Doctrine\ORM\EntityRepository;
+use App\CoreBundle\Repository\AbstractGenericRepository;
+use App\UserBundle\Repository\Interfaces\UserRepositoryInterface;
 use Doctrine\ORM\QueryBuilder;
-use App\CoreBundle\Traits\Repository\TraitRepository;
-use App\CoreBundle\Traits\Repository\TraitSave;
 
-/**
- * UserRepository
- */
-class UserRepository extends EntityRepository implements TraitRepositoryInterface
+class UserRepository extends AbstractGenericRepository implements UserRepositoryInterface
 {
-    use TraitRepository;
-
-    use TraitSave;
-
     /**
-     * @param string $alias
-     * @return \Doctrine\ORM\QueryBuilder
+     * @inheritdoc
      */
-    private function getBuilder($alias = 'u')
-    {
-        return $this->createQueryBuilder($alias);
-    }
-
     public function getUserByIdentifierQueryBuilder(QueryBuilder &$qb, $identifier)
     {
         $qb->andWhere(
-                $qb->expr()->orX(
-                    'u.username = :identifier', 'u.email = :identifier'
-                )
+            $qb->expr()->orX(
+                'u.username = :identifier', 'u.email = :identifier'
             )
+        )
             ->setParameter('identifier', $identifier);
 
         return $this;
     }
 
+    /**
+     * @inheritdoc
+     */
     public function getUserByEmailOrUsername($identifier)
     {
         $qb = $this->getBuilder();

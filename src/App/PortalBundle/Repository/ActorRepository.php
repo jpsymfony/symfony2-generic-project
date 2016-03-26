@@ -9,7 +9,7 @@ class ActorRepository extends AbstractGenericRepository implements ActorReposito
 {
     public function findByFirstNameOrLastName($motcle)
     {
-        $qb = $this->createQueryBuilder('a');
+        $qb = $this->getBuilder('a');
         $qb
             ->where("a.firstName LIKE :motcle OR a.lastName LIKE :motcle")
             ->orderBy('a.lastName', 'ASC')

@@ -75,7 +75,7 @@ class LoadUsers implements FixtureInterface, ContainerAwareInterface
         $manager->persist($user);
 
         $manager->flush();
-    } 
+    }
 
     public function setContainer(ContainerInterface $container = null)
     {
