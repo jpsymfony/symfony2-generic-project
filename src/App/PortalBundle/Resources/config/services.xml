@@ -8,7 +8,6 @@
         <parameter key="app_portal.be2bill.class">App\PortalBundle\Services\Be2bill</parameter>
         <parameter key="app_portal.paypal.class">App\PortalBundle\Services\Paypal</parameter>
         <parameter key="app_portal.payment_container_service.class">App\PortalBundle\Services\PaymentContainerService</parameter>
-        <parameter key="app_portal.guzzle.exception.class">App\PortalBundle\EventListener\GuzzleExceptionListener</parameter>
     </parameters>
     
     <services>
@@ -24,12 +23,6 @@
 
         <service id="app_portal.payment_container_service"
                  class="%app_portal.payment_container_service.class%">
-        </service>
-
-        <service id="app_portal.guzzle_exception_eventlistener" class="%app_portal.guzzle.exception.class%">
-            <tag name="kernel.event_listener" event="kernel.exception" method="onKernelException" />
-            <tag name="kernel.event_listener" event="kernel.terminate" method="onKernelTerminate" />
-            <argument type="service" id="app_portal.payment_container_service" />
         </service>
     </services>
 </container>

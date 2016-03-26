@@ -1,11 +1,12 @@
 <?php
 
 namespace App\PortalBundle\Repository\Interfaces;
-use App\CoreBundle\Repository\GenericRepositoryInterface;
 
-interface MovieRepositoryInterface  extends GenericRepositoryInterface
+interface MovieRepositoryInterface
 {
-    public function remove($entity);
-
-    public function findAllByEntity($result = 'object', $MaxResults = NULL, $orderby = '');
+    /**
+     * @param $requestVal
+     * @return array of movies
+     */
+    public function getResultFilter($requestVal);
 }

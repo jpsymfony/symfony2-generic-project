@@ -20,7 +20,7 @@ class MovieController extends Controller
     /**
      * @Route("/movies", name="movie_list")
      * @Template("@AppPortal/Movie/list.html.twig", vars={"movies"})
-     * @ParamConverter("movies", converter="project_collection_converter", options={"manager":"app_portal.movie.manager", "orderby":"title"})
+     * @ParamConverter("movies", converter="project_collection_converter", options={"manager":"app_portal.movie.manager", "orderby":"title", "dir":"desc"})
      */
     public function listAction(ArrayCollection $movies)
     {
@@ -38,12 +38,12 @@ class MovieController extends Controller
      * @Route("/movies/{id}/show", name="movie_show")
      * @ParamConverter("movie", class="AppPortalBundle:Movie")
      * @Security("has_role('ROLE_VISITOR')")
-     * @Cache(lastModified="movie.getUpdatedAt()", expires="+24 hours", maxage=600, smaxage=600)
+     * @Cache(smaxage=600)
      */
     public function showAction(Movie $movie)
     {
         $response = new Response();
-        $response->setEtag($movie->getId() . $movie->getUpdatedAt()->format('YmdHisu'));
+        $response->setEtag(md5($movie->getId() . $movie->getUpdatedAt()->format('YmdHis') . microtime(true)));
 
         return $this->render('@AppPortal/Movie/show.html.twig', ['movie' => $movie], $response);
     }
@@ -125,7 +125,7 @@ class MovieController extends Controller
     public function listSearchAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
-        $movies = $em->getRepository('AppPortalBundle:Movie')->getResultFilterQueryBuilder(current($request->query->all()));
+        $movies = $em->getRepository('AppPortalBundle:Movie')->getResultFilter(current($request->query->all()));
 
         return array(
             'movies' => $movies,

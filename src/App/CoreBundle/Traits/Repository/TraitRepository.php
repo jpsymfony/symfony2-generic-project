@@ -8,20 +8,20 @@ use Symfony\Component\Translation\Exception\NotFoundResourceException;
 trait TraitRepository
 {
     /**
-     * @return string
+     * @inheritdoc
      */
     public function getClassName()
     {
         return $this->getEntityName();
     }
 
+    public function getAlias()
+    {
+        return substr($this->_class->getTableName(), 0, 3);
+    }
+
     /**
-     * Count all fields existed from the given entity 
-     *
-     * @param boolean $enabled [0, 1]    
-     * 
-     * @return string the count of all fields.
-     * @access public
+     * @inheritdoc
      */
     public function count($enabled = null)
     {
@@ -34,30 +34,24 @@ trait TraitRepository
         }
     }
 
+    /**
+     * @inheritdoc
+     */
     public function remove($entity)
     {
         $this->_em->remove($entity);
         $this->_em->flush();
     }
-    
-   /**
-     * Find all translations by an entity.
-     *
-     * @param string $result = {'array', 'object'}
-     * @param int    $MaxResults
-     * @param string $orderby 
-     * 
-     * @return array|object
-     * @access public
+
+    /**
+     * @inheritdoc
      */
-    public function findAllByEntity($result = "object", $MaxResults = null, $orderby = '')
+    public function findAllByEntity($result = "object", $MaxResults = null, $orderby = '', $dir = 'ASC')
     {
-        $qb = $this->_em->createQueryBuilder()
-        ->select('a')
-        ->from($this->_entityName, 'a');
+        $qb = $this->createQueryBuilder($this->getAlias());
         
         if (!empty($orderby)) {
-            $qb->orderBy("a.$orderby", 'ASC');
+            $qb->orderBy($this->getAlias(). '.' . $orderby, $dir);
         }
       
         $query = $qb->getQuery();
@@ -70,13 +64,7 @@ trait TraitRepository
     }
 
     /**
-     * Loads all translations with all translatable fields from the given entity
-     *
-     * @param Query   $query
-     * @param string  $result = {'array', 'object'}
-     *
-     * @return array|object of result query
-     * @access public
+     * @inheritdoc
      */
     public function findByQuery(Query $query, $result = "array")
     {

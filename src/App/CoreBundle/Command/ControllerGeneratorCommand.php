@@ -20,12 +20,12 @@ class ControllerGeneratorCommand extends ContainerAwareCommand
     {
         $this->setName('mywebsite:generate-controller')
             ->setDefinition(array(
-                new InputOption('controller', null, InputOption::VALUE_REQUIRED, 'Le nom du contrôler à créer'),
-                new InputOption('bundle', null, InputOption::VALUE_REQUIRED, 'Le bundle dans lequel créer le contrôleur'),
-                new InputOption('baseController', null, InputOption::VALUE_REQUIRED, 'S\'il faut ou non heriter du controlleur de base de Symfony2')
+                new InputOption('controller', null, InputOption::VALUE_REQUIRED, 'Le nom du controller à créer'),
+                new InputOption('bundle', null, InputOption::VALUE_REQUIRED, 'Le bundle dans lequel créer le controller'),
+                new InputOption('baseController', null, InputOption::VALUE_REQUIRED, 'S\'il faut ou non heriter du controller de base de Symfony2')
             ))
-            ->setDescription('Genere le code de base pour commencer a utiliser un contrôleur')
-            ->setHelp('Cette commande vous permet de facilement generer le code necessaire pour commencer a travailler avec un controlleur.');
+            ->setDescription('Genere le code de base pour commencer a utiliser un controller')
+            ->setHelp('Cette commande vous permet de facilement generer le code necessaire pour commencer a travailler avec un controller.');
 
     }
 
@@ -35,14 +35,14 @@ class ControllerGeneratorCommand extends ContainerAwareCommand
         $dialog = $this->getHelper('question');
         $output->writeln(array(
             '',
-            '      Bienvenue dans le générateur de controleurs',
+            '      Bienvenue dans le générateur de controllers',
             '',
-            'Cet outil va vous permettre de générer rapidement votre contrôleur',
+            'Cet outil va vous permettre de générer rapidement votre controller',
             '',
         ));
 
         // On récupère les informations de l'utilisateur
-        $controllerQuestion = new Question('Nom du contrôleur: ');
+        $controllerQuestion = new Question('Nom du controller: ');
         $controllerQuestion->setValidator(function ($answer) {
             if (empty($answer)) {
                 throw new \RuntimeException(
@@ -59,7 +59,7 @@ class ControllerGeneratorCommand extends ContainerAwareCommand
         $controller = $dialog->ask($input, $output, $controllerQuestion);
 
         $baseControllerQuestion = new ChoiceQuestion(
-            'Voulez vous que le bundle étende le controlleur de base de Symfony2(yes) ?',
+            'Voulez vous que le bundle étende le controller de base de Symfony2(yes) ?',
             array('yes', 'no'),
             '0'
         );
@@ -130,14 +130,14 @@ class ControllerGeneratorCommand extends ContainerAwareCommand
 
         $logger = $this->getContainer()->get('logger');
 
-        $logger->debug('This is a debug message');
+        /*$logger->debug('This is a debug message');
         $logger->info('This is an info message');
         $logger->notice('This is an notice message');
         $logger->warning('This is a warning message');
         $logger->error('This is an error message');
         $logger->critical('This is a critical message');
         $logger->alert('This is an alert message');
-        $logger->emergency('This is an emergency message');
+        $logger->emergency('This is an emergency message');*/
 
         return 0;
     }

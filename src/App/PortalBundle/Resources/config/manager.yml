@@ -21,11 +21,11 @@ services:
         lazy: true
 
     app_portal.category.manager:
-            class: %app_portal.category_manager.class%
-            arguments:  ["@app_portal.category.repository"]
-            lazy: true
+        class: %app_portal.category_manager.class%
+        arguments:  ["@app_portal.category.repository"]
+        lazy: true
 
     app_portal.contact.manager:
         class: %app_portal.contact_manager.class%
-        arguments: ['@mailer', '@twig', '@translator','AppPortalBundle:Mail:contact_mail.html.twig', '%email_from%', '%%mailer_user%%']
+        arguments: ['@mailer', '@twig', '@translator','AppPortalBundle:Mail:contact_mail.html.twig', '%email_from%', '%mailer_user%']
         lazy: true

@@ -28,54 +28,46 @@ class MovieType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-                ->add('id', 'hidden')
-                ->add('title', 'text', array('label' => 'film.titre'))
-                ->add('description', 'textarea', array('label' => 'film.description'))
-                ->add('image', new ImageType(), array('data' => $this->image)) // if an image has previously been uploaded, we populate the movie object with database values
-                ->add(
-                    $builder->create(
-                        'releaseAt', 'text',
-                        array(
-                            'attr' => array('class' => 'datepicker'),
-                            'label' => 'film.dateSortie'
-                        )
+            ->add('id', 'hidden')
+            ->add('title', 'text', array('label' => 'film.titre'))
+            ->add('description', 'textarea', array('label' => 'film.description'))
+            ->add('image', new ImageType(), array('data' => $this->image))// if an image has previously been uploaded, we populate the movie object with database values
+            ->add(
+                $builder->create(
+                    'releaseAt', 'text',
+                    array(
+                        'attr' => array('class' => 'datepicker'),
+                        'label' => 'film.dateSortie'
                     )
-                        ->addModelTransformer(new TextToDateTimeDataTransformer())
-                );
+                )
+                    ->addModelTransformer(new TextToDateTimeDataTransformer())
+            )
 
+            ->add('category', 'genemu_jqueryselect2_entity', array(
+                'class' => 'App\PortalBundle\Entity\Category',
+                'property' => 'title',
+                'multiple' => false,
+                'required' => false,
+                'label' => 'film.categorie',
+                'configs' => array(
+                    'multiple' => false // Whether or not multiple values are allowed (default to false)
+                )
+            ))
 
-        if (!empty($options)) {
-            if (!$options['category_hidden']) {
-                $builder->add('category', 'genemu_jqueryselect2_entity', array(
-                    'class' => 'App\PortalBundle\Entity\Category',
-                    'property' => 'title',
-                    'multiple' => false,
-                    'required' => false,
-                    'label' => 'film.categorie',
-                    'configs' => array(
-                        'multiple' => false // Whether or not multiple values are allowed (default to false)
-                    )
-                ));
-            }
-        }
-        if (!empty($options)) {
-            if (!$options['actors_hidden']) {
-                $builder->add('actors', 'genemu_jqueryselect2_entity', array(
-                    'class' => 'App\PortalBundle\Entity\Actor',
-                    'property' => 'firstNameLastName',
-                    'expanded' => false,
-                    'multiple' => true,
-                    'required' => false,
-                    'label' => 'film.acteurs',
-                    'configs' => array(
-                        'multiple' => true // Whether or not multiple values are allowed (default to false)
-                    )
-                ));
-            }
-        }
+            ->add('actors', 'genemu_jqueryselect2_entity', array(
+                'class' => 'App\PortalBundle\Entity\Actor',
+                'property' => 'firstNameLastName',
+                'expanded' => false,
+                'multiple' => true,
+                'required' => false,
+                'label' => 'film.acteurs',
+                'configs' => array(
+                    'multiple' => true // Whether or not multiple values are allowed (default to false)
+                )
+            ));
 
         if (!empty($options)) {
-            if (!$options['hashtags_hidden']) {
+            if (isset($options['hashtags_hidden']) && !$options['hashtags_hidden']) {
                 $builder->add('hashTags', 'hashtags');
             }
         }
@@ -111,8 +103,6 @@ class MovieType extends AbstractType
     {
         $resolver->setDefaults(array(
                 'data_class' => 'App\PortalBundle\Entity\Movie',
-                'category_hidden' => true,
-                'actors_hidden' => true,
                 'hashtags_hidden' => true,
         ));
     }

@@ -2,15 +2,9 @@
 
 namespace App\PortalBundle\Repository;
 
+use App\CoreBundle\Repository\AbstractGenericRepository;
 use App\PortalBundle\Repository\Interfaces\CategoryRepositoryInterface;
-use App\CoreBundle\Traits\Repository\Interfaces\TraitRepositoryInterface;
-use App\CoreBundle\Traits\Repository\TraitRepository;
-use App\CoreBundle\Traits\Repository\TraitSave;
 
-
-class CategoryRepository extends \Doctrine\ORM\EntityRepository implements CategoryRepositoryInterface, TraitRepositoryInterface
+class CategoryRepository extends AbstractGenericRepository implements CategoryRepositoryInterface
 {
-    use TraitRepository;
-    
-    use TraitSave;
 }

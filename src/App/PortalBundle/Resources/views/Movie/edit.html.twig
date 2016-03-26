@@ -31,9 +31,12 @@
     {{ form_row(form.image) }}
     {{ form_row(form.category) }}
     {{ form_row(form.actors) }}
-    {{ form_row(form.hashTags) }}
+
+    {% if form.hashTags is defined %}
+        {{ form_row(form.hashTags) }}
+    {% endif %}
+
     {{ form_row(form.releaseAt) }}
-    {{ form_rest(form) }}
     {{ form_end(form) }}
 
 <p style="text-align: center"><a href="{{ path('movie_list') }}">{{ 'film.liste.retour'|trans }}</a></p>

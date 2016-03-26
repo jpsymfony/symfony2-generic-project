@@ -2,13 +2,9 @@
 
 namespace App\PortalBundle\Repository;
 
-use Doctrine\ORM\EntityRepository;
-use App\CoreBundle\Traits\Repository\TraitRepository;
-use App\CoreBundle\Traits\Repository\TraitSave;
+use App\CoreBundle\Repository\AbstractGenericRepository;
+use App\PortalBundle\Repository\Interfaces\ImageRepositoryInterface;
 
-class ImageRepository extends EntityRepository
+class ImageRepository extends AbstractGenericRepository implements ImageRepositoryInterface
 {
-    use TraitRepository;
-
-    use TraitSave;
 }

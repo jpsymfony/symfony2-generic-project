@@ -17,7 +17,7 @@
                 {% endif %}
             </ul>
 
-            <h3 class="text-muted">Formation Symfony</h3>
+            <h3 class="text-muted">Site de démo Symfony</h3>
 
             <div id="choisir_langue">{{ 'menu.choisir_langue'|trans }} :
                 <a href="{{ path('change_langue', {'language' : 'fr'}) }}">FR</a> |
@@ -31,7 +31,7 @@
         </div>
 
         <div class="footer">
-            <p>Mywebsite @2016 {{ 'copyright' | trans({}, 'divers') }}</p>
+            <p>Mywebsite @{{ 'now'|date('Y') }} {{ 'copyright' | trans({}, 'divers') }}</p>
         </div>
     </div>
 {% endblock %}

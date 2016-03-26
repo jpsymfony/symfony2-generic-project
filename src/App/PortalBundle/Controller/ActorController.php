@@ -2,7 +2,6 @@
 
 namespace App\PortalBundle\Controller;
 
-use App\PortalBundle\Form\Type\ActorType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -61,7 +60,7 @@ class ActorController extends Controller
             $em = $this->container->get('doctrine')->getManager();
 
             if ($motcle != '') {
-                $actors = $em->getRepository('AppPortalBundle:Actor')->findbyFirstNameOrLastName($motcle);
+                $actors = $em->getRepository('AppPortalBundle:Actor')->findByFirstNameOrLastName($motcle);
             } else {
                 $actors = $em->getRepository('AppPortalBundle:Actor')->findAll();
             }

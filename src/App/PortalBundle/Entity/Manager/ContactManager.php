@@ -33,16 +33,12 @@ class ContactManager implements ContactManagerInterface
     protected $from;
 
     /**
-     * @var string $from
+     * @var string $to
      */
     protected $to;
 
     /**
-     * @param \Swift_Mailer $mailer
-     * @param \Twig_Environment $templating
-     *
-     * @param $template
-     * @param $from
+     * @inheritdoc
      */
     public function __construct(\Swift_Mailer $mailer, \Twig_Environment $templating, TranslatorInterface $translator, $template, $from, $to)
     {
@@ -55,7 +51,7 @@ class ContactManager implements ContactManagerInterface
     }
 
     /**
-     * @param Contact $data
+     * @inheritdoc
      */
     public function sendMail(Contact $data)
     {
