@@ -1,6 +1,8 @@
 <?php
 namespace App\PortalBundle\Entity\Manager\Interfaces;
 
-interface HashTagManagerInterface
+use App\CoreBundle\Entity\Manager\Interfaces\GenericManagerInterface;
+
+interface HashTagManagerInterface extends GenericManagerInterface
 {
 }

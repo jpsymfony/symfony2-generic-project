@@ -37,7 +37,7 @@ class NewMovieFormHandlerStrategy extends AbstractMovieFormHandlerStrategy
         return $this->form;
     }
 
-    public function handle(Request $request, Movie $movie, ArrayCollection $originalHashTags = null)
+    public function handleForm(Request $request, Movie $movie, ArrayCollection $originalHashTags = null)
     {
         $movie->setAuthor($this->securityTokenStorage->getToken()->getUser());
         $this->movieManager->save($movie, true, true);

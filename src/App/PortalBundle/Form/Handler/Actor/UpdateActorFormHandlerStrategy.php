@@ -63,7 +63,7 @@ class UpdateActorFormHandlerStrategy extends AbstractActorFormHandlerStrategy
         return $this->form;
     }
 
-    public function handle(Request $request, Actor $actor)
+    public function handleForm(Request $request, Actor $actor)
     {
         $this->actorManager->save($actor, false, true);
 

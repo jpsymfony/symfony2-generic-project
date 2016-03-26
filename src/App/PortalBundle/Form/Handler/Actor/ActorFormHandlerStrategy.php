@@ -6,7 +6,7 @@ use App\PortalBundle\Entity\Actor;
 
 interface ActorFormHandlerStrategy
 {
-    public function handle(Request $request, Actor $actor);
+    public function handleForm(Request $request, Actor $actor);
 
     public function createForm(Actor $actor);
 
