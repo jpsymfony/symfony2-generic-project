@@ -52,7 +52,7 @@ class UpdateMovieFormHandlerStrategy extends AbstractMovieFormHandlerStrategy
         return $this->form;
     }
 
-    public function handle(Request $request, Movie $movie, ArrayCollection $originalHashTags = null)
+    public function handleForm(Request $request, Movie $movie, ArrayCollection $originalHashTags = null)
     {
         if (!$this->authorizationChecker->isGranted(MovieVoter::EDIT, $movie)) {
             $errorMessage = $this->translator->trans('film.modifier.erreur', ['%movie%' => $movie->getTitle()]);

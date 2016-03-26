@@ -1,6 +1,8 @@
 <?php
 namespace App\PortalBundle\Entity\Manager\Interfaces;
 
-interface ActorManagerInterface
+use App\CoreBundle\Entity\Manager\Interfaces\GenericManagerInterface;
+
+interface ActorManagerInterface extends GenericManagerInterface
 {
 }

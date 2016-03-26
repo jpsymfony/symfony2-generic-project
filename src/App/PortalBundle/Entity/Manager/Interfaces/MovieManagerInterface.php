@@ -1,6 +1,8 @@
 <?php
 namespace App\PortalBundle\Entity\Manager\Interfaces;
 
-interface MovieManagerInterface
+use App\CoreBundle\Entity\Manager\Interfaces\GenericManagerInterface;
+
+interface MovieManagerInterface extends GenericManagerInterface
 {
 }

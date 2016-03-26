@@ -84,7 +84,7 @@ abstract class AbstractMovieFormHandlerStrategy implements MovieFormHandlerStrat
         return $this->form->createView();
     }
 
-    abstract public function handle(Request $request, Movie $movie, ArrayCollection $originalTags = null);
+    abstract public function handleForm(Request $request, Movie $movie, ArrayCollection $originalTags = null);
 
     abstract public function createForm(Movie $movie);
 

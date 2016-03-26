@@ -15,16 +15,6 @@ class MovieFormHandler
     private $message = "";
 
     /**
-     * @var FormInterface
-     */
-    protected $form;
-
-    /**
-     * @var Request
-     */
-    protected $request;
-
-    /**
      * @var MovieFormHandlerStrategy
      */
     protected $movieFormHandlerStrategy;
@@ -43,16 +33,25 @@ class MovieFormHandler
      */
     protected $hashTagManager;
 
+    /**
+     * @param MovieFormHandlerStrategy $mfhs
+     */
     public function setMovieFormHandlerStrategy(MovieFormHandlerStrategy $mfhs)
     {
         $this->movieFormHandlerStrategy = $mfhs;
     }
 
+    /**
+     * @return MovieFormHandlerStrategy
+     */
     public function getMovieFormHandlerStrategy()
     {
         return $this->movieFormHandlerStrategy;
     }
 
+    /**
+     * @return string
+     */
     public function getMessage()
     {
         return $this->message;
@@ -102,7 +101,7 @@ class MovieFormHandler
                 return false;
             }
 
-            $this->message = $this->movieFormHandlerStrategy->handle($request, $movie, $originalHashTags);
+            $this->message = $this->movieFormHandlerStrategy->handleForm($request, $movie, $originalHashTags);
 
             return true;
         }

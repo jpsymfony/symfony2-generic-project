@@ -7,7 +7,7 @@ use App\PortalBundle\Entity\Movie;
 
 interface MovieFormHandlerStrategy
 {
-    public function handle(Request $request, Movie $movie, ArrayCollection $originalHashTags = null);
+    public function handleForm(Request $request, Movie $movie, ArrayCollection $originalHashTags = null);
 
     public function createForm(Movie $movie);
 

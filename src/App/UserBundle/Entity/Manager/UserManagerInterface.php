@@ -2,9 +2,10 @@
 
 namespace App\UserBundle\Entity\Manager;
 
+use App\CoreBundle\Entity\Manager\Interfaces\GenericManagerInterface;
 use App\UserBundle\Entity\UserInterface;
 
-interface UserManagerInterface
+interface UserManagerInterface extends GenericManagerInterface
 {
     /**
      * @param UserInterface $user

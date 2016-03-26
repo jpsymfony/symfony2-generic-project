@@ -2,8 +2,6 @@
 
 namespace App\CoreBundle\Entity\Manager\Interfaces;
 
-use App\CoreBundle\Repository\AbstractGenericRepository;
-
 interface GenericManagerInterface
 {
     /**

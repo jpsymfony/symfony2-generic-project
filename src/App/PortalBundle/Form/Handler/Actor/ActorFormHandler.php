@@ -10,16 +10,6 @@ class ActorFormHandler
     private $message = "";
 
     /**
-     * @var FormInterface
-     */
-    protected $form;
-
-    /**
-     * @var Request
-     */
-    protected $request;
-
-    /**
      * @var ActorFormHandlerStrategy $actorFormHandlerStrategy
      */
     protected $actorFormHandlerStrategy;
@@ -51,7 +41,7 @@ class ActorFormHandler
                 return false;
             }
 
-            $this->message = $this->actorFormHandlerStrategy->handle($request, $actor);
+            $this->message = $this->actorFormHandlerStrategy->handleForm($request, $actor);
 
             return true;
         }
