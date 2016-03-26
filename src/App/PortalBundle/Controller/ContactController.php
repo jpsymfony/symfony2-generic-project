@@ -17,8 +17,7 @@ class ContactController extends Controller
      */
     public function indexAction(Request $request)
     {
-        $contact = new Contact();
-        $form = $this->get('form.factory')->create('app_portal_contacttype', $contact);
+        $form = $this->get('form.factory')->create('app_portal_contacttype', new Contact());
 
         if ($this->getRequestContactFormHandler()->handle($form, $request)) {
             $this->addFlash('success', 'Merci pour votre message.');
@@ -26,7 +25,6 @@ class ContactController extends Controller
         }
 
         return array(
-            'contact' => $contact,
             'form' => $form->createView(),
         );
     }

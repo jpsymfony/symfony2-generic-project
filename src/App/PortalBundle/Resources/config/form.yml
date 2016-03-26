@@ -80,6 +80,5 @@ services:
 
     app_portal.contact.form.type:
             class: %app_portal.contact.form.type.class%
-            arguments: ['@doctrine.orm.entity_manager']
             tags:
                 - { name: form.type, alias: app_portal_contacttype }
