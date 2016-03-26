@@ -32,7 +32,6 @@ class Movie implements TraitDatetimeInterface, TraitSimpleInterface, TraitEnable
     private static $likeFieldsSearchForm = ['title', 'description', 'releaseDateFrom', 'releaseDateTo'];
     private static $collectionFields = ['hashTags', 'actors'];
     private static $objectFields = ['category'];
-
     private static $managerCollectionMapping =
         [
             'actors' => 'actor',

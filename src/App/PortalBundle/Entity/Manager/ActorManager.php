@@ -1,42 +1,9 @@
 <?php
 namespace App\PortalBundle\Entity\Manager;
 
+use App\CoreBundle\Entity\Manager\AbstractGenericManager;
 use App\PortalBundle\Entity\Manager\Interfaces\ActorManagerInterface;
-use App\PortalBundle\Repository\Interfaces\ActorRepositoryInterface;
 
-class ActorManager implements ActorManagerInterface
+class ActorManager extends AbstractGenericManager implements ActorManagerInterface
 {
-    /**
-     * @var ActorRepositoryInterface
-     */
-    protected $actorRepository;
-
-    /**
-     * ActorManager constructor.
-     * @param ActorRepositoryInterface $actorRepository
-     */
-    public function __construct(ActorRepositoryInterface $actorRepository)
-    {
-        $this->actorRepository = $actorRepository;
-    }
-    
-    public function remove($entity)
-    {
-        $this->actorRepository->remove($entity);
-    }
-    
-    public function all($result = "object", $MaxResults = null, $orderby = '')
-    {
-        return $this->actorRepository->findAllByEntity($result, $MaxResults, $orderby);
-    }
-
-    public function find($actor)
-    {
-        return $this->actorRepository->find($actor);
-    }
-
-    public function save($entity, $persist = false, $flush = true)
-    {
-        return $this->actorRepository->save($entity, $persist, $flush);
-    }
 }

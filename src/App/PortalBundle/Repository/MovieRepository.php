@@ -2,19 +2,13 @@
 
 namespace App\PortalBundle\Repository;
 
+use App\CoreBundle\Repository\AbstractGenericRepository;
 use App\PortalBundle\Entity\Movie;
 use App\PortalBundle\Repository\Interfaces\MovieRepositoryInterface;
-use App\CoreBundle\Traits\Repository\Interfaces\TraitRepositoryInterface;
-use App\CoreBundle\Traits\Repository\TraitRepository;
-use App\CoreBundle\Traits\Repository\TraitSave;
 
-class MovieRepository extends \Doctrine\ORM\EntityRepository implements MovieRepositoryInterface, TraitRepositoryInterface
+class MovieRepository extends AbstractGenericRepository implements MovieRepositoryInterface
 {
-    use TraitRepository;
-    
-    use TraitSave;
-
-    public function getResultFilterQueryBuilder($requestVal)
+    public function getResultFilter($requestVal)
     {
         $qb = $this->createQueryBuilder('f');
 

@@ -24,10 +24,6 @@
 			{% if is_granted('ROLE_ADMIN') %}
 				<td><a href="{{ path('actor_delete', { 'id': a.id }) }}">{{ 'supprimer' | trans({}, 'divers') }}</a></td>
 			{% endif %}
-		{% else %}
-			<tr>
-				<td>{{ 'acteur.aucun'|trans }}</td>
-			</tr>
 		{% endfor %}
 		</tbody>
 	</table>

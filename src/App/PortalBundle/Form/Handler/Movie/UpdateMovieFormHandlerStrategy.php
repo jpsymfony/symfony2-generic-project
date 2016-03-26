@@ -46,8 +46,6 @@ class UpdateMovieFormHandlerStrategy extends AbstractMovieFormHandlerStrategy
         $this->form = $this->formFactory->create(new MovieType($movie->getImage()), $movie, array(
             'action' => $this->router->generate('movie_edit', array('id' => $movie->getId())),
             'method' => 'PUT',
-            'category_hidden' => false,
-            'actors_hidden' => false,
             'hashtags_hidden' => false,
         ));
 

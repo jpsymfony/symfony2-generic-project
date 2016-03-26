@@ -1,37 +1,9 @@
 <?php
 namespace App\PortalBundle\Entity\Manager;
 
+use App\CoreBundle\Entity\Manager\AbstractGenericManager;
 use App\PortalBundle\Entity\Manager\Interfaces\HashTagManagerInterface;
-use App\PortalBundle\Repository\Interfaces\HashTagRepositoryInterface;
 
-class HashTagManager implements HashTagManagerInterface
+class HashTagManager extends AbstractGenericManager implements HashTagManagerInterface
 {
-    /**
-     * @var HashTagRepositoryInterface
-     */
-    protected $hashTagRepository;
-
-    /**
-     * HashTagManager constructor.
-     * @param HashTagRepositoryInterface $hashTagRepository
-     */
-    public function __construct(HashTagRepositoryInterface $hashTagRepository)
-    {
-        $this->hashTagRepository = $hashTagRepository;
-    }
-    
-    public function remove($entity)
-    {
-        $this->hashTagRepository->remove($entity);
-    }
-
-    public function find($hashTag)
-    {
-        return $this->hashTagRepository->find($hashTag);
-    }
-
-    public function save($entity, $persist = false, $flush = true)
-    {
-        return $this->hashTagRepository->save($entity, $persist, $flush);
-    }
 }

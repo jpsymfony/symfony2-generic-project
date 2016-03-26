@@ -2,7 +2,6 @@
 
 namespace App\PortalBundle\Form\Type;
 
-use App\CoreBundle\Form\DataTransformer\TextToDateTimeDataTransformer;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;

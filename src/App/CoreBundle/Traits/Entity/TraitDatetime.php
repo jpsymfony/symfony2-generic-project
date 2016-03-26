@@ -4,14 +4,6 @@ namespace App\CoreBundle\Traits\Entity;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * abstract class for time attributs.
- * 
- * @category   Generalisation
- * @package    Trait
- * @subpackage Entity
- * @abstract
- */
 trait TraitDatetime
 {
     /**
@@ -43,29 +35,6 @@ trait TraitDatetime
      * @ORM\Column(name="archive_at", type="datetime", nullable=true)
      */
     protected $archive_at;
-    
-     /**
-      * @ORM\PrePersist()
-      */
-     public function setCreatedValue()
-     {
-         // we create the Created_at value
-        if (!$this->getCreatedAt()) {
-            $this->setCreatedAt(new \DateTime());
-        }
-        // we modify the Updated_at value
-        if (!$this->getUpdatedAt()) {
-            $this->setUpdatedAt(new \DateTime());
-        }
-     }
-    
-     /**
-      * @ORM\PreUpdate()
-      */
-     public function setUpdatedValue()
-     {
-         $this->setUpdatedAt(new \DateTime());
-     }
 
     /**
      * {@inheritdoc}

@@ -54,28 +54,31 @@ class CollectionConverter implements \Sensio\Bundle\FrameworkExtraBundle\Request
         // http://stackoverflow.com/questions/10904759/symfony2-and-paramconverters
         $name    = $configuration->getName();
         $options = $configuration->getOptions();
-        $serviceClassName = '';
+        $managerClassName = '';
+        $dir = 'ASC';
         
         $max = $request->attributes->get('max', null);
         
         $orderby = "";
-        if (isset($options['orderby'])
-            && !empty($options['orderby'])
-        ) {
+        if (!empty($options['orderby'])) {
             $orderby = $options['orderby'];
+        }
+
+        if (!empty($options['dir'])) {
+            $dir = $options['dir'];
         }
         
         try {
-            $serviceClassName = $options['manager'];
+            $managerClassName = $options['manager'];
         } catch (\Exception $e) {
-            throw new NotFoundHttpException(sprintf('%s service manager option not found.', $serviceClassName));
+            throw new NotFoundHttpException(sprintf('%s service manager option not found.', $managerClassName));
         }
 
         try {
-            $result = $this->container->get($serviceClassName)->all("object", $max, $orderby);
+            $result = $this->container->get($managerClassName)->all("object", $max, $orderby, $dir);
             $collection = new ArrayCollection($result);
         } catch (\Exception $e) {
-            throw new NotFoundHttpException(sprintf('%s service manager not found.', $serviceClassName));
+            throw new NotFoundHttpException(sprintf('%s service manager not found.', $managerClassName));
         }
         
         if (!($collection instanceof ArrayCollection)) {

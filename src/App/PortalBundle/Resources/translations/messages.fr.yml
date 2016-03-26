@@ -6,13 +6,12 @@ acteur:
       dateNaissance: Date de naissance
       sexe: Sexe
       liste: Liste des acteurs
-      trouve: %count% acteur a été trouvé|]1,+Inf]%count% acteurs ont été trouvés
+      trouve: ]-Inf, 0]Aucun acteur n'a été trouvé|]0, 1]1 acteur a été trouvé|]1,+Inf]%count% acteurs ont été trouvés
       liste.retour: Retour à la liste des acteurs
       ajouter: Ajouter un acteur
       modifier: Modifier l'acteur %prenom% %nom%
       ajouter.succes: L'acteur %prenom% %nom% a été ajouté avec succès !
       modifier.succes: L'acteur %prenom% %nom% a été modifié avec succès !
-      aucun: Aucun acteur n’a été trouvé
       top.jeunes: Top des acteurs les plus jeunes
       chercher: Chercher
       supprime: L'acteur %actor% a bien été supprimé

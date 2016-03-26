@@ -1,22 +1,15 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: johnsaulnier
- * Date: 08/03/2016
- * Time: 01:41
- */
-
 namespace App\PortalBundle\EventSubscriber;
 
 use App\PortalBundle\AppPortalEvents;
 use App\PortalBundle\Event\MovieEvent;
-use Doctrine\Common\EventSubscriber;
 use Doctrine\ORM\Event\LifecycleEventArgs;
 use App\PortalBundle\Entity\Movie;
+use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
-class SearchIndexerSubscriber implements EventSubscriber
+class ExampleMovieSubscriber implements EventSubscriberInterface
 {
-    public function getSubscribedEvents()
+    public static function getSubscribedEvents()
     {
         return array(
             'postPersist',

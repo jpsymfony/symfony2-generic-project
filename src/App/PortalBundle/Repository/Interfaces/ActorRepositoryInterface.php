@@ -1,9 +1,8 @@
 <?php
 
 namespace App\PortalBundle\Repository\Interfaces;
-use App\CoreBundle\Repository\GenericRepositoryInterface;
 
-interface ActorRepositoryInterface extends GenericRepositoryInterface
+interface ActorRepositoryInterface
 {
-
+    public function findbyFirstNameOrLastName($motcle);
 }

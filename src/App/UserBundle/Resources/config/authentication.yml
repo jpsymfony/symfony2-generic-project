@@ -5,7 +5,7 @@ parameters:
 
 services:
     #
-    # AUTHENTICATION handler
+    # AUTHENTICATION handlers
     #
     security_authentication_success_handler:
         class:  %app_user.authentication.security.success.class%
