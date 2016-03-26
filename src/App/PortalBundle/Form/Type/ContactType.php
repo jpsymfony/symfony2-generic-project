@@ -2,23 +2,12 @@
 
 namespace App\PortalBundle\Form\Type;
 
-use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class ContactType extends AbstractType
 {
-    /**
-     * @var ObjectManager
-     */
-    protected $em;
-
-    public function __construct(ObjectManager $em)
-    {
-        $this->em = $em;
-    }
-
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
