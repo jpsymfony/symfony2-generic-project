@@ -10,7 +10,7 @@ class MovieRepository extends AbstractGenericRepository implements MovieReposito
 {
     public function getResultFilter($requestVal)
     {
-        $qb = $this->createQueryBuilder('f');
+        $qb = $this->getBuilder('f');
 
         if (!empty($requestVal)) {
             $isReleaseDateFrom = !empty($requestVal['releaseDateFrom']);

@@ -13,4 +13,13 @@ class AbstractGenericRepository extends EntityRepository implements TraitReposit
     use TraitRepository;
 
     use TraitSave;
+
+    /**
+     * @param string $alias
+     * @return \Doctrine\ORM\QueryBuilder
+     */
+    protected function getBuilder($alias = 'u')
+    {
+        return $this->createQueryBuilder($alias);
+    }
 }

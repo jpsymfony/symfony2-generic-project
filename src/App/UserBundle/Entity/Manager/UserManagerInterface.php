@@ -13,7 +13,54 @@ interface UserManagerInterface
      */
     public function createUser(UserInterface $user);
 
-    public function setLastConnexion(UserInterface $user, \Datetime $lastConnexion);
+    /**
+     * @param UserInterface $user
+     * @param $newPassword
+     * @return mixed
+     */
+    public function updateCredentials(UserInterface $user, $newPassword);
 
-    public function save(UserInterface $user, $persist = false, $flush = true);
+    /**
+     * @param UserInterface $user
+     * @param $plainPassword
+     * @return mixed
+     */
+    public function isPasswordValid(UserInterface $user, $plainPassword);
+
+    /**
+     * @param $identifier
+     * @return mixed
+     */
+    public function getUserByIdentifier($identifier);
+
+    /**
+     * @param $user
+     * @return mixed
+     */
+    public function sendRequestPassword($user);
+
+    /**
+     * @param UserInterface $user
+     * @param $token
+     * @return mixed
+     */
+    public function updateConfirmationTokenUser(UserInterface $user, $token);
+
+    /**
+     * @param $token
+     * @return mixed
+     */
+    public function getUserByConfirmationToken($token);
+
+    /**
+     * @param UserInterface $user
+     * @return mixed
+     */
+    public function clearConfirmationTokenUser(UserInterface $user);
+
+    /**
+     * @param UserInterface $user
+     * @param \Datetime $lastConnexion
+     */
+    public function setLastConnexion(UserInterface $user, \Datetime $lastConnexion);
 } 

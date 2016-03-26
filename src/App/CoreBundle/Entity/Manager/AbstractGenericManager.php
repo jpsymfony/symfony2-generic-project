@@ -15,14 +15,6 @@ class AbstractGenericManager implements GenericManagerInterface
     /**
      * @inheritdoc
      */
-    public function __construct(AbstractGenericRepository $repository)
-    {
-        $this->repository = $repository;
-    }
-
-    /**
-     * @inheritdoc
-     */
     public function remove($entity)
     {
         $this->repository->remove($entity);

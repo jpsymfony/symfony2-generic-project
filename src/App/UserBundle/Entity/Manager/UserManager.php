@@ -2,6 +2,7 @@
 
 namespace App\UserBundle\Entity\Manager;
 
+use App\CoreBundle\Entity\Manager\AbstractGenericManager;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Security\Core\Encoder\EncoderFactoryInterface;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
@@ -10,7 +11,7 @@ use App\UserBundle\Entity\UserInterface;
 use App\UserBundle\Event\UserDataEvent;
 use App\UserBundle\Repository\UserRepository;
 
-class UserManager implements UserManagerInterface
+class UserManager extends AbstractGenericManager implements UserManagerInterface
 {
     /**
      * @var EncoderFactoryInterface $encoderFactory
@@ -29,9 +30,9 @@ class UserManager implements UserManagerInterface
 
     /**
      *
-     * @var UserRepository $userRepository
+     * @var UserRepository $repository
      */
-    protected $userRepository;
+    protected $epository;
 
     /**
      * @param EncoderFactoryInterface       $encoderFactory
@@ -49,13 +50,11 @@ class UserManager implements UserManagerInterface
         $this->encoderFactory = $encoderFactory;
         $this->dispatcher = $dispatcher;
         $this->encoder = $encoder;
-        $this->userRepository = $userRepository;
+        $this->repository = $userRepository;
     }
 
     /**
-     * @param UserInterface $user
-     *
-     * @return UserInterface
+     * @inheritdoc
      */
     public function createUser(UserInterface $user)
     {
@@ -69,6 +68,9 @@ class UserManager implements UserManagerInterface
         );
     }
 
+    /**
+     * @inheritdoc
+     */
     public function updateCredentials(UserInterface $user, $newPassword)
     {
         $user->setPlainPassword($newPassword);
@@ -76,16 +78,25 @@ class UserManager implements UserManagerInterface
         $this->save($user, false, true);
     }
 
+    /**
+     * @inheritdoc
+     */
     public function isPasswordValid(UserInterface $user, $plainPassword)
     {
         return $this->encoder->isPasswordValid($user, $plainPassword);
     }
 
+    /**
+     * @inheritdoc
+     */
     public function getUserByIdentifier($identifier)
     {
-        return $this->userRepository->getUserByEmailOrUsername($identifier);
+        return $this->repository->getUserByEmailOrUsername($identifier);
     }
 
+    /**
+     * @inheritdoc
+     */
     public function sendRequestPassword($user)
     {
         $this->dispatcher->dispatch(
@@ -93,33 +104,36 @@ class UserManager implements UserManagerInterface
         );
     }
 
+    /**
+     * @inheritdoc
+     */
     public function updateConfirmationTokenUser(UserInterface $user, $token) {
         $user->setConfirmationToken($token);
         $user->setIsAlreadyRequested(true);
         $this->save($user, false, true);
     }
 
+    /**
+     * @inheritdoc
+     */
     public function getUserByConfirmationToken($token)
     {
-        return $this->userRepository->findOneByConfirmationToken($token);
+        return $this->repository->findOneByConfirmationToken($token);
     }
 
+    /**
+     * @inheritdoc
+     */
     public function clearConfirmationTokenUser(UserInterface $user) {
         $user->setConfirmationToken(null);
         $user->setIsAlreadyRequested(false);
     }
 
     /**
-     * @param UserInterface $user
-     * @param \Datetime $lastConnexion
+     * @inheritdoc
      */
     public function setLastConnexion(UserInterface $user, \Datetime $lastConnexion)
     {
         $user->setLastConnexion($lastConnexion);
-    }
-
-    public function save(UserInterface $user, $persist = false, $flush = true)
-    {
-        $this->userRepository->save($user, $persist, $flush);
     }
 }

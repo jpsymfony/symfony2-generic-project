@@ -7,12 +7,6 @@ use App\CoreBundle\Repository\AbstractGenericRepository;
 interface GenericManagerInterface
 {
     /**
-     * ActorManager constructor.
-     * @param AbstractGenericRepository $repository
-     */
-    public function __construct(AbstractGenericRepository $repository);
-
-    /**
      * @param $entity
      */
     public function remove($entity);
