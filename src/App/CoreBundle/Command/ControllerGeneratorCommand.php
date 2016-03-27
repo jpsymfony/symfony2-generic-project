@@ -1,6 +1,7 @@
 <?php
 namespace App\CoreBundle\Command;
 
+use App\CoreBundle\Services\Utils;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -13,8 +14,7 @@ use Symfony\Component\Console\Question\Question;
 
 class ControllerGeneratorCommand extends ContainerAwareCommand
 {
-
-    private $bundles = ['AppAdminBundle', 'AppBackUserBundle', 'AppCoreBundle', 'AppPortalBundle', 'AppUserBundle'];
+    private $bundles = [];
 
     protected function configure()
     {
@@ -31,6 +31,8 @@ class ControllerGeneratorCommand extends ContainerAwareCommand
 
     protected function interact(InputInterface $input, OutputInterface $output)
     {
+        $this->getBundles();
+
         // On affiche quelques infos
         $dialog = $this->getHelper('question');
         $output->writeln(array(
@@ -140,5 +142,15 @@ class ControllerGeneratorCommand extends ContainerAwareCommand
         $logger->emergency('This is an emergency message');*/
 
         return 0;
+    }
+
+    private function getBundles()
+    {
+        $utils = new Utils();
+        $bundles = $utils->getBundlesList();
+
+        foreach ($bundles as $bundle) {
+            array_push($this->bundles, 'App' . $bundle);
+        }
     }
 }

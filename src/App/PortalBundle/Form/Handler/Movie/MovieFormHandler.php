@@ -1,6 +1,7 @@
 <?php
 namespace App\PortalBundle\Form\Handler\Movie;
 
+use App\CoreBundle\Services\Utils;
 use App\PortalBundle\Entity\Manager\Interfaces\ActorManagerInterface;
 use App\PortalBundle\Entity\Manager\Interfaces\CategoryManagerInterface;
 use App\PortalBundle\Entity\Manager\Interfaces\HashTagManagerInterface;
@@ -145,9 +146,23 @@ class MovieFormHandler
             $class = Movie::getManagerName($class); // get mappedClass, ie actor for actors, hashTag for hashTags, etc.
         }
 
-        $nameSpaceClass = '\App\PortalBundle\Entity\Manager\\' . ucfirst($class) . 'Manager';
-        if (!class_exists($nameSpaceClass)) {
-            throw new ResourceNotFoundException('Impossible de trouver la classe ' . $nameSpaceClass);
+        $utils = new Utils();
+        $bundles = $utils->getBundlesList();
+
+        $isValidClass = false;
+
+        foreach ($bundles as $bundle) {
+            $nameSpaceClass = '\App\\'. $bundle .'\Entity\Manager\\' . ucfirst($class) . 'Manager';
+            if (!class_exists($nameSpaceClass)) {
+                continue;
+            } else {
+                $isValidClass = true;
+                break;
+            }
+        }
+
+        if (!$isValidClass) {
+            throw new ResourceNotFoundException('Impossible de trouver la classe ' . ucfirst($class) . 'Manager');
         }
 
         return $class;
