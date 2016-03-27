@@ -2,6 +2,7 @@
 
 namespace App\PortalBundle\Repository;
 
+use App\CoreBundle\Form\DataTransformer\DatedmYToDateYmdViewTransformer;
 use App\CoreBundle\Repository\AbstractGenericRepository;
 use App\PortalBundle\Entity\Movie;
 use App\PortalBundle\Repository\Interfaces\MovieRepositoryInterface;
@@ -15,6 +16,10 @@ class MovieRepository extends AbstractGenericRepository implements MovieReposito
         if (!empty($requestVal)) {
             $isReleaseDateFrom = !empty($requestVal['releaseDateFrom']);
             $isReleaseDateTo = !empty($requestVal['releaseDateTo']);
+
+            $viewTranformer = new DatedmYToDateYmdViewTransformer();
+            $releaseDateFrom = $viewTranformer->reverseTransform($requestVal['releaseDateFrom']);
+            $releaseDateTo = $viewTranformer->reverseTransform($requestVal['releaseDateTo']);
 
             foreach ($requestVal as $key => $val) {
                 if (!empty($requestVal[$key])) {
@@ -39,15 +44,15 @@ class MovieRepository extends AbstractGenericRepository implements MovieReposito
 
             if ($isReleaseDateFrom && $isReleaseDateTo) {
                 $qb->andWhere('DATE(f.releaseAt) >= :releaseDateFrom')
-                    ->setParameter('releaseDateFrom', $requestVal['releaseDateFrom']);
+                    ->setParameter('releaseDateFrom', $releaseDateFrom);
                 $qb->andWhere('DATE(f.releaseAt) <= :releaseDateTo')
-                    ->setParameter('releaseDateTo', $requestVal['releaseDateTo']);
+                    ->setParameter('releaseDateTo', $releaseDateTo);
             } elseif ($isReleaseDateFrom && !$isReleaseDateTo) {
                 $qb->andWhere('DATE(f.releaseAt) >= :releaseDateFrom')
-                    ->setParameter('releaseDateFrom', $requestVal['releaseDateFrom']);
+                    ->setParameter('releaseDateFrom', $releaseDateFrom);
             } elseif (!$isReleaseDateFrom && $isReleaseDateTo) {
                 $qb->andWhere('DATE(f.releaseAt) <= :releaseDateTo')
-                    ->setParameter('releaseDateTo', $requestVal['releaseDateTo']);
+                    ->setParameter('releaseDateTo', $releaseDateTo);
             }
         }
 

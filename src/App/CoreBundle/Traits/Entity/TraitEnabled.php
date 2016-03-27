@@ -3,14 +3,7 @@ namespace App\CoreBundle\Traits\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * abstract class for enabled attributs.
- * 
- * @category   Generalisation
- * @package    Trait
- * @subpackage Entity
- * @abstract
- */
+
 trait TraitEnabled
 {
     /**

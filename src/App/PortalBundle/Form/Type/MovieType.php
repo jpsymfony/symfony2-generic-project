@@ -37,7 +37,8 @@ class MovieType extends AbstractType
                     'releaseAt', 'text',
                     array(
                         'attr' => array('class' => 'datepicker'),
-                        'label' => 'film.dateSortie'
+                        'label' => 'film.dateSortie',
+                        'read_only' => true,
                     )
                 )
                     ->addModelTransformer(new TextToDateTimeDataTransformer())

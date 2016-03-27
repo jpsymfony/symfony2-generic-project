@@ -55,6 +55,7 @@ class MovieFilterType extends AbstractType
                         'attr' => array('class' => 'datepicker'),
                         'label' => 'film.dateSortieDebut',
                         'mapped' => false,
+                        'read_only' => true,
                     )
                 )
                 ->add('releaseDateTo', 'text',
@@ -62,6 +63,7 @@ class MovieFilterType extends AbstractType
                         'attr' => array('class' => 'datepicker'),
                         'label' => 'film.dateSortieFin',
                         'mapped' => false,
+                        'read_only' => true,
                     )
                 );
     }
