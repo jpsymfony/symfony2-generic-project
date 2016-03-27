@@ -21,7 +21,8 @@ class ActorType extends AbstractType
                 'birthday', 'text',
                 array(
                     'attr' => array('class' => 'datepicker'),
-                    'label' => 'acteur.dateNaissance'
+                    'label' => 'acteur.dateNaissance',
+                    'read_only' => true,
                 )
             )
                 ->addModelTransformer(new TextToDateTimeDataTransformer())

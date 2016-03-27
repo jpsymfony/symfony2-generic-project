@@ -12,7 +12,7 @@ trait TraitDatetime
      * @ORM\Column(name="created_at", type="datetime", nullable=true)
      * @Gedmo\Timestampable(on="create")
      */
-    protected $created_at;
+    protected $createdAt;
     
     /**
      * @var \DateTime $updated_at
@@ -20,28 +20,28 @@ trait TraitDatetime
      * @ORM\Column(name="updated_at", type="datetime", nullable=true)
      * @Gedmo\Timestampable(on="update")
      */
-    protected $updated_at;
+    protected $updatedAt;
     
     /**
      * @var \DateTime $published_at
      *
      * @ORM\Column(name="published_at", type="datetime", nullable=true)
      */
-    protected $published_at;
+    protected $publishedAt;
     
     /**
      * @var \DateTime $archive_at
      *
      * @ORM\Column(name="archive_at", type="datetime", nullable=true)
      */
-    protected $archive_at;
+    protected $archiveAt;
 
     /**
      * {@inheritdoc}
      */
     public function setCreatedAt($createdAt)
     {
-        $this->created_at = $createdAt;
+        $this->createdAt = $createdAt;
         return $this;
     }
     
@@ -50,7 +50,7 @@ trait TraitDatetime
      */
     public function getCreatedAt()
     {
-        return $this->created_at;
+        return $this->createdAt;
     }
     
     /**
@@ -58,7 +58,7 @@ trait TraitDatetime
      */
     public function setUpdatedAt($updatedAt)
     {
-        $this->updated_at = $updatedAt;
+        $this->updatedAt = $updatedAt;
         return $this;
     }
     
@@ -67,7 +67,7 @@ trait TraitDatetime
      */
     public function getUpdatedAt()
     {
-        return $this->updated_at;
+        return $this->updatedAt;
     }
     
     /**
@@ -75,7 +75,7 @@ trait TraitDatetime
      */
     public function setPublishedAt($publishedAt)
     {
-        $this->published_at = $publishedAt;
+        $this->publishedAt = $publishedAt;
         return $this;
     }
     
@@ -84,7 +84,7 @@ trait TraitDatetime
      */
     public function getPublishedAt()
     {
-        return $this->published_at;
+        return $this->publishedAt;
     }
     
     /**
@@ -92,7 +92,7 @@ trait TraitDatetime
      */
     public function setArchiveAt($archiveAt)
     {
-        $this->archive_at = $archiveAt;
+        $this->archiveAt = $archiveAt;
         return $this;
     }
     
@@ -101,6 +101,6 @@ trait TraitDatetime
      */
     public function getArchiveAt()
     {
-        return $this->archive_at;
+        return $this->archiveAt;
     }
 }

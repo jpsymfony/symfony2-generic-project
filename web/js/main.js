@@ -65,18 +65,18 @@ $('#app_portal_movie_filter_releaseDateFrom').datepicker( {
     changeMonth: true,
     changeYear: true,
     showButtonPanel: true,
-    dateFormat: 'yy-mm-dd',
+    dateFormat: 'dd-mm-yy',
     yearRange: "-50:+0",
     onClose: function(dateText, inst) {
         $(this).datepicker('setDate', new Date(inst.selectedYear, inst.selectedMonth, inst.selectedDay));
     }
 });
 
-$('#app_portal_movie_filter_releaseDateTo').datepicker( {
+$('#app_portal_movie_filter_releaseDateTo').datepicker({
     changeMonth: true,
     changeYear: true,
     showButtonPanel: true,
-    dateFormat: 'yy-mm-dd',
+    dateFormat: 'dd-mm-yy',
     yearRange: "-50:+0",
     onClose: function(dateText, inst) {
         $(this).datepicker('setDate', new Date(inst.selectedYear, inst.selectedMonth, inst.selectedDay));
