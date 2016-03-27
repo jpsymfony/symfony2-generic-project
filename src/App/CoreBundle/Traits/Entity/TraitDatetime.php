@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 trait TraitDatetime
 {
     /**
-     * @var \DateTime $created_at
+     * @var \DateTime $createdAt
      *
      * @ORM\Column(name="created_at", type="datetime", nullable=true)
      * @Gedmo\Timestampable(on="create")
@@ -15,7 +15,7 @@ trait TraitDatetime
     protected $createdAt;
     
     /**
-     * @var \DateTime $updated_at
+     * @var \DateTime $updatedAt
      *
      * @ORM\Column(name="updated_at", type="datetime", nullable=true)
      * @Gedmo\Timestampable(on="update")
@@ -23,14 +23,14 @@ trait TraitDatetime
     protected $updatedAt;
     
     /**
-     * @var \DateTime $published_at
+     * @var \DateTime $publishedAt
      *
      * @ORM\Column(name="published_at", type="datetime", nullable=true)
      */
     protected $publishedAt;
     
     /**
-     * @var \DateTime $archive_at
+     * @var \DateTime $archiveAt
      *
      * @ORM\Column(name="archive_at", type="datetime", nullable=true)
      */

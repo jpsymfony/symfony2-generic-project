@@ -3,7 +3,6 @@ namespace App\CoreBundle\Traits\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
-
 trait TraitEnabled
 {
     /**

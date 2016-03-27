@@ -11,7 +11,7 @@
         <div class="movie-metadata">
             <table class="metadata table table-bordered">
                 <tr><th>{{ 'film.horaire' | trans }}</th><td> {{ '14-16'|formatSingleDayPart }} {{ '5.5'|price }}</td></tr>
-                <tr><th>{{ 'film.dateSortie' | trans }}</th><td>{{ movie.releaseAt | date("d/m/Y") }}</td></tr>
+                <tr><th>{{ 'film.dateSortie' | trans }}</th><td>{{ movie.releasedAt | date("d/m/Y") }}</td></tr>
                 <tr>
                     <th>{{ 'film.categorie'|trans }}</th>
                     <td>{{ movie.category.title }}</td>
