@@ -17,8 +17,8 @@ class DatedmYToDateYmdViewTransformer implements DataTransformerInterface
     // quand le formulaire est soumis
     public function reverseTransform($stringDate)
     {
-        if (null === $stringDate) {
-            return NULL;
+        if (empty($stringDate)) {
+            return null;
         }
 
         if (!is_string($stringDate)) {
@@ -28,5 +28,6 @@ class DatedmYToDateYmdViewTransformer implements DataTransformerInterface
         $stringDateParts = explode('-', $stringDate);
 
         return $stringDateParts[2] . '-' . $stringDateParts[1]. '-' . $stringDateParts[0]; // we want Y-m-d format for doctrine request
+
     }
 }
