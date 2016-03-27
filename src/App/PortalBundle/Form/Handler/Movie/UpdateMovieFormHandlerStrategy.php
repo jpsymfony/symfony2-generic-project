@@ -5,7 +5,7 @@ use App\PortalBundle\Entity\Manager\Interfaces\HashTagManagerInterface;
 use App\PortalBundle\Form\Type\MovieType;
 use App\UserBundle\Security\MovieVoter;
 use Doctrine\Common\Collections\ArrayCollection;
-use Symfony\Component\Finder\Exception\AccessDeniedException;
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
