@@ -34,7 +34,7 @@ class MovieType extends AbstractType
             ->add('image', new ImageType(), array('data' => $this->image))// if an image has previously been uploaded, we populate the movie object with database values
             ->add(
                 $builder->create(
-                    'releaseAt', 'text',
+                    'releasedAt', 'text',
                     array(
                         'attr' => array('class' => 'datepicker'),
                         'label' => 'film.dateSortie',

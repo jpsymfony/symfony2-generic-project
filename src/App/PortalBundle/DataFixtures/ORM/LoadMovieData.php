@@ -40,7 +40,7 @@ class LoadMovieData extends AbstractFixture implements OrderedFixtureInterface
         $movie1->addHashTag($hashTag1);
         $movie1->addHashTag($hashTag2);
         $movie1->setAuthor($author1);
-        $movie1->setReleaseAt(new \DateTime('2000-07-25'));
+        $movie1->setReleasedAt(new \DateTime('2000-07-25'));
         $manager->persist($movie1);
 
         $movie2 = new Movie();
@@ -51,7 +51,7 @@ class LoadMovieData extends AbstractFixture implements OrderedFixtureInterface
         $movie2->addHashTag($hashTag3);
         $movie2->addHashTag($hashTag4);
         $movie2->setAuthor($author1);
-        $movie2->setReleaseAt(new \DateTime('1998-12-15'));
+        $movie2->setReleasedAt(new \DateTime('1998-12-15'));
         $manager->persist($movie2);
 
         $movie3 = new Movie();
@@ -62,7 +62,7 @@ class LoadMovieData extends AbstractFixture implements OrderedFixtureInterface
         $movie3->addHashTag($hashTag5);
         $movie3->addHashTag($hashTag6);
         $movie3->setAuthor($author2);
-        $movie3->setReleaseAt(new \DateTime('2013-03-29'));
+        $movie3->setReleasedAt(new \DateTime('2013-03-29'));
         $manager->persist($movie3);
 
         $manager->flush();

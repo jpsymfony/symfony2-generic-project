@@ -43,15 +43,15 @@ class MovieRepository extends AbstractGenericRepository implements MovieReposito
             }
 
             if ($isReleaseDateFrom && $isReleaseDateTo) {
-                $qb->andWhere('DATE(f.releaseAt) >= :releaseDateFrom')
+                $qb->andWhere('DATE(f.releasedAt) >= :releaseDateFrom')
                     ->setParameter('releaseDateFrom', $releaseDateFrom);
-                $qb->andWhere('DATE(f.releaseAt) <= :releaseDateTo')
+                $qb->andWhere('DATE(f.releasedAt) <= :releaseDateTo')
                     ->setParameter('releaseDateTo', $releaseDateTo);
             } elseif ($isReleaseDateFrom && !$isReleaseDateTo) {
-                $qb->andWhere('DATE(f.releaseAt) >= :releaseDateFrom')
+                $qb->andWhere('DATE(f.releasedAt) >= :releaseDateFrom')
                     ->setParameter('releaseDateFrom', $releaseDateFrom);
             } elseif (!$isReleaseDateFrom && $isReleaseDateTo) {
-                $qb->andWhere('DATE(f.releaseAt) <= :releaseDateTo')
+                $qb->andWhere('DATE(f.releasedAt) <= :releaseDateTo')
                     ->setParameter('releaseDateTo', $releaseDateTo);
             }
         }

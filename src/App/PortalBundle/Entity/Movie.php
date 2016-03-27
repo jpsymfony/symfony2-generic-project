@@ -100,54 +100,17 @@ class Movie implements TraitDatetimeInterface, TraitSimpleInterface, TraitEnable
     private $author;
 
     /**
-     * @var \DateTime $releaseAt
+     * @var \DateTime $releasedAt
      *
      * @ORM\Column(name="released_at", type="date")
      * @Assert\NotBlank()
      */
-    private $releaseAt;
-
-    /**
-     * phpname type
-     * e.g. 'AuthorId'
-     */
-    const TYPE_PHPNAME = 'phpName';
-
-    /**
-     * column fieldname type
-     * e.g. 'author_id'
-     */
-    const TYPE_FIELDNAME = 'fieldName';
-
-    /**
-     * holds an array of fieldnames
-     *
-     * first dimension keys are the type constants
-     * e.g. static::$fieldNames[static::TYPE_PHPNAME][0] = 'Id'
-     */
-    protected static $fieldNames = array(
-        self::TYPE_PHPNAME => array('Id', 'Title', 'Description', 'Category', 'Actors', 'HashTags'),
-        self::TYPE_FIELDNAME => array('id', 'title', 'description', 'category', 'actors', 'hashTags'),
-    );
-
+    private $releasedAt;
 
     public function __construct()
     {
         $this->actors = new ArrayCollection();
         $this->hashTags = new ArrayCollection();
-    }
-
-    /**
-     * Set category
-     *
-     * @param SingleIntIdEntity $category
-     * @return Movie
-     */
-    public function setSingleIntIdCategory(SingleIntIdEntity $category)
-    {
-        $this->category = $category;
-
-        return $this;
     }
 
     /**
@@ -360,18 +323,18 @@ class Movie implements TraitDatetimeInterface, TraitSimpleInterface, TraitEnable
     /**
      * @return \DateTime
      */
-    public function getReleaseAt()
+    public function getReleasedAt()
     {
-        return $this->releaseAt;
+        return $this->releasedAt;
     }
 
     /**
-     * @param \DateTime $releaseAt
+     * @param \DateTime $releasedAt
      * @return Movie
      */
-    public function setReleaseAt($releaseAt)
+    public function setReleasedAt($releasedAt)
     {
-        $this->releaseAt = $releaseAt;
+        $this->releasedAt = $releasedAt;
         return $this;
     }
 
@@ -422,64 +385,5 @@ class Movie implements TraitDatetimeInterface, TraitSimpleInterface, TraitEnable
         }
 
         return static::$managerCollectionMapping[$manager];
-    }
-
-
-    /**
-     * Populates the object using an array.
-     *
-     * This is particularly useful when populating an object from one of the
-     * request arrays (e.g. $_POST).  This method goes through the column
-     * names, checking to see whether a matching key exists in populated
-     * array. If so the setByName() method is called for that column.
-     *
-     * You can specify the key type of the array by additionally passing one
-     * of the class type constants BasePeer::TYPE_PHPNAME, BasePeer::TYPE_STUDLYPHPNAME,
-     * BasePeer::TYPE_COLNAME, BasePeer::TYPE_FIELDNAME, BasePeer::TYPE_NUM.
-     * The default key type is the column's BasePeer::TYPE_PHPNAME
-     *
-     * @param array $arr An array to populate the object from.
-     * @param string $keyType The type of keys the array uses.
-     * @return void
-     */
-    public function fromArray($arr, $keyType = self::TYPE_PHPNAME)
-    {
-        $keys = static::getFieldNames($keyType);
-        if (array_key_exists($keys[0], $arr)) {
-            $this->setId($arr[$keys[0]]);
-        }
-        if (array_key_exists($keys[1], $arr)) {
-            $this->setTitle($arr[$keys[1]]);
-        }
-        if (array_key_exists($keys[2], $arr)) {
-            $this->setDescription($arr[$keys[2]]);
-        }
-        if (array_key_exists($keys[3], $arr)) {
-            $this->setSingleIntIdCategory($arr[$keys[3]]);
-        }
-        if (array_key_exists($keys[4], $arr)) {
-            $this->setActors($arr[$keys[4]]);
-        }
-        /*if (array_key_exists($keys[5], $arr)) {
-            $this->setHashTags($arr[$keys[5]]);
-        }*/
-    }
-
-    /**
-     * Returns an array of field names.
-     *
-     * @param      string $type The type of fieldnames to return:
-     *                      One of the class type constants BasePeer::TYPE_PHPNAME, BasePeer::TYPE_STUDLYPHPNAME
-     *                      BasePeer::TYPE_COLNAME, BasePeer::TYPE_FIELDNAME, BasePeer::TYPE_NUM
-     * @return array           A list of field names
-     * @throws \Exception - if the type is not valid.
-     */
-    public static function getFieldNames($type)
-    {
-        if (!array_key_exists($type, static::$fieldNames)) {
-            throw new \Exception('Method getFieldNames() expects the parameter $type to be one of the class constants BasePeer::TYPE_PHPNAME, BasePeer::TYPE_STUDLYPHPNAME, BasePeer::TYPE_COLNAME, BasePeer::TYPE_FIELDNAME, BasePeer::TYPE_NUM. ' . $type . ' was given.');
-        }
-
-        return static::$fieldNames[$type];
     }
 }
