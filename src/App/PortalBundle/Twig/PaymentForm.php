@@ -2,8 +2,10 @@
 
 namespace App\PortalBundle\Twig;
 
+use App\CoreBundle\Services\Utils;
 use App\PortalBundle\Services\GenericPaymentService;
 use App\PortalBundle\Services\PaymentContainerService;
+use Symfony\Component\Routing\Exception\ResourceNotFoundException;
 use Symfony\Component\Translation\Exception\NotFoundResourceException;
 
 class PaymentForm extends \Twig_Extension
@@ -27,7 +29,7 @@ class PaymentForm extends \Twig_Extension
     public function __construct(PaymentContainerService $paymentContainerService, $configPayment)
     {
         $this->paymentContainerService = $paymentContainerService;
-        $this->defaultPaymentOrganism = $configPayment['default'];
+        $this->defaultPaymentOrganism = ucfirst($configPayment['default']);
         $this->url = $configPayment[$this->defaultPaymentOrganism]['url'];
     }
 
@@ -57,11 +59,10 @@ class PaymentForm extends \Twig_Extension
             'ORDERID' => $orderId,
         );
 
-        $defaultPaymentOrganismNamespaceClass = '\App\PortalBundle\Services\\' . $this->defaultPaymentOrganism;
-        $defaultPaymentOrganismClass = new $defaultPaymentOrganismNamespaceClass();
+        $defaultPaymentOrganismClass =  $this->getPaymentClass($this->defaultPaymentOrganism);
 
         if (!$defaultPaymentOrganismClass instanceof GenericPaymentService) {
-            throw new NotFoundResourceException('no service found for ' . $this->defaultPaymentOrganism);
+            throw new NotFoundResourceException('no GenericPaymentService found for ' . $this->defaultPaymentOrganism);
         }
 
         $paymentSolution = null;
@@ -72,8 +73,48 @@ class PaymentForm extends \Twig_Extension
             }
         }
 
-        $html = $paymentSolution->getHtml($this->url, $parameters, $displaySubmitBtn, $message);
-        return $html;
+        return $paymentSolution->getHtml($this->url, $parameters, $displaySubmitBtn, $message);
+    }
+
+    private function getPaymentClass($class)
+    {
+        $isValidClass = $this->isValidPaymentClass($class);
+        if ($isValidClass['valid']) {
+            return new $isValidClass['class']();
+        } else {
+            throw new NotFoundResourceException('no Service found for ' . $this->defaultPaymentOrganism);
+        }
+    }
+
+    private function isValidPaymentClass($class)
+    {
+        $utils = new Utils();
+        $bundles = $utils->getBundlesList();
+
+        $isValidClass = false;
+        $nameSpaceClass = '';
+
+        foreach ($bundles as $bundle) {
+            $nameSpaceClass = '\App\\'. $bundle .'\Services\\' . ucfirst($class);
+            if (!class_exists($nameSpaceClass)) {
+                continue;
+            } else {
+                $isValidClass = true;
+                break;
+            }
+        }
+
+        if (!$isValidClass) {
+            return [
+                'valid' => false,
+                'class' => '',
+            ];
+        }
+
+        return [
+            'valid' => true,
+            'class' => $nameSpaceClass,
+        ];
     }
 
 }

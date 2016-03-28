@@ -10,7 +10,7 @@ use Symfony\Component\Security\Http\HttpUtils;
 
 class AuthenticationFailureHandler extends DefaultAuthenticationFailureHandler
 {
-    
+
     public function __construct(
             HttpKernelInterface $httpKernel,
             HttpUtils $httpUtils,
@@ -24,8 +24,6 @@ class AuthenticationFailureHandler extends DefaultAuthenticationFailureHandler
     {
         $this->logger->error('authentication error with user ' . $request->request->get('_username'));
 
-        $response = parent::onAuthenticationFailure($request, $exception);
-        
-        return $response;
+        return parent::onAuthenticationFailure($request, $exception);
     }
 }

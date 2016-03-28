@@ -132,14 +132,14 @@ class ControllerGeneratorCommand extends ContainerAwareCommand
 
         $logger = $this->getContainer()->get('logger');
 
-        /*$logger->debug('This is a debug message');
+        $logger->debug('This is a debug message');
         $logger->info('This is an info message');
         $logger->notice('This is an notice message');
         $logger->warning('This is a warning message');
         $logger->error('This is an error message');
         $logger->critical('This is a critical message');
         $logger->alert('This is an alert message');
-        $logger->emergency('This is an emergency message');*/
+        $logger->emergency('This is an emergency message');
 
         return 0;
     }

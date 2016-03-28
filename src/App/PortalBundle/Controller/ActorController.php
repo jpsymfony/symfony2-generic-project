@@ -89,7 +89,8 @@ class ActorController extends Controller
         if (is_null($actor)) {
             $actor = new Actor();
             $actorFormHandler->setActorFormHandlerStrategy($this->get('app_portal.new_actor.form.handler.strategy'));
-        } else { // we get entity from database
+        } else {
+            // we get entity from database
             $actorFormHandler->setActorFormHandlerStrategy($this->get('app_portal.update_actor.form.handler.strategy'));
         }
 

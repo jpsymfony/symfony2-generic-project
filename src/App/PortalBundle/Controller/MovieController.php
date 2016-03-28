@@ -61,7 +61,8 @@ class MovieController extends Controller
         if (is_null($movie)) {
             $movie = new Movie();
             $this->getMovieFormHandler()->setMovieFormHandlerStrategy($this->get('app_portal.new_movie.form.handler.strategy'));
-        } else { // we get entity from database
+        } else {
+            // we get entity from database
             $this->getMovieFormHandler()->setMovieFormHandlerStrategy($this->get('app_portal.update_movie.form.handler.strategy'));
         }
 
