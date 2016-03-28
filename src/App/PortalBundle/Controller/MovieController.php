@@ -114,7 +114,12 @@ class MovieController extends Controller
             ]
         );
 
-        $this->getMovieFormHandler()->handleSearchForm($form, $request);
+        try {
+            $this->getMovieFormHandler()->handleSearchForm($form, $request);
+        } catch (\Exception $e) {
+            $this->get('logger')->critical($e->getMessage());
+            $this->addFlash('error', $e->getMessage());
+        }
 
         return $this->render('@AppPortal/Movie/partials/formFilter.html.twig', ['form' => $form->createView()]);
     }

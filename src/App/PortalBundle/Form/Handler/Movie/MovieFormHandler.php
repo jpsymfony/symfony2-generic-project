@@ -133,7 +133,7 @@ class MovieFormHandler
 
                 // category
                 if (in_array($key, Movie::getObjectFields())) {
-                    $key = $this->isValidClass($key);
+                    $this->isValidClass($key);
                     $objectManager = $key . 'Manager';
                     $object = $this->$objectManager->find($val);
                     $form->get($key)->setData($object);
