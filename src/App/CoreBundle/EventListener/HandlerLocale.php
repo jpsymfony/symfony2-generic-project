@@ -35,7 +35,7 @@ class HandlerLocale
      * @param $switchLanguageAuthorized
      * @param $allLocales
      */
-    public function __construct($defaultLocale = 'fr', $switchLanguageAuthorized, $allLocales)
+    public function __construct($defaultLocale, $switchLanguageAuthorized, $allLocales)
     {
         $this->defaultLocale = $defaultLocale;
         $this->switchLanguageAuthorized = $switchLanguageAuthorized;
@@ -66,16 +66,19 @@ class HandlerLocale
         if ($isSwitchLanguageBrowserAuthorized && !$islocale) {
             $langValue = $this->request->getPreferredLanguage();
             if (in_array($langValue, $allLocales)) {
-                $this->request->attributes->set('_locale', $langValue); // for _locale routing parameter
+                // for _locale routing parameter
+                $this->request->attributes->set('_locale', $langValue);
                 $this->request->setLocale($langValue);
                 return;
             }
         }
         if ($islocale && !empty($localevalue)) {
-            $this->request->attributes->set('_locale', $localevalue); // for _locale routing parameter
+            // for _locale routing parameter
+            $this->request->attributes->set('_locale', $localevalue);
             $this->request->setLocale($localevalue);
         } else {
-            $this->request->attributes->set('_locale', $this->defaultLocale); // for _locale routing parameter
+            // for _locale routing parameter
+            $this->request->attributes->set('_locale', $this->defaultLocale);
             $this->request->setLocale($this->defaultLocale);
         }
     }

@@ -25,10 +25,10 @@ class LoadBackUsers implements FixtureInterface, ContainerAwareInterface
 
     public function load(ObjectManager $manager)
     {
-        $this->loadUsers($manager);
+        $this->loadUsers();
     }
 
-    private function loadUsers(ObjectManager $manager)
+    private function loadUsers()
     {
         $manipulator = $this->container->get('fos_user.util.user_manipulator');
         $manipulator->create('supadmin', 'supadmin', 'supadmin@gmail.com', true, true);

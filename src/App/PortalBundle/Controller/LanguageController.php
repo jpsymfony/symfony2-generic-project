@@ -32,7 +32,7 @@ class LanguageController extends Controller
         if (empty($url)) {
             $url = $this->container->get('router')->generate('homepage');
         } else {
-            if (false == stristr($url, $this->get('request')->getHttpHost())) {
+            if (!stristr($url, $this->get('request')->getHttpHost())) {
                 $this->createAccessDeniedException('Attack!!');
             }
         }

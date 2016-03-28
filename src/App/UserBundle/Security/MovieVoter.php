@@ -51,6 +51,7 @@ class MovieVoter extends Voter
         switch($attribute) {
             case self::EDIT:
                 return $this->canEdit($movie, $user);
+            default: break;
         }
 
         throw new \LogicException('This code should not be reached!');

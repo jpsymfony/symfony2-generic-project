@@ -22,9 +22,7 @@ class I18nExtension extends \Twig_Extension
     public function priceFilter($number, $decimals = 0, $decPoint = '.', $thousandsSep = ',')
     {
         $price = number_format($number, $decimals, $decPoint, $thousandsSep);
-        $price = '$'.$price;
-
-        return $price;
+        return '$'.$price;
     }
 
     public static function get($locale)
@@ -39,19 +37,25 @@ class I18nExtension extends \Twig_Extension
 
     public static function formatTime($time, $format = ':')
     {
-        $timeParts       = explode($format, $time);
-        $transformedTime = $timeParts[0] . self::getDefault() . $timeParts[1];
+        $timeParts = explode($format, $time);
 
-        return $transformedTime;
+        if (1 === count($timeParts)) {
+            throw new \Exception('You did not used a format such as :');
+        }
+
+        return $timeParts[0] . self::getDefault() . $timeParts[1];
     }
 
     public static function formatSingleDayPart($daypart)
     {
-        $daypartParts       = explode('-', $daypart);
-        $tempDayPart        = self::constructDayPart($daypartParts);
-        $daypartTransformed = implode('-', $tempDayPart);
+        $daypartParts = explode('-', $daypart);
 
-        return $daypartTransformed;
+        if (1 === count($daypartParts)) {
+            throw new \Exception('You did not used a separator such as -');
+        }
+
+        $tempDayPart        = self::constructDayPart($daypartParts);
+        return implode('-', $tempDayPart);
     }
 
     private static function constructDayPart($daypartParts)

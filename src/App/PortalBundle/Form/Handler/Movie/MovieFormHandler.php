@@ -114,12 +114,14 @@ class MovieFormHandler
 
         foreach ($attributes as $key => $val) {
             if (!empty($val)) {
-                if (in_array($key, Movie::getLikeFieldsSearchForm())) { // title, description, releaseDateFrom, releaseDateTo
+                // title, description, releaseDateFrom, releaseDateTo
+                if (in_array($key, Movie::getLikeFieldsSearchForm())) {
                     $form->get($key)->setData($val);
                     continue;
                 }
 
-                if (in_array($key, Movie::getCollectionFields())) { // hashTags, actors
+                // hashTags, actors
+                if (in_array($key, Movie::getCollectionFields())) {
                     $normalizedKey = $this->isValidClass($key);
                     $objectManager = $normalizedKey . 'Manager';
                     foreach($val as $keyCollection => $valCollection) {
@@ -129,7 +131,8 @@ class MovieFormHandler
                     continue;
                 }
 
-                if (in_array($key, Movie::getObjectFields())) { // category
+                // category
+                if (in_array($key, Movie::getObjectFields())) {
                     $key = $this->isValidClass($key);
                     $objectManager = $key . 'Manager';
                     $object = $this->$objectManager->find($val);
@@ -143,7 +146,8 @@ class MovieFormHandler
     private function isValidClass($class)
     {
         if (array_key_exists($class, Movie::getManagerCollectionMapping())) {
-            $class = Movie::getManagerName($class); // get mappedClass, ie actor for actors, hashTag for hashTags, etc.
+            // get mappedClass, ie actor for actors, hashTag for hashTags, etc.
+            $class = Movie::getManagerName($class);
         }
 
         $utils = new Utils();

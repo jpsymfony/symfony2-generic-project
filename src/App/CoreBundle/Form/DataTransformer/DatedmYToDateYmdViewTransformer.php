@@ -10,8 +10,8 @@ class DatedmYToDateYmdViewTransformer implements DataTransformerInterface
     // quand info revient de l'extérieur (base de données, url, fichier texte, etc.), à l'affichage du formulaire lors d'un edit
     public function transform($stringDate)
     {
-        return; // we already have the date format we want from url so we do nothing
-
+        // we already have the date format we want from url so we do nothing
+        return;
     }
 
     // quand le formulaire est soumis
@@ -27,7 +27,8 @@ class DatedmYToDateYmdViewTransformer implements DataTransformerInterface
 
         $stringDateParts = explode('-', $stringDate);
 
-        return $stringDateParts[2] . '-' . $stringDateParts[1]. '-' . $stringDateParts[0]; // we want Y-m-d format for doctrine request
+        // we want Y-m-d format for doctrine request
+        return $stringDateParts[2] . '-' . $stringDateParts[1]. '-' . $stringDateParts[0];
 
     }
 }

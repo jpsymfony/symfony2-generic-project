@@ -31,7 +31,8 @@ class MovieType extends AbstractType
             ->add('id', 'hidden')
             ->add('title', 'text', array('label' => 'film.titre'))
             ->add('description', 'textarea', array('label' => 'film.description'))
-            ->add('image', new ImageType(), array('data' => $this->image))// if an image has previously been uploaded, we populate the movie object with database values
+            // if an image has previously been uploaded, we populate the movie object with database values
+            ->add('image', new ImageType(), array('data' => $this->image))
             ->add(
                 $builder->create(
                     'releasedAt', 'text',
@@ -51,7 +52,8 @@ class MovieType extends AbstractType
                 'required' => false,
                 'label' => 'film.categorie',
                 'configs' => array(
-                    'multiple' => false // Whether or not multiple values are allowed (default to false)
+                    // Whether or not multiple values are allowed (default to false)
+                    'multiple' => false
                 )
             ))
 
@@ -63,14 +65,13 @@ class MovieType extends AbstractType
                 'required' => false,
                 'label' => 'film.acteurs',
                 'configs' => array(
-                    'multiple' => true // Whether or not multiple values are allowed (default to false)
+                    // Whether or not multiple values are allowed (default to false)
+                    'multiple' => true
                 )
             ));
 
-        if (!empty($options)) {
-            if (isset($options['hashtags_hidden']) && !$options['hashtags_hidden']) {
-                $builder->add('hashTags', 'hashtags');
-            }
+        if (!empty($options) && isset($options['hashtags_hidden']) && !$options['hashtags_hidden']) {
+            $builder->add('hashTags', 'hashtags');
         }
 
         $builder->add('Valider', 'submit', array(
@@ -81,7 +82,8 @@ class MovieType extends AbstractType
        $builder->addEventListener(
             FormEvents::POST_SUBMIT,
             function (FormEvent $event) {
-                $data = $event->getData(); // object movie data from the form
+                // object movie data from the form
+                $data = $event->getData();
 
                 if (!$data instanceof Movie) {
                     throw new \RuntimeException('Movie instance required.');

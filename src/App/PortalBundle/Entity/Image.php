@@ -118,8 +118,10 @@ class Image
 
         // On déplace le fichier envoyé dans le répertoire de notre choix
         $this->file->move(
-            $this->getUploadRootDir(), // Le répertoire de destination
-            $this->id . '.' . $this->extension   // Le nom du fichier à créer, ici « id.extension »
+        // Le répertoire de destination
+            $this->getUploadRootDir(),
+            // Le nom du fichier à créer, ici « id.extension »
+            $this->id . '.' . $this->extension
         );
     }
 
