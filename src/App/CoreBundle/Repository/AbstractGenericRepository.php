@@ -7,7 +7,7 @@ use Symfony\Component\Translation\Exception\NotFoundResourceException;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Query;
 
-class AbstractGenericRepository extends EntityRepository implements GenericRepositoryInterface
+abstract class AbstractGenericRepository extends EntityRepository implements GenericRepositoryInterface
 {
     /**
      * {@inheritdoc}

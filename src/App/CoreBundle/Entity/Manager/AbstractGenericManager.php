@@ -5,7 +5,7 @@ namespace App\CoreBundle\Entity\Manager;
 use App\CoreBundle\Entity\Manager\Interfaces\GenericManagerInterface;
 use App\CoreBundle\Repository\AbstractGenericRepository;
 
-class AbstractGenericManager implements GenericManagerInterface
+abstract class AbstractGenericManager implements GenericManagerInterface
 {
     /**
      * @var AbstractGenericRepository $repository

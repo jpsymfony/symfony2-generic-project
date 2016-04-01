@@ -8,7 +8,7 @@
             {{ error.messageKey|trans(error.messageData) }}
         </div>
     {% endif %}
-        <div style="margin-left: 50%;">
+        <div style="text-align: center">
             <h1>{{ 'user.connexion.label' | trans }}</h1>
         </div>
         <form action="{{ path('security_login_check') }}" method="post" class="form-horizontal">
