@@ -88,7 +88,6 @@ class MovieFormHandler
             (null === $movie->getId() && $request->isMethod('POST'))
             || (null !== $movie->getId() && $request->isMethod('PUT'))
         ) {
-
             $originalHashTags = new ArrayCollection();
 
             // Create an ArrayCollection of the current Tag objects in the database
