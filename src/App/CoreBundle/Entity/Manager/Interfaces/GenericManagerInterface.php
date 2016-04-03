@@ -31,4 +31,15 @@ interface GenericManagerInterface
      * @return mixed
      */
     public function save($entity, $persist = false, $flush = true);
+
+    /**
+     * @param $labelClass
+     * @return GenericManagerInterface
+     */
+    public function isTypeMatch($labelClass);
+
+    /**
+     * @return string LabelClass
+     */
+    public function getLabel();
 }

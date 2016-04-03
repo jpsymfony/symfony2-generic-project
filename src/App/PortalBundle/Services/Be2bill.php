@@ -2,7 +2,7 @@
 
 namespace App\PortalBundle\Services;
 
-class Be2bill implements GenericPaymentServiceInterface
+class Be2bill extends AbstractPaymentService
 {
     public function getHtml($url, $parameters, $displaySubmitBtn, $message)
     {
@@ -15,14 +15,6 @@ class Be2bill implements GenericPaymentServiceInterface
     public function addFail()
     {
         // send mail and log error
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function isTypeMatch($labelClass)
-    {
-        return $labelClass === $this->getLabel();
     }
 
     /**

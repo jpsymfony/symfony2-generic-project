@@ -2,7 +2,7 @@
 
 namespace App\PortalBundle\Services;
 
-class Paypal implements GenericPaymentServiceInterface
+class Paypal extends AbstractPaymentService
 {
     public function getHtml($url, $parameters, $displaySubmitBtn, $message)
     {
@@ -15,14 +15,6 @@ class Paypal implements GenericPaymentServiceInterface
     public function addFail()
     {
         // send mail and log error
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function isTypeMatch($labelClass)
-    {
-        return $labelClass === $this->getLabel();
     }
 
     /**

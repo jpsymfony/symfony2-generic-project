@@ -3,9 +3,10 @@ namespace App\PortalBundle\Entity\Manager;
 
 use App\PortalBundle\Entity\Contact;
 use App\PortalBundle\Entity\Manager\Interfaces\ContactManagerInterface;
+use App\PortalBundle\Entity\Manager\Interfaces\ManagerInterface;
 use Symfony\Component\Translation\TranslatorInterface;
 
-class ContactManager implements ContactManagerInterface
+class ContactManager implements ContactManagerInterface, ManagerInterface
 {
     /**
      * @var \Swift_Mailer
@@ -65,6 +66,22 @@ class ContactManager implements ContactManagerInterface
             ->setContentType('text/html');
 
         $this->mailer->send($message);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function isTypeMatch($labelClass)
+    {
+        return false;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function getLabel()
+    {
+        return null;
     }
 
 }
