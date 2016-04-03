@@ -2,10 +2,8 @@
 
 namespace App\PortalBundle\Twig;
 
-use App\CoreBundle\Services\Utils;
-use App\PortalBundle\Services\GenericPaymentService;
-use App\PortalBundle\Services\PaymentContainerService;
-use Symfony\Component\Routing\Exception\ResourceNotFoundException;
+use App\PortalBundle\Services\GenericPaymentServiceInterface;
+use App\PortalBundle\Services\PaymentManagerService;
 use Symfony\Component\Translation\Exception\NotFoundResourceException;
 
 class PaymentForm extends \Twig_Extension
@@ -20,17 +18,16 @@ class PaymentForm extends \Twig_Extension
      * @var string $defaultPaymentOrganism
      */
     private $defaultPaymentOrganism = null;
-
     /**
-     * @var PaymentContainerService $PaymentContainerService
+     * @var PaymentManagerService
      */
-    private $paymentContainerService;
+    private $paymentManagerService;
 
-    public function __construct(PaymentContainerService $paymentContainerService, $configPayment)
+    public function __construct(PaymentManagerService $paymentManagerService, $configPayment)
     {
-        $this->paymentContainerService = $paymentContainerService;
+        $this->paymentManagerService = $paymentManagerService;
         $this->defaultPaymentOrganism = ucfirst($configPayment['default']);
-        $this->url = $configPayment[$this->defaultPaymentOrganism]['url'];
+
     }
 
     public function getFunctions()
@@ -43,6 +40,15 @@ class PaymentForm extends \Twig_Extension
     public function getName()
     {
         return 'payment_form';
+    }
+
+    public function setUrl($configPayment)
+    {
+        if (!isset($configPayment[$this->defaultPaymentOrganism])) {
+            throw new NotFoundResourceException('no configPayment for ' . $this->defaultPaymentOrganism);
+        }
+
+        $this->url = $configPayment[$this->defaultPaymentOrganism]['url'];
     }
 
     public function getPaymentForm($values, $displaySubmitBtn, $message)
@@ -59,62 +65,13 @@ class PaymentForm extends \Twig_Extension
             'ORDERID' => $orderId,
         );
 
-        $defaultPaymentOrganismClass =  $this->getPaymentClass($this->defaultPaymentOrganism);
+        $paymentSolution = $this->paymentManagerService->getPaymentClass($this->defaultPaymentOrganism);
 
-        if (!$defaultPaymentOrganismClass instanceof GenericPaymentService) {
+        if (!$paymentSolution instanceof GenericPaymentServiceInterface) {
             throw new NotFoundResourceException('no GenericPaymentService found for ' . $this->defaultPaymentOrganism);
         }
 
-        $paymentSolution = null;
-
-        foreach ($this->paymentContainerService->getPaymentServices() as $paymentService) {
-            if ($paymentService instanceof $defaultPaymentOrganismClass) {
-                $paymentSolution = $paymentService;
-            }
-        }
-
         return $paymentSolution->getHtml($this->url, $parameters, $displaySubmitBtn, $message);
-    }
-
-    private function getPaymentClass($class)
-    {
-        $isValidClass = $this->isValidPaymentClass($class);
-        if ($isValidClass['valid']) {
-            return new $isValidClass['class']();
-        } else {
-            throw new NotFoundResourceException('no Service found for ' . $this->defaultPaymentOrganism);
-        }
-    }
-
-    private function isValidPaymentClass($class)
-    {
-        $utils = new Utils();
-        $bundles = $utils->getBundlesList();
-
-        $isValidClass = false;
-        $nameSpaceClass = '';
-
-        foreach ($bundles as $bundle) {
-            $nameSpaceClass = '\App\\'. $bundle .'\Services\\' . ucfirst($class);
-            if (!class_exists($nameSpaceClass)) {
-                continue;
-            } else {
-                $isValidClass = true;
-                break;
-            }
-        }
-
-        if (!$isValidClass) {
-            return [
-                'valid' => false,
-                'class' => '',
-            ];
-        }
-
-        return [
-            'valid' => true,
-            'class' => $nameSpaceClass,
-        ];
     }
 
 }

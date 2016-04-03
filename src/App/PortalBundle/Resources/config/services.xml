@@ -8,6 +8,7 @@
         <parameter key="app_portal.be2bill.class">App\PortalBundle\Services\Be2bill</parameter>
         <parameter key="app_portal.paypal.class">App\PortalBundle\Services\Paypal</parameter>
         <parameter key="app_portal.payment_container_service.class">App\PortalBundle\Services\PaymentContainerService</parameter>
+        <parameter key="app_portal.payment_manager_service.class">App\PortalBundle\Services\PaymentManagerService</parameter>
     </parameters>
     
     <services>
@@ -23,6 +24,13 @@
 
         <service id="app_portal.payment_container_service"
                  class="%app_portal.payment_container_service.class%">
+        </service>
+
+        <service id="app_portal.payment_manager_service"
+                 class="%app_portal.payment_manager_service.class%">
+            <call method="setPaymentContainerService">
+                <argument type="service" id="app_portal.payment_container_service"/>
+            </call>
         </service>
     </services>
 </container>
