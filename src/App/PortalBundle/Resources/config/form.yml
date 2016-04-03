@@ -46,9 +46,7 @@ services:
     app_portal.movie.form.handler:
         class: %app_portal.movie.form.handler.class%
         calls:
-            - [setActorManager, ['@app_portal.actor.manager']]
-            - [setCategoryManager, ['@app_portal.category.manager']]
-            - [setHashTagManager, ['@app_portal.hashtag.manager']]
+            - [setManagerService, ['@app_portal.manager_service']]
 
     app_portal.new_movie.form.handler.strategy:
         class: %app_portal.new_movie.form.handler.strategy.class%

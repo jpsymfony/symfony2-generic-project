@@ -43,4 +43,17 @@ abstract class AbstractGenericManager implements GenericManagerInterface
     {
         return $this->repository->save($entity, $persist, $flush);
     }
+
+    /**
+     * @inheritdoc
+     */
+    public function isTypeMatch($labelClass)
+    {
+        return $labelClass === $this->getLabel();
+    }
+
+    /**
+     * @inheritdoc
+     */
+    abstract public function getLabel();
 }

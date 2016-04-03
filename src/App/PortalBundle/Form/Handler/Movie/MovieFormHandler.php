@@ -2,9 +2,7 @@
 namespace App\PortalBundle\Form\Handler\Movie;
 
 use App\CoreBundle\Services\Utils;
-use App\PortalBundle\Entity\Manager\Interfaces\ActorManagerInterface;
-use App\PortalBundle\Entity\Manager\Interfaces\CategoryManagerInterface;
-use App\PortalBundle\Entity\Manager\Interfaces\HashTagManagerInterface;
+use App\PortalBundle\Services\ManagerService;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -18,21 +16,12 @@ class MovieFormHandler
     /**
      * @var MovieFormHandlerStrategy
      */
-    protected $movieFormHandlerStrategy;
+    private $movieFormHandlerStrategy;
 
     /**
-     * @var CategoryManagerInterface
+     * @var ManagerService
      */
-    protected $categoryManager;
-
-    /**
-     * @var ActorManagerInterface
-     */
-    protected $actorManager;
-
-    /** @var HashTagManagerInterface
-     */
-    protected $hashTagManager;
+    private $managerService;
 
     /**
      * @param MovieFormHandlerStrategy $mfhs
@@ -50,36 +39,17 @@ class MovieFormHandler
         return $this->movieFormHandlerStrategy;
     }
 
+    public function setManagerService(ManagerService $managerService)
+    {
+        $this->managerService = $managerService;
+    }
+
     /**
      * @return string
      */
     public function getMessage()
     {
         return $this->message;
-    }
-
-    /**
-     * @param CategoryManagerInterface $categoryManager
-     */
-    public function setCategoryManager(CategoryManagerInterface $categoryManager)
-    {
-        $this->categoryManager = $categoryManager;
-    }
-
-    /**
-     * @param ActorManagerInterface $actorManager
-     */
-    public function setActorManager(ActorManagerInterface $actorManager)
-    {
-        $this->actorManager = $actorManager;
-    }
-
-    /**
-     * @param HashTagManagerInterface $hashTagManager
-     */
-    public function setHashTagManager(HashTagManagerInterface $hashTagManager)
-    {
-        $this->hashTagManager = $hashTagManager;
     }
 
     public function handleForm(FormInterface $form, Movie $movie, Request $request)
@@ -121,10 +91,10 @@ class MovieFormHandler
 
                 // hashTags, actors
                 if (in_array($key, Movie::getCollectionFields())) {
-                    $normalizedKey = $this->isValidClass($key);
-                    $objectManager = $normalizedKey . 'Manager';
+                    $normalizedKey = Movie::getManagerName($key);
+                    $objectManager = $this->managerService->getManagerClass($normalizedKey . 'Manager');
                     foreach($val as $keyCollection => $valCollection) {
-                        $attributes[$key][$keyCollection] = $this->$objectManager->find($valCollection);
+                        $attributes[$key][$keyCollection] = $objectManager->find($valCollection);
                     }
                     $form->get($key)->setData($attributes[$key]);
                     continue;
@@ -132,41 +102,13 @@ class MovieFormHandler
 
                 // category
                 if (in_array($key, Movie::getObjectFields())) {
-                    $this->isValidClass($key);
-                    $objectManager = $key . 'Manager';
-                    $object = $this->$objectManager->find($val);
+                    $objectManager = $this->managerService->getManagerClass($key . 'Manager');
+                    $object = $objectManager->find($val);
                     $form->get($key)->setData($object);
                     continue;
                 }
             }
         }
-    }
-
-    private function isValidClass($class)
-    {
-        // get mappedClass, ie actor for actors, hashTag for hashTags, etc.
-        $class = Movie::getManagerName($class);
-
-        $utils = new Utils();
-        $bundles = $utils->getBundlesList();
-
-        $isValidClass = false;
-
-        foreach ($bundles as $bundle) {
-            $nameSpaceClass = '\App\\'. $bundle .'\Entity\Manager\\' . ucfirst($class) . 'Manager';
-            if (!class_exists($nameSpaceClass)) {
-                continue;
-            } else {
-                $isValidClass = true;
-                break;
-            }
-        }
-
-        if (!$isValidClass) {
-            throw new ResourceNotFoundException('Impossible de trouver la classe ' . ucfirst($class) . 'Manager');
-        }
-
-        return $class;
     }
 
     public function createForm(Movie $movie)

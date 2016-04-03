@@ -2,10 +2,10 @@
 
 namespace App\UserBundle\Entity\Manager;
 
-use App\CoreBundle\Entity\Manager\AbstractGenericManager;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Security\Core\Encoder\EncoderFactoryInterface;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+use App\CoreBundle\Entity\Manager\AbstractGenericManager;
 use App\UserBundle\AppUserEvents;
 use App\UserBundle\Entity\UserInterface;
 use App\UserBundle\Event\UserDataEvent;
@@ -32,7 +32,7 @@ class UserManager extends AbstractGenericManager implements UserManagerInterface
      *
      * @var UserRepository $repository
      */
-    protected $epository;
+    protected $repository;
 
     /**
      * @param EncoderFactoryInterface       $encoderFactory
@@ -132,8 +132,16 @@ class UserManager extends AbstractGenericManager implements UserManagerInterface
     /**
      * @inheritdoc
      */
-    public function setLastConnexion(UserInterface $user, \Datetime $lastConnexion)
+    public function setLastConnexion(UserInterface $user, \DateTime $lastConnexion)
     {
         $user->setLastConnexion($lastConnexion);
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function getLabel()
+    {
+        return 'UserManager';
     }
 }
