@@ -144,10 +144,8 @@ class MovieFormHandler
 
     private function isValidClass($class)
     {
-        if (array_key_exists($class, Movie::getManagerCollectionMapping())) {
-            // get mappedClass, ie actor for actors, hashTag for hashTags, etc.
-            $class = Movie::getManagerName($class);
-        }
+        // get mappedClass, ie actor for actors, hashTag for hashTags, etc.
+        $class = Movie::getManagerName($class);
 
         $utils = new Utils();
         $bundles = $utils->getBundlesList();
