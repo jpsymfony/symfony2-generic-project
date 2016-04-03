@@ -378,12 +378,12 @@ class Movie implements TraitDatetimeInterface, TraitSimpleInterface, TraitEnable
         return self::$managerCollectionMapping;
     }
 
-    public static function getManagerName($manager)
+    public static function getManagerName($class)
     {
-        if (!array_key_exists($manager, static::$managerCollectionMapping)) {
-            throw new \Exception('Method getManagerName() expects the parameter ' . $manager . ' to be one of ' . implode('Manager, ', array_keys(static::$managerCollectionMapping)));
+        if (!array_key_exists($class, static::$managerCollectionMapping)) {
+            throw new \Exception('Method getManagerName() expects the parameter ' . $class . ' to be one of ' . implode('Manager, ', array_keys(static::$managerCollectionMapping)));
         }
 
-        return static::$managerCollectionMapping[$manager];
+        return static::$managerCollectionMapping[$class];
     }
 }
