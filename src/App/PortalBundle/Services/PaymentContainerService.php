@@ -4,20 +4,20 @@ namespace App\PortalBundle\Services;
 
 class PaymentContainerService
 {
-    private $paiementServices;
+    private $paymentServices;
 
     public function __construct()
     {
-        $this->paiementServices = array();
+        $this->paymentServices = array();
     }
 
-    public function addPaymentService(GenericPaymentService $paiementService)
+    public function addPaymentService(GenericPaymentServiceInterface $paymentService)
     {
-        $this->paiementServices[] = $paiementService;
+        $this->paymentServices[] = $paymentService;
     }
 
     public function getPaymentServices()
     {
-        return $this->paiementServices;
+        return $this->paymentServices;
     }
 }

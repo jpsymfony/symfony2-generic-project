@@ -9,8 +9,11 @@
         </service>
 
         <service id="app_portal.twig.payment_form_extension" class="App\PortalBundle\Twig\PaymentForm">
-            <argument type="service" id="app_portal.payment_container_service" />
+            <argument type="service" id="app_portal.payment_manager_service" />
             <argument>%app_portal.payment_organisms%</argument>
+            <call method="setUrl">
+                <argument>%app_portal.payment_organisms%</argument>
+            </call>
             <tag name="twig.extension" />
         </service>
     </services>

@@ -1,7 +1,7 @@
 <?php
 namespace App\PortalBundle\EventListener;
 
-use App\PortalBundle\Services\GenericPaymentService;
+use App\PortalBundle\Services\GenericPaymentServiceInterface;
 use App\PortalBundle\Services\PaymentContainerService;
 use Guzzle\Http\Exception\BadResponseException;
 use Symfony\Component\HttpFoundation\JsonResponse;
