@@ -18,4 +18,24 @@ class ActorRepository extends AbstractGenericRepository implements ActorReposito
 
         return $query->getResult();
     }
+
+    /**
+     * @inheritdoc
+     */
+    public function getActors($limit = 20, $offset = 0)
+    {
+        $limit = (int) $limit;
+        if ($limit <= 0) {
+            throw new \LogicException('$limit must be greater than 0.');
+        }
+        
+        $qb = $this->getBuilder('a');
+
+        $qb->setFirstResult($offset)
+            ->setMaxResults($limit);
+
+        return $qb->getQuery()->getArrayResult();
+
+        //return $this->paginate($qb, $limit, $offset);
+    }
 }

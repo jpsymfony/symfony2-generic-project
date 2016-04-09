@@ -9,6 +9,9 @@ use App\PortalBundle\Repository\Interfaces\MovieRepositoryInterface;
 
 class MovieRepository extends AbstractGenericRepository implements MovieRepositoryInterface
 {
+    /**
+     * @inheritdoc
+     */
     public function getResultFilter($requestVal)
     {
         $qb = $this->getBuilder('f');
@@ -63,5 +66,18 @@ class MovieRepository extends AbstractGenericRepository implements MovieReposito
         $query = $qb->getQuery();
 
         return $query->getResult();
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function getMovies($limit = 20, $offset = 0)
+    {
+        $qb = $this->getBuilder('f');
+
+        $qb->setFirstResult($offset)
+            ->setMaxResults($limit);
+
+        return $qb->getQuery()->getArrayResult();
     }
 }

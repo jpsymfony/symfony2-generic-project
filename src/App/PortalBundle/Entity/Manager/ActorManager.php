@@ -21,6 +21,14 @@ class ActorManager extends AbstractGenericManager implements ActorManagerInterfa
     /**
      * @inheritdoc
      */
+    public function getFilteredActors($limit = 20, $offset = 0)
+    {
+        return $this->repository->getActors($limit, $offset);
+    }
+
+    /**
+     * @inheritdoc
+     */
     public function getLabel()
     {
         return 'actorManager';
