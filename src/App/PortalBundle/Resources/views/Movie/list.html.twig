@@ -13,4 +13,8 @@
     {% if is_granted('ROLE_EDITOR') %}
         <p><a href="{{ path('movie_new') }}">{{ 'film.ajouter'|trans }}</a><p>
     {% endif %}
+
+    <div style="text-align: center">
+        {% include '@AppPortal/Pagination/pagination.html.twig' with {'pagination' : pagination} %}
+    </div>
 {% endblock %}

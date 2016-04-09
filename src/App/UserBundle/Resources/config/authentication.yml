@@ -8,19 +8,19 @@ services:
     # AUTHENTICATION handlers
     #
     security_authentication_success_handler:
-        class:  %app_user.authentication.security.success.class%
+        class:  "%app_user.authentication.security.success.class%"
         arguments:  ["@logger", "@security.http_utils", {}]
         tags:
             - { name: 'monolog.logger', channel: 'mywebsite_user' }
 
     security_authentication_failure_handler:
-        class:  %app_user.authentication.security.failure.class%
+        class:  "%app_user.authentication.security.failure.class%"
         arguments:  ["@http_kernel", "@security.http_utils", {}, "@logger"]
         tags:
             - { name: 'monolog.logger', channel: 'security' }
 
     security_logout_success_handler:
-        class:  %app_user.logout.security.success.class%
+        class:  "%app_user.logout.security.success.class%"
         arguments:  ["@logger", "@app_user_manager"]
         tags:
             - { name: 'monolog.logger', channel: 'mywebsite_user' }

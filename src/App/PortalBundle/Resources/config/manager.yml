@@ -6,35 +6,35 @@ parameters:
     app_portal.contact_manager.class: App\PortalBundle\Entity\Manager\ContactManager
 services:
     app_portal.actor.manager:
-        class: %app_portal.actor_manager.class%
+        class: "%app_portal.actor_manager.class%"
         arguments:  ["@app_portal.actor.repository"]
         lazy: true
         tags:
             - { name: app_portal.manager_services }
 
     app_portal.movie.manager:
-        class: %app_portal.movie_manager.class%
+        class: "%app_portal.movie_manager.class%"
         arguments:  ["@app_portal.movie.repository"]
         lazy: true
         tags:
             - { name: app_portal.manager_services }
 
     app_portal.hashtag.manager:
-        class: %app_portal.hashtag_manager.class%
+        class: "%app_portal.hashtag_manager.class%"
         arguments:  ["@app_portal.hashtag.repository"]
         lazy: true
         tags:
             - { name: app_portal.manager_services }
 
     app_portal.category.manager:
-        class: %app_portal.category_manager.class%
+        class: "%app_portal.category_manager.class%"
         arguments:  ["@app_portal.category.repository"]
         lazy: true
         tags:
             - { name: app_portal.manager_services }
 
     app_portal.contact.manager:
-        class: %app_portal.contact_manager.class%
+        class: "%app_portal.contact_manager.class%"
         arguments: ['@mailer', '@twig', '@translator','AppPortalBundle:Mail:contact_mail.html.twig', '%email_from%', '%mailer_user%']
         lazy: true
         tags:

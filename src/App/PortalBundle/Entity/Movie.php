@@ -3,7 +3,7 @@
 namespace App\PortalBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Bridge\Doctrine\Tests\Fixtures\SingleIntIdEntity;
+use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Validator\Constraints as Assert;
 use Gedmo\Mapping\Annotation as Gedmo;
 
@@ -14,10 +14,8 @@ use App\CoreBundle\Traits\Entity\Interfaces\TraitDatetimeInterface;
 use App\CoreBundle\Traits\Entity\Interfaces\TraitSimpleInterface;
 use App\CoreBundle\Traits\Entity\Interfaces\TraitEnabledInterface;
 
-use Doctrine\Common\Collections\ArrayCollection;
-
 /**
- * @ORM\Table(name="movie")
+ * @ORM\Table(name="movie", indexes={@ORM\Index(name="title_idx", columns={"title"}), @ORM\Index(name="release_idx", columns={"released_at"})})
  * @ORM\Entity(repositoryClass="App\PortalBundle\Repository\MovieRepository")
  */
 class Movie implements TraitDatetimeInterface, TraitSimpleInterface, TraitEnabledInterface

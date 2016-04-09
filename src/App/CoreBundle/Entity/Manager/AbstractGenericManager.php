@@ -15,6 +15,14 @@ abstract class AbstractGenericManager implements GenericManagerInterface
     /**
      * @inheritdoc
      */
+    public function count($enabled = false) 
+    {
+        return $this->repository->count($enabled);
+    }
+    
+    /**
+     * @inheritdoc
+     */
     public function remove($entity)
     {
         $this->repository->remove($entity);

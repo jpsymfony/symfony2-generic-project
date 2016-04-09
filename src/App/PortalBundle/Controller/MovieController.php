@@ -18,17 +18,33 @@ use Symfony\Component\HttpFoundation\Response;
 class MovieController extends Controller
 {
     /**
-     * @Route("/movies", name="movie_list")
-     * @Template("@AppPortal/Movie/list.html.twig", vars={"movies"})
-     * @ParamConverter("movies", converter="project_collection_converter", options={"manager":"app_portal.movie.manager", "orderby":"title", "dir":"desc"})
+     * @Route("/movies/page/{page}", name="movie_list", defaults={"page" = 1})
+     * @Template("@AppPortal/Movie/list.html.twig")
      */
-    public function listAction(ArrayCollection $movies)
+    public function listAction($page)
     {
+        $maxMoviesPerPage = $this->container->getParameter('app_portal.max_movies_per_page');
+        $movies = $this->get('app_portal.movie.manager')
+            ->getFilteredMovies($maxMoviesPerPage, ($page - 1) * $maxMoviesPerPage);
+
+        $pagination = array(
+            'page' => $page,
+            'route' => 'movie_list',
+            'pages_count' => $this->get('app_portal.actor.manager')->count(),
+            'route_params' => array()
+        );
+
+        return array(
+            'movies' => $movies,
+            'pagination' => $pagination,
+        );
     }
 
     /**
      * @Template("@AppPortal/Movie/partials/movies.html.twig", vars={"movies"})
-     * @ParamConverter("movies", converter="project_collection_converter", options={"manager":"app_portal.movie.manager", "orderby":"title"})
+     * @ParamConverter("movies", converter="project_collection_converter", options={"manager":"app_portal.movie.manager", "orderby":"title", "dir":"desc"})
+     * @param ArrayCollection $movies
+     * @param int $max
      */
     public function topAction(ArrayCollection $movies, $max = 5)
     {
@@ -37,6 +53,8 @@ class MovieController extends Controller
     /**
      * @Route("/movies/{id}/show", name="movie_show")
      * @ParamConverter("movie", class="AppPortalBundle:Movie")
+     * @param Movie $movie
+     * @return Response
      * @Security("has_role('ROLE_VISITOR')")
      * @Cache(smaxage=600)
      */
@@ -52,6 +70,9 @@ class MovieController extends Controller
      * @Route("/admin/movies/new", name="movie_new")
      * @Route("/admin/movies/{id}/edit", name="movie_edit")
      * @Template("@AppPortal/Movie/edit.html.twig")
+     * @param Request $request
+     * @param Movie|null $movie
+     * @return array|RedirectResponse
      * @ParamConverter("movie", class="AppPortalBundle:Movie")
      * @Security("has_role('ROLE_EDITOR')")
      */
@@ -84,6 +105,7 @@ class MovieController extends Controller
     /**
      * @Route("/admin/movies/{id}/delete", name="movie_delete")
      * @ParamConverter("movie", class="AppPortalBundle:Movie")
+     * @param Movie $movie
      * @return RedirectResponse
      */
     public function deleteAction(Movie $movie)
@@ -127,6 +149,8 @@ class MovieController extends Controller
     /**
      * @Route("/movies/search", name="movie_search")
      * @Template("@AppPortal/Movie/list.html.twig")
+     * @param Request $request
+     * @return array
      */
     public function listSearchAction(Request $request)
     {

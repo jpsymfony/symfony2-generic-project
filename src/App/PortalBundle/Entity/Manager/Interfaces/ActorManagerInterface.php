@@ -12,4 +12,11 @@ interface ActorManagerInterface extends GenericManagerInterface
      * @param ActorRepository $repository
      */
     public function __construct(ActorRepository $repository);
+
+    /**
+     * @param int $limit
+     * @param int $offset
+     * @return array of actors
+     */
+    public function getFilteredActors($limit = 20, $offset = 0);
 }

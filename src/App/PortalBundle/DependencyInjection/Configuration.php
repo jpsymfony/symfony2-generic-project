@@ -27,6 +27,8 @@ class Configuration implements ConfigurationInterface
         $rootNode
             ->children()
                 ->variableNode('max_hashtag_limit')->end()
+                ->variableNode('max_movies_per_page')->end()
+                ->variableNode('max_actors_per_page')->end()
                 ->arrayNode('payment_organisms')
                     ->children()
                         ->variableNode('default')
