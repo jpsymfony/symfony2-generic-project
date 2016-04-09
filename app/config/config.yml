@@ -140,6 +140,8 @@ fos_user:
 
 app_portal:
     max_hashtag_limit: 5
+    max_movies_per_page: 5
+    max_actors_per_page: 5
 
 app_user:
     redirection_url_after_access_denied_exception: homepage

@@ -17,12 +17,22 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 class ActorController extends Controller
 {
     /**
-     * @Route("/actors", name="actors_list")
-     * @Template("@AppPortal/Actor/list.html.twig", vars={"actors"})
-     * @ParamConverter("actors", converter="project_collection_converter", options={"manager":"app_portal.actor.manager", "orderby":"lastName"})
+     * @Route("/actors/page/{page}", name="actors_list", defaults={"page" = 1})
+     * @Template("@AppPortal/Actor/list.html.twig")
      */
-    public function listAction(ArrayCollection $actors = null)
+    public function listAction($page)
     {
+        $maxActorsPerPage = $this->container->getParameter('app_portal.max_actors_per_page');
+        $actors = $this->get('app_portal.actor.manager')
+            ->getFilteredActors($maxActorsPerPage, ($page - 1) * $maxActorsPerPage);
+
+        $pagination = array(
+            'page' => $page,
+            'route' => 'actors_list',
+            'pages_count' => $this->get('app_portal.actor.manager')->count(), //$actors->getNbPages(),
+            'route_params' => array()
+        );
+
         $form = $this->container->get('form.factory')->create(
             new ActorSearchForm(),
             null,
@@ -35,6 +45,7 @@ class ActorController extends Controller
 
         return array(
             'actors' => $actors,
+            'pagination' => $pagination,
             'displayActorsFound' => true,
             'form' => $form->createView()
         );

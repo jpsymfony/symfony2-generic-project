@@ -35,6 +35,8 @@ class AppPortalExtension extends Extension
         $loader->load('listener.xml');
 
         $container->setParameter('app_portal.max_hashtag_limit', $config['max_hashtag_limit']);
+        $container->setParameter('app_portal.max_movies_per_page', $config['max_movies_per_page']);
+        $container->setParameter('app_portal.max_actors_per_page', $config['max_actors_per_page']);
         $container->setParameter('app_portal.payment_organisms', $config['payment_organisms']);
     }
 }
