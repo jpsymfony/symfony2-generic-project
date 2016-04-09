@@ -16,11 +16,11 @@ parameters:
 
 services:
     app_portal.actor.form.handler:
-        class: %app_portal.actor.form.handler.class%
+        class: "%app_portal.actor.form.handler.class%"
 
     app_portal.abstract_movie.form.handler.strategy:
         abstract:  true
-        class: %app_portal.abstract_movie.form.handler.strategy.class%
+        class: "%app_portal.abstract_movie.form.handler.strategy.class%"
         calls:
            - [setMovieManager, ['@app_portal.movie.manager']]
            - [setFormFactory, ['@form.factory']]
@@ -28,7 +28,7 @@ services:
            - [setTranslator, ['@translator']]
 
     app_portal.new_actor.form.handler.strategy:
-        class: %app_portal.new_actor.form.handler.strategy.class%
+        class: "%app_portal.new_actor.form.handler.strategy.class%"
         arguments:
             - "@translator"
             - "@app_portal.actor.manager"
@@ -36,7 +36,7 @@ services:
             - "@router"
 
     app_portal.update_actor.form.handler.strategy:
-        class: %app_portal.update_actor.form.handler.strategy.class%
+        class: "%app_portal.update_actor.form.handler.strategy.class%"
         arguments:
             - "@translator"
             - "@app_portal.actor.manager"
@@ -44,39 +44,39 @@ services:
             - "@router"
 
     app_portal.movie.form.handler:
-        class: %app_portal.movie.form.handler.class%
+        class: "%app_portal.movie.form.handler.class%"
         calls:
             - [setManagerService, ['@app_portal.manager_service']]
 
     app_portal.new_movie.form.handler.strategy:
-        class: %app_portal.new_movie.form.handler.strategy.class%
+        class: "%app_portal.new_movie.form.handler.strategy.class%"
         parent: app_portal.abstract_movie.form.handler.strategy
         arguments:
             - "@security.token_storage"
 
     app_portal.update_movie.form.handler.strategy:
-        class: %app_portal.update_movie.form.handler.strategy.class%
+        class: "%app_portal.update_movie.form.handler.strategy.class%"
         parent: app_portal.abstract_movie.form.handler.strategy
         arguments:
             - "@app_portal.hashtag.manager"
             - "@security.authorization_checker"
 
     app_portal.request_contact.handler:
-        class: %app_portal.request_contact.handler.class%
+        class: "%app_portal.request_contact.handler.class%"
         arguments: ['@app_portal.contact.manager']
 
     app_portal.hashtag.form:
-        class: %app_portal.hashtag.form.collection_type.class%
-        arguments: [%app_portal.max_hashtag_limit%]
+        class: "%app_portal.hashtag.form.collection_type.class%"
+        arguments: ["%app_portal.max_hashtag_limit%"]
         tags:
             - { name: form.type, alias: hashtags }
 
     app_portal.hashtag.form.type:
-        class: %app_portal.hashtag.form.type.class%
+        class: "%app_portal.hashtag.form.type.class%"
         tags:
             - { name: form.type, alias: app_portal_hashtag }
 
     app_portal.contact.form.type:
-            class: %app_portal.contact.form.type.class%
+            class: "%app_portal.contact.form.type.class%"
             tags:
                 - { name: form.type, alias: app_portal_contacttype }

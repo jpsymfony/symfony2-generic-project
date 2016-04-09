@@ -28,10 +28,10 @@ interface GenericRepositoryInterface
      *
      * @param boolean $enabled [0, 1]
      *
-     * @return string the count of all fields.
+     * @return int the count of all fields.
      * @access public
      */
-    public function count($enabled = null);
+    public function count($enabled = false);
 
     /**
      * @param $entity

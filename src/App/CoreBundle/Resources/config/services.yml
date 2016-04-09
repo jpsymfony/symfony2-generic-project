@@ -6,7 +6,7 @@ services:
       class: App\CoreBundle\Services\EntityManagementGuesser
 
    app_core.collection_converter:
-      class: %app_core.param_converter.collection.class%
+      class: "%app_core.param_converter.collection.class%"
       arguments:
           - "@doctrine"
           - "@service_container"

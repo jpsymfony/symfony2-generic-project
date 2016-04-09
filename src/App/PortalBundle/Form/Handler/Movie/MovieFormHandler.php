@@ -1,13 +1,11 @@
 <?php
 namespace App\PortalBundle\Form\Handler\Movie;
 
-use App\CoreBundle\Services\Utils;
 use App\PortalBundle\Services\ManagerService;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 use App\PortalBundle\Entity\Movie;
-use Symfony\Component\Routing\Exception\ResourceNotFoundException;
 
 class MovieFormHandler
 {

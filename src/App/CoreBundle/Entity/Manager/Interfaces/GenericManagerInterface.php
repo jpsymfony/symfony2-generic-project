@@ -5,6 +5,16 @@ namespace App\CoreBundle\Entity\Manager\Interfaces;
 interface GenericManagerInterface
 {
     /**
+     * Count all fields existed from the given entity
+     *
+     * @param boolean $enabled [0, 1]
+     *
+     * @return int the count of all fields.
+     * @access public
+     */
+    public function count($enabled = false);
+
+    /**
      * @param $entity
      */
     public function remove($entity);

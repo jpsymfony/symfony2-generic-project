@@ -20,9 +20,11 @@ class CollectionConverter implements \Sensio\Bundle\FrameworkExtraBundle\Request
      * @var ManagerRegistry $registry Manager registry
      */
     private $registry;
- 
+    
     /**
-     * @param ManagerRegistry $registry Manager registry
+     * CollectionConverter constructor.
+     * @param ManagerRegistry $registry
+     * @param ContainerInterface $container
      */
     public function __construct(ManagerRegistry $registry, ContainerInterface $container)
     {
