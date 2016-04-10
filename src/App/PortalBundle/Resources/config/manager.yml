@@ -8,6 +8,10 @@ services:
     app_portal.actor.manager:
         class: "%app_portal.actor_manager.class%"
         arguments:  ["@app_portal.actor.repository"]
+        calls:
+              - [setFormFactory, ['@form.factory']]
+              - [setRouter, ['@router']]
+              - [setSearchFormType, ['@app_portal.actor_search.form']]
         lazy: true
         tags:
             - { name: app_portal.manager_services }

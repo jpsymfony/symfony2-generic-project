@@ -2,6 +2,8 @@
 
 namespace App\PortalBundle\Repository\Interfaces;
 
+use Pagerfanta\Pagerfanta;
+
 interface ActorRepositoryInterface
 {
     /**
@@ -13,7 +15,7 @@ interface ActorRepositoryInterface
     /**
      * @param int $limit
      * @param int $offset
-     * @return array of actors
+     * @return Pagerfanta
      */
     public function getActors($limit = 20, $offset = 0);
 }

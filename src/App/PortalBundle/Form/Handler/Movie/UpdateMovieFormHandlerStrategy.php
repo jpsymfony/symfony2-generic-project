@@ -42,12 +42,16 @@ class UpdateMovieFormHandlerStrategy extends AbstractMovieFormHandlerStrategy
 
     public function createForm(Movie $movie)
     {
-        // we put image in the constructor of MovieType to fill value when the form is loaded
-        $this->form = $this->formFactory->create(new MovieType($movie->getImage()), $movie, array(
-            'action' => $this->router->generate('movie_edit', array('id' => $movie->getId())),
-            'method' => 'PUT',
-            'hashtags_hidden' => false,
-        ));
+        // we put image in the MovieType constructor to fill value when the form is loaded
+        $this->form = $this->formFactory->create(
+            new MovieType($movie->getImage()),
+            $movie,
+            [
+                'action' => $this->router->generate('movie_edit', ['id' => $movie->getId()]),
+                'method' => 'PUT',
+                'hashtags_hidden' => false,
+            ]
+        );
 
         return $this->form;
     }
