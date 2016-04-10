@@ -44,6 +44,9 @@ abstract class AbstractGenericRepository extends EntityRepository implements Gen
         return $this->getEntityName();
     }
 
+    /**
+     * @inheritdoc
+     */
     public function getAlias()
     {
         return substr($this->_class->getTableName(), 0, 3);
@@ -111,7 +114,10 @@ abstract class AbstractGenericRepository extends EntityRepository implements Gen
         return $entities;
     }
 
-    protected function paginate(QueryBuilder $qb, $limit = 20, $offset = 0)
+    /**
+     * @inheritdoc
+     */
+    public function paginate(QueryBuilder $qb, $limit = 20, $offset = 0)
     {
         $limit = (int) $limit;
         if ($limit <= 0) {
