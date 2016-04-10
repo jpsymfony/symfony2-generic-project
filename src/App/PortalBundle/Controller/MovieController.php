@@ -28,12 +28,7 @@ class MovieController extends Controller
         $maxMoviesPerPage = $this->container->getParameter('app_portal.max_movies_per_page');
         $movies = $this->get('app_portal.movie.manager')
             ->getFilteredMovies($maxMoviesPerPage, ($page - 1) * $maxMoviesPerPage);
-
-        $pagination = array(
-            'page' => $page,
-            'route' => 'movie_list',
-            'pages_count' => ceil($this->get('app_portal.movie.manager')->count() / $maxMoviesPerPage),
-        );
+        $pagination = $this->get('app_portal.movie.manager')->getPagination($page, 'movie_list', $maxMoviesPerPage);
 
         return array(
             'movies' => $movies,
@@ -98,7 +93,7 @@ class MovieController extends Controller
         }
 
         return array(
-            'form' => $form->createView(),
+            'form' => $this->getMovieFormHandler()->createView(),
             'movie' => $movie,
         );
     }

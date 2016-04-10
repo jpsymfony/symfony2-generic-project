@@ -20,9 +20,9 @@ abstract class AbstractActorFormHandlerStrategy implements ActorFormHandlerStrat
         return $this->form->createView();
     }
 
-    abstract public function handleForm(Request $request, Actor $movie);
+    abstract public function handleForm(Request $request, Actor $actor);
 
-    abstract public function createForm(Actor $movie);
+    abstract public function createForm(Actor $actor);
 
 
 }

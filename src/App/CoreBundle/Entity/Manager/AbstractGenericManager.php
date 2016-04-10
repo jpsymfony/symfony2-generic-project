@@ -4,6 +4,7 @@ namespace App\CoreBundle\Entity\Manager;
 
 use App\CoreBundle\Entity\Manager\Interfaces\GenericManagerInterface;
 use App\CoreBundle\Repository\AbstractGenericRepository;
+use Pagerfanta\Pagerfanta;
 
 abstract class AbstractGenericManager implements GenericManagerInterface
 {
@@ -64,4 +65,13 @@ abstract class AbstractGenericManager implements GenericManagerInterface
      * @inheritdoc
      */
     abstract public function getLabel();
+
+    public function getPagination($page, $route, $maxPerPage)
+    {
+        return array(
+            'page' => $page,
+            'route' => $route,
+            'pages_count' => ceil($this->count() / $maxPerPage),
+        );
+    }
 }

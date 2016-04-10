@@ -11,7 +11,6 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use App\PortalBundle\Entity\Actor;
-use App\PortalBundle\Form\Type\ActorSearchForm;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 class ActorController extends Controller
@@ -27,22 +26,8 @@ class ActorController extends Controller
         $maxActorsPerPage = $this->container->getParameter('app_portal.max_actors_per_page');
         $actors = $this->get('app_portal.actor.manager')
             ->getFilteredActors($maxActorsPerPage, ($page - 1) * $maxActorsPerPage);
-
-        $pagination = array(
-            'page' => $page,
-            'route' => 'actors_list',
-            'pages_count' => ceil($actors->getNbPages() / $maxActorsPerPage),
-        );
-
-        $form = $this->container->get('form.factory')->create(
-            new ActorSearchForm(),
-            null,
-            [
-                'action' => $this->generateUrl('actor_search'),
-                'method' => 'POST',
-                'attr' => ['id' => 'form_recherche']
-            ]
-        );
+        $pagination = $this->get('app_portal.actor.manager')->getPagination($page, 'actors_list', $maxActorsPerPage);
+        $form = $this->get('app_portal.actor.manager')->getActorSearchForm();
 
         return array(
             'actors' => $actors,
@@ -90,34 +75,27 @@ class ActorController extends Controller
     /**
      * @Route("/admin/actors/new", name="actor_new")
      * @Route("/admin/actors/{id}/edit", name="actor_edit")
+     * @param Request $request
+     * @param Actor|null $actor
+     * @return array|RedirectResponse
      * @Template("@AppPortal/Actor/edit.html.twig")
      * @Security("has_role('ROLE_EDITOR')")
      */
     public function newEditAction(Request $request, Actor $actor = null)
     {
         $actorFormHandler = $this->container->get('app_portal.actor.form.handler');
+        $entityToProcess = $actorFormHandler->processForm($actor);
 
-        // we create entity if not exists in database
-        if (is_null($actor)) {
-            $actor = new Actor();
-            $actorFormHandler->setActorFormHandlerStrategy($this->get('app_portal.new_actor.form.handler.strategy'));
-        } else {
-            // we get entity from database
-            $actorFormHandler->setActorFormHandlerStrategy($this->get('app_portal.update_actor.form.handler.strategy'));
-        }
-
-        $form = $actorFormHandler->createForm($actor);
-
-        if ($actorFormHandler->handleForm($form, $actor, $request)) {
+        if ($actorFormHandler->handleForm($actorFormHandler->getForm(), $entityToProcess, $request)) {
             // we add flash messages to stick with context (new or edited object)
             $this->addFlash('success', $actorFormHandler->getMessage());
 
-            return $this->redirectToRoute('actor_edit', array('id' => $actor->getId()));
+            return $this->redirectToRoute('actor_edit', array('id' => $entityToProcess->getId()));
         }
 
         return array(
-            'form' => $form->createView(),
-            'actor' => $actor,
+            'form' => $actorFormHandler->createView(),
+            'actor' => $entityToProcess,
         );
     }
 
