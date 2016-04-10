@@ -2,6 +2,8 @@
 namespace App\CoreBundle\Repository\Interfaces;
 
 use Doctrine\ORM\Query;
+use Doctrine\ORM\QueryBuilder;
+use Pagerfanta\Pagerfanta;
 
 interface GenericRepositoryInterface
 {
@@ -22,6 +24,11 @@ interface GenericRepositoryInterface
      * @return string
      */
     public function getClassName();
+
+    /**
+     * @return string alias of className
+     */
+    public function getAlias();
 
     /**
      * Count all fields existed from the given entity
@@ -61,4 +68,12 @@ interface GenericRepositoryInterface
      * @access public
      */
     public function findByQuery(Query $query, $result = "array");
+
+    /**
+     * @param QueryBuilder $qb
+     * @param int $limit
+     * @param int $offset
+     * @return Pagerfanta
+     */
+    public function paginate(QueryBuilder $qb, $limit = 20, $offset = 0);
 }
