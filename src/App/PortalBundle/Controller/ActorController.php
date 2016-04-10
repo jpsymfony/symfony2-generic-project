@@ -19,6 +19,8 @@ class ActorController extends Controller
     /**
      * @Route("/actors/page/{page}", name="actors_list", defaults={"page" = 1})
      * @Template("@AppPortal/Actor/list.html.twig")
+     * @param integer $page
+     * @return mixed
      */
     public function listAction($page)
     {

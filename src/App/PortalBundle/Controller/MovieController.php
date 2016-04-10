@@ -20,6 +20,8 @@ class MovieController extends Controller
     /**
      * @Route("/movies/page/{page}", name="movie_list", defaults={"page" = 1})
      * @Template("@AppPortal/Movie/list.html.twig")
+     * @param integer $page
+     * @return array of movies and pagination
      */
     public function listAction($page)
     {
