@@ -6,6 +6,7 @@ use App\CoreBundle\Form\DataTransformer\DatedmYToDateYmdViewTransformer;
 use App\CoreBundle\Repository\AbstractGenericRepository;
 use App\PortalBundle\Entity\Movie;
 use App\PortalBundle\Repository\Interfaces\MovieRepositoryInterface;
+use Doctrine\ORM\Tools\Pagination\Paginator;
 
 class MovieRepository extends AbstractGenericRepository implements MovieRepositoryInterface
 {
@@ -79,5 +80,7 @@ class MovieRepository extends AbstractGenericRepository implements MovieReposito
             ->setMaxResults($limit);
 
         return $qb->getQuery()->getArrayResult();
+
+        //return new Paginator($qb, false);
     }
 }
