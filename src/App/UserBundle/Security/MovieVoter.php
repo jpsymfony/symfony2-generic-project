@@ -2,7 +2,7 @@
 namespace App\UserBundle\Security;
 
 use App\PortalBundle\Entity\Movie;
-use App\UserBundle\Entity\User;
+use App\UserBundle\Entity\UserInterface;
 use Symfony\Component\Security\Core\Authorization\AccessDecisionManagerInterface;
 use Symfony\Component\Security\Core\Authorization\Voter\Voter;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
@@ -37,7 +37,7 @@ class MovieVoter extends Voter
     {
         $user = $token->getUser();
 
-        if (!$user instanceof User) {
+        if (!$user instanceof UserInterface) {
             // the user must be logged in; if not, deny access
             return false;
         }
@@ -57,7 +57,7 @@ class MovieVoter extends Voter
         throw new \LogicException('This code should not be reached!');
     }
 
-    private function canEdit(Movie $movie, User $user)
+    private function canEdit(Movie $movie, UserInterface $user)
     {
         if (!is_object($user)) {
             return false;
