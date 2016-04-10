@@ -32,8 +32,7 @@ class MovieController extends Controller
         $pagination = array(
             'page' => $page,
             'route' => 'movie_list',
-            'pages_count' => $this->get('app_portal.actor.manager')->count(),
-            'route_params' => array()
+            'pages_count' => ceil($this->get('app_portal.movie.manager')->count() / $maxMoviesPerPage),
         );
 
         return array(

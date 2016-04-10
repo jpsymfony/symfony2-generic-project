@@ -31,8 +31,7 @@ class ActorController extends Controller
         $pagination = array(
             'page' => $page,
             'route' => 'actors_list',
-            'pages_count' => $this->get('app_portal.actor.manager')->count(), //$actors->getNbPages(),
-            'route_params' => array()
+            'pages_count' => ceil($actors->getNbPages() / $maxActorsPerPage),
         );
 
         $form = $this->container->get('form.factory')->create(

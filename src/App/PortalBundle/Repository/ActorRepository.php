@@ -34,8 +34,8 @@ class ActorRepository extends AbstractGenericRepository implements ActorReposito
         $qb->setFirstResult($offset)
             ->setMaxResults($limit);
 
-        return $qb->getQuery()->getArrayResult();
+        //return $qb->getQuery()->getArrayResult();
 
-        //return $this->paginate($qb, $limit, $offset);
+        return $this->paginate($qb, $limit, $offset);
     }
 }
