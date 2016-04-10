@@ -139,7 +139,7 @@ fos_user:
     user_class: App\BackUserBundle\Entity\User
 
 app_portal:
-    max_hashtag_limit: 5
+    max_hashtag_limit: 3
     max_movies_per_page: 5
     max_actors_per_page: 5
 
