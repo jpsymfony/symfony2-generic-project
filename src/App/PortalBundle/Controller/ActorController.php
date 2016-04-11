@@ -9,32 +9,36 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Doctrine\Common\Collections\ArrayCollection;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use App\PortalBundle\Entity\Actor;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 class ActorController extends Controller
 {
     /**
-     * @Route("/actors/page/{page}", name="actors_list", defaults={"page" = 1})
+     * @Route("/actors/page/{page}", name="actors_list", defaults={"page" = 1}, options={"expose"=true})
      * @Template("@AppPortal/Actor/list.html.twig")
+     * @param Request $request
      * @param integer $page
      * @return mixed
      */
-    public function listAction($page)
+    public function listAction(Request $request, $page)
     {
-        $maxActorsPerPage = $this->container->getParameter('app_portal.max_actors_per_page');
-        $actors = $this->get('app_portal.actor.manager')
-            ->getFilteredActors($maxActorsPerPage, ($page - 1) * $maxActorsPerPage);
-        $pagination = $this->get('app_portal.actor.manager')->getPagination($page, 'actors_list', $maxActorsPerPage);
-        $form = $this->get('app_portal.actor.manager')->getActorSearchForm();
+        $limit = $this->container->getParameter('app_portal.max_actors_per_page');
+        $motcle = $request->query->get('motcle');
+        $nbFilteredActors = $this->get('app_portal.actor.repository')->getResultFilterCount($motcle);
 
-        return array(
-            'actors' => $actors,
-            'pagination' => $pagination,
+        $data = [
+            'actors' => $this->getActorManager()->getFilteredActors($motcle, $limit, ($page - 1) * $limit),
             'displayActorsFound' => true,
-            'form' => $form->createView()
-        );
+            'pagination' => $this->getActorManager()->getPagination($request->query->all(), $page, 'actors_list', $limit, $nbFilteredActors),
+            'nbFilteredActors' => $nbFilteredActors
+        ];
+
+        if ($request->isXmlHttpRequest()) {
+            return $this->container->get('templating')->renderResponse('@AppPortal/Actor/partials/actors.html.twig', $data);
+        }
+
+        return array_merge($data, ['form' => $this->getActorManager()->getActorSearchForm()->createView()]);
     }
 
     /**
@@ -43,33 +47,6 @@ class ActorController extends Controller
      */
     public function topAction(ArrayCollection $actors, $max = 5, $displayActorsFound = false)
     {
-    }
-
-    /**
-     * @Route("/actors/search", name="actor_search", options={"expose"=true})
-     * @Method("POST")
-     */
-    public function searchAction(Request $request)
-    {
-        if ($request->isXmlHttpRequest()) {
-            $motcle = $request->request->get('motcle');
-
-            $em = $this->container->get('doctrine')->getManager();
-
-            if ($motcle != '') {
-                $actors = $em->getRepository('AppPortalBundle:Actor')->findByFirstNameOrLastName($motcle);
-            } else {
-                $actors = $em->getRepository('AppPortalBundle:Actor')->findAll();
-            }
-
-            return $this->container->get('templating')->renderResponse(
-                '@AppPortal/Actor/partials/actors.html.twig',
-                array(
-                    'actors' => $actors,
-                    'displayActorsFound' => true
-                )
-            );
-        }
     }
 
     /**
@@ -83,20 +60,19 @@ class ActorController extends Controller
      */
     public function newEditAction(Request $request, Actor $actor = null)
     {
-        $actorFormHandler = $this->container->get('app_portal.actor.form.handler');
-        $entityToProcess = $actorFormHandler->processForm($actor);
+        $entityToProcess = $this->getActorFormHandler()->processForm($actor);
 
-        if ($actorFormHandler->handleForm($actorFormHandler->getForm(), $entityToProcess, $request)) {
+        if ($this->getActorFormHandler()->handleForm($this->getActorFormHandler()->getForm(), $entityToProcess, $request)) {
             // we add flash messages to stick with context (new or edited object)
-            $this->addFlash('success', $actorFormHandler->getMessage());
+            $this->addFlash('success', $this->getActorFormHandler()->getMessage());
 
             return $this->redirectToRoute('actor_edit', array('id' => $entityToProcess->getId()));
         }
 
-        return array(
-            'form' => $actorFormHandler->createView(),
+        return [
+            'form' => $this->getActorFormHandler()->createView(),
             'actor' => $entityToProcess,
-        );
+        ];
     }
 
     /**
@@ -110,9 +86,19 @@ class ActorController extends Controller
         if (!$this->get('security.authorization_checker')->isGranted('ROLE_ADMIN')) {
             throw $this->createAccessDeniedException('You cannot access this page!');
         }
-        $this->container->get('app_portal.actor.manager')->remove($actor);
+        $this->getActorManager()->remove($actor);
         $this->addFlash('success', $this->get('translator')->trans('acteur.supprime', ['%actor%' => $actor]));
 
         return new RedirectResponse($this->container->get('router')->generate('actors_list'));
+    }
+
+    public function getActorFormHandler()
+    {
+        return $this->get('app_portal.actor.form.handler');
+    }
+
+    public function getActorManager()
+    {
+        return $this->get('app_portal.actor.manager');
     }
 }

@@ -37,8 +37,8 @@ $("#form_recherche").submit(function (e) {
 
     var DATA = 'motcle=' + motcle;
     $.ajax({
-        type: "POST",
-        url: Routing.generate('actor_search'),
+        type: "GET",
+        url: Routing.generate('actors_list'),
         data: DATA,
         cache: false,
         success: function (data) {
@@ -59,7 +59,7 @@ $("#app_portal_actor_birthday").datepicker({
     }
 });
 
-$("#app_portal_movie_releaseAt").datepicker({dateFormat: 'dd/mm/yy'});
+$("#app_portal_movie_releasedAt").datepicker({dateFormat: 'dd/mm/yy'});
 
 $('#app_portal_movie_filter_releaseDateFrom').datepicker( {
     changeMonth: true,

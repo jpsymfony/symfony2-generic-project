@@ -10,14 +10,6 @@
     {{ form(form, { attr: { novalidate: 'novalidate' } }) }}
 <div class="loading"></div>
 <div id="resultats_recherche">
-    {% include '@AppPortal/Actor/partials/actors.html.twig' with {'actors' : actors, 'displayActorsFound': displayActorsFound}  %}
+    {% include '@AppPortal/Actor/partials/actors.html.twig' with {'actors' : actors, 'displayActorsFound': displayActorsFound, 'pagination': pagination}  %}
 </div>
-
-    {% if is_granted('ROLE_EDITOR') %}
-        <p><a href="{{ path('actor_new') }}">{{ 'acteur.ajouter'|trans }}</a><p>
-    {% endif %}
-
-    <div style="text-align: center">
-        {% include '@AppPortal/Pagination/pagination.html.twig' with {'pagination' : pagination} %}
-    </div>
 {% endblock %}

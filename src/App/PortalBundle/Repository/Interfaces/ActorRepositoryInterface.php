@@ -6,11 +6,11 @@ use Pagerfanta\Pagerfanta;
 
 interface ActorRepositoryInterface
 {
-    /**
-     * @param $motcle
-     * @return mixed
-     */
-    public function findbyFirstNameOrLastName($motcle);
+    public function getResultFilterCount($requestVal);
+
+    public function getResultFilterPaginated($requestVal, $limit = 20, $offset = 0);
+
+    public function getQueryResultFilter($requestVal);
 
     /**
      * @param int $limit

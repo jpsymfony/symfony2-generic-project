@@ -1,6 +1,7 @@
 <?php
 namespace App\PortalBundle\Form\Handler\Movie;
 
+use App\PortalBundle\Entity\Manager\Interfaces\MovieManagerInterface;
 use App\PortalBundle\Services\ManagerService;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Form\FormInterface;
@@ -9,32 +10,47 @@ use App\PortalBundle\Entity\Movie;
 
 class MovieFormHandler
 {
+    /**
+     * @var string
+     */
     private $message = "";
 
     /**
-     * @var MovieFormHandlerStrategy
+     * @var FormInterface $form
      */
-    private $movieFormHandlerStrategy;
+    protected $form;
 
     /**
-     * @var ManagerService
+     * @var ManagerService $managerService
      */
     private $managerService;
 
     /**
-     * @param MovieFormHandlerStrategy $mfhs
+     * @var MovieFormHandlerStrategy $movieFormHandlerStrategy
      */
-    public function setMovieFormHandlerStrategy(MovieFormHandlerStrategy $mfhs)
-    {
-        $this->movieFormHandlerStrategy = $mfhs;
-    }
+    private $movieFormHandlerStrategy;
 
     /**
-     * @return MovieFormHandlerStrategy
+     * @var MovieFormHandlerStrategy $newActorFormHandlerStrategy
      */
-    public function getMovieFormHandlerStrategy()
-    {
-        return $this->movieFormHandlerStrategy;
+    protected $newMovieFormHandlerStrategy;
+
+    /**
+     * @var MovieFormHandlerStrategy $updateActorFormHandlerStrategy
+     */
+    protected $updateMovieFormHandlerStrategy;
+
+    /**
+     * @var MovieManagerInterface $movieManager
+     */
+    protected $movieManager;
+
+    public function setNewMovieFormHandlerStrategy(MovieFormHandlerStrategy $nafhs) {
+        $this->newMovieFormHandlerStrategy = $nafhs;
+    }
+
+    public function setUpdateMovieFormHandlerStrategy(MovieFormHandlerStrategy $uafhs) {
+        $this->updateMovieFormHandlerStrategy = $uafhs;
     }
 
     public function setManagerService(ManagerService $managerService)
@@ -50,6 +66,39 @@ class MovieFormHandler
         return $this->message;
     }
 
+    /**
+     * @param Movie|null $movie
+     * @return Movie
+     */
+    public function processForm(Movie $movie = null)
+    {
+        if (is_null($movie)) {
+            $movie = new Movie();
+            $this->movieFormHandlerStrategy = $this->newMovieFormHandlerStrategy;
+        } else {
+            $this->movieFormHandlerStrategy = $this->updateMovieFormHandlerStrategy;
+        }
+
+        $this->form = $this->createForm($movie);
+
+        return $movie;
+    }
+
+    /**
+     * @param Movie $movie
+     * @return FormInterface
+     */
+    public function createForm(Movie $movie)
+    {
+        return $this->movieFormHandlerStrategy->createForm($movie);
+    }
+
+    /**
+     * @param FormInterface $form
+     * @param Movie $movie
+     * @param Request $request
+     * @return bool
+     */
     public function handleForm(FormInterface $form, Movie $movie, Request $request)
     {
         if (
@@ -75,6 +124,11 @@ class MovieFormHandler
         }
     }
 
+    /**
+     * @param FormInterface $form
+     * @param Request $request
+     * @throws \Exception
+     */
     public function handleSearchForm(FormInterface $form, Request $request)
     {
         $attributes = $request->attributes->all();
@@ -109,11 +163,17 @@ class MovieFormHandler
         }
     }
 
-    public function createForm(Movie $movie)
+    /**
+     * @return FormInterface
+     */
+    public function getForm()
     {
-        return $this->movieFormHandlerStrategy->createForm($movie);
+        return $this->form;
     }
 
+    /**
+     * @return mixed
+     */
     public function createView()
     {
         return $this->movieFormHandlerStrategy->createView();

@@ -1,1 +1,1 @@
-fos.Router.setData({"base_url":"","routes":{"actor_search":{"tokens":[["text","\/actors\/search"]],"defaults":[],"requirements":{"_method":"POST"},"hosttokens":[]}},"prefix":"","host":"localhost","scheme":"http"});
+fos.Router.setData({"base_url":"","routes":{"actors_list":{"tokens":[["variable","\/","[^\/]++","page"],["text","\/actors\/page"]],"defaults":{"page":1},"requirements":[],"hosttokens":[]}},"prefix":"","host":"localhost","scheme":"http"});

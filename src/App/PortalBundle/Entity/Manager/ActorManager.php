@@ -37,9 +37,9 @@ class ActorManager extends AbstractGenericManager implements ActorManagerInterfa
     /**
      * @inheritdoc
      */
-    public function getFilteredActors($limit = 20, $offset = 0)
+    public function getFilteredActors($motcle ='', $limit = 20, $offset = 0)
     {
-        return $this->repository->getActors($limit, $offset);
+        return $this->repository->getResultFilterPaginated($motcle, $limit, $offset);
     }
 
     /**
@@ -51,7 +51,7 @@ class ActorManager extends AbstractGenericManager implements ActorManagerInterfa
             $this->searchFormType,
             null,
             [
-                'action' => $this->router->generate('actor_search'),
+                'action' => $this->router->generate('actors_list'),
                 'method' => 'POST',
                 'attr' => ['id' => 'form_recherche']
             ]

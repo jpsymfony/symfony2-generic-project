@@ -10,6 +10,7 @@ parameters:
 
     app_portal.request_contact.handler.class: App\PortalBundle\Form\Handler\Contact\ContactFormHandler
     app_portal.actor_search.form.class: App\PortalBundle\Form\Type\ActorSearchFormType
+    app_portal.movie_search.form.class: App\PortalBundle\Form\Type\MovieFilterType
     app_portal.contact.form.type.class: App\PortalBundle\Form\Type\ContactType
 
     app_portal.hashtag.form.type.class: App\PortalBundle\Form\Type\HashTagType
@@ -51,6 +52,8 @@ services:
         class: "%app_portal.movie.form.handler.class%"
         calls:
             - [setManagerService, ['@app_portal.manager_service']]
+            - [setNewMovieFormHandlerStrategy, ['@app_portal.new_movie.form.handler.strategy']]
+            - [setUpdateMovieFormHandlerStrategy, ['@app_portal.update_movie.form.handler.strategy']]
 
     app_portal.new_movie.form.handler.strategy:
         class: "%app_portal.new_movie.form.handler.strategy.class%"
@@ -73,6 +76,11 @@ services:
             class: "%app_portal.actor_search.form.class%"
             tags:
                 - { name: form.type, alias: actor_search }
+
+    app_portal.movie_search.form:
+            class: "%app_portal.movie_search.form.class%"
+            tags:
+                - { name: form.type, alias: app_portal_movie_filter }
 
     app_portal.hashtag.form:
         class: "%app_portal.hashtag.form.collection_type.class%"

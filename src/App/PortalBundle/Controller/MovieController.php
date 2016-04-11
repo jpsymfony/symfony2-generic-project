@@ -2,7 +2,6 @@
 
 namespace App\PortalBundle\Controller;
 
-use App\PortalBundle\Form\Type\MovieFilterType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Cache;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -20,20 +19,20 @@ class MovieController extends Controller
     /**
      * @Route("/movies/page/{page}", name="movie_list", defaults={"page" = 1})
      * @Template("@AppPortal/Movie/list.html.twig")
+     * @param Request $request
      * @param integer $page
      * @return array of movies and pagination
      */
-    public function listAction($page)
+    public function listAction(Request $request, $page)
     {
         $maxMoviesPerPage = $this->container->getParameter('app_portal.max_movies_per_page');
-        $movies = $this->get('app_portal.movie.manager')
-            ->getFilteredMovies($maxMoviesPerPage, ($page - 1) * $maxMoviesPerPage);
-        $pagination = $this->get('app_portal.movie.manager')->getPagination($page, 'movie_list', $maxMoviesPerPage);
+        $movies = $this->getMovieManager()->getFilteredMovies($maxMoviesPerPage, ($page - 1) * $maxMoviesPerPage);
+        $pagination = $this->getMovieManager()->getPagination($request->query->all(), $page, 'movie_list', $maxMoviesPerPage);
 
-        return array(
+        return [
             'movies' => $movies,
             'pagination' => $pagination,
-        );
+        ];
     }
 
     /**
@@ -74,28 +73,19 @@ class MovieController extends Controller
      */
     public function newEditAction(Request $request, Movie $movie = null)
     {
-        // we create entity if not exists in database
-        if (is_null($movie)) {
-            $movie = new Movie();
-            $this->getMovieFormHandler()->setMovieFormHandlerStrategy($this->get('app_portal.new_movie.form.handler.strategy'));
-        } else {
-            // we get entity from database
-            $this->getMovieFormHandler()->setMovieFormHandlerStrategy($this->get('app_portal.update_movie.form.handler.strategy'));
-        }
+        $entityToProcess = $this->getMovieFormHandler()->processForm($movie);
 
-        $form = $this->getMovieFormHandler()->createForm($movie);
-
-        if ($this->getMovieFormHandler()->handleForm($form, $movie, $request)) {
+        if ($this->getMovieFormHandler()->handleForm($this->getMovieFormHandler()->getForm(), $entityToProcess, $request)) {
             // we add flash messages to stick with context (new or edited object)
             $this->addFlash('success', $this->getMovieFormHandler()->getMessage());
 
-            return $this->redirectToRoute('movie_edit', array('id' => $movie->getId()));
+            return $this->redirectToRoute('movie_edit', array('id' => $entityToProcess->getId()));
         }
 
-        return array(
+        return [
             'form' => $this->getMovieFormHandler()->createView(),
-            'movie' => $movie,
-        );
+            'movie' => $entityToProcess,
+        ];
     }
 
     /**
@@ -109,7 +99,7 @@ class MovieController extends Controller
         if (!$this->get('security.authorization_checker')->isGranted('ROLE_ADMIN')) {
             throw $this->createAccessDeniedException('You cannot access this page!');
         }
-        $this->container->get('app_portal.movie.manager')->remove($movie);
+        $this->getMovieManager()->remove($movie);
         $this->addFlash('success', $this->get('translator')->trans('film.supprime', ['%title%' => $movie->getTitle()]));
 
         return new RedirectResponse($this->container->get('router')->generate('movie_list'));
@@ -122,20 +112,12 @@ class MovieController extends Controller
      */
     public function formFilterAction(Request $request)
     {
-        $movie = new Movie();
-        $form = $this->createForm(
-            new MovieFilterType(),
-            $movie,
-            [
-                'method' => 'GET',
-                'action' => $this->generateUrl('movie_search')
-            ]
-        );
+        $form = $this->getMovieManager()->getMovieSearchForm(new Movie());
 
         try {
             $this->getMovieFormHandler()->handleSearchForm($form, $request);
         } catch (\Exception $e) {
-            $this->get('logger')->critical($e->getMessage());
+            $this->get('logger')->error($e->getMessage());
             $this->addFlash('error', $e->getMessage());
         }
 
@@ -150,16 +132,33 @@ class MovieController extends Controller
      */
     public function listSearchAction(Request $request)
     {
-        $em = $this->getDoctrine()->getManager();
-        $movies = $em->getRepository('AppPortalBundle:Movie')->getResultFilter(current($request->query->all()));
+        $page = $request->query->has('page') ? ($request->query->get('page') > 1 ? $request->query->get('page') : 1) : 1;
+        $requestVal = $request->query->all();
+        $limit = $this->container->getParameter('app_portal.max_movies_per_page');
+        $offset = ($page - 1) * $limit;
 
-        return array(
+        $movies = $this->getMovieRepository()->getResultFilterPaginated(current($requestVal), $limit, $offset);
+        $nbFilteredMovies = $this->getMovieRepository()->getResultFilterCount(current($requestVal));
+        $pagination = $this->getMovieManager()->getPagination($requestVal, $page, 'movie_search', $limit, $nbFilteredMovies);
+
+        return [
             'movies' => $movies,
-        );
+            'pagination' => $pagination,
+        ];
     }
 
     public function getMovieFormHandler()
     {
         return $this->container->get('app_portal.movie.form.handler');
+    }
+
+    public function getMovieRepository()
+    {
+        return $this->get('app_portal.movie.repository');
+    }
+
+    public function getMovieManager()
+    {
+        return $this->get('app_portal.movie.manager');
     }
 }

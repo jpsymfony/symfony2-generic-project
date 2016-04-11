@@ -19,6 +19,10 @@ services:
     app_portal.movie.manager:
         class: "%app_portal.movie_manager.class%"
         arguments:  ["@app_portal.movie.repository"]
+        calls:
+              - [setFormFactory, ['@form.factory']]
+              - [setRouter, ['@router']]
+              - [setSearchFormType, ['@app_portal.movie_search.form']]
         lazy: true
         tags:
             - { name: app_portal.manager_services }
