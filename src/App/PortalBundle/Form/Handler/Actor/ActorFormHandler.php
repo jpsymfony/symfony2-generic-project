@@ -68,7 +68,7 @@ class ActorFormHandler
 
     /**
      * @param Actor $actor
-     * @return mixed
+     * @return FormInterface
      */
     public function createForm(Actor $actor)
     {
@@ -87,7 +87,7 @@ class ActorFormHandler
             (null === $actor->getId() && $request->isMethod('POST'))
             || (null !== $actor->getId() && $request->isMethod('PUT'))
         ) {
-            $form->submit($request);
+            $form->handleRequest($request);
 
             if (!$form->isValid()) {
                 return false;

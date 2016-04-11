@@ -8,7 +8,11 @@ interface MovieRepositoryInterface
      * @param $requestVal
      * @return array of movies
      */
-    public function getResultFilter($requestVal);
+    public function getResultFilterCount($requestVal);
+
+    public function getResultFilterPaginated($requestVal, $limit = 20, $offset = 0);
+
+    public function getQueryResultFilter($requestVal);
 
     /**
      * @param int $limit

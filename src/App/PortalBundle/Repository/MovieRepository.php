@@ -12,7 +12,30 @@ class MovieRepository extends AbstractGenericRepository implements MovieReposito
     /**
      * @inheritdoc
      */
-    public function getResultFilter($requestVal)
+    public function getResultFilterCount($requestVal)
+    {
+        $qb = $this->getQueryResultFilter($requestVal);
+        $qb->select('COUNT(f.id)');
+
+        return $qb->getQuery()->getSingleScalarResult();
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function getResultFilterPaginated($requestVal, $limit = 20, $offset = 0)
+    {
+        $qb = $this->getQueryResultFilter($requestVal);
+
+        $qb->orderBy('f.title', 'ASC');
+
+        $qb->setFirstResult($offset)
+            ->setMaxResults($limit);
+
+        return $qb->getQuery()->getResult();
+    }
+
+    public function getQueryResultFilter($requestVal)
     {
         $qb = $this->getBuilder('f');
 
@@ -62,10 +85,7 @@ class MovieRepository extends AbstractGenericRepository implements MovieReposito
             }
         }
 
-        $qb->orderBy('f.title', 'ASC');
-        $query = $qb->getQuery();
-
-        return $query->getResult();
+        return $qb;
     }
 
     /**

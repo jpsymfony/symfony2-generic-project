@@ -66,12 +66,14 @@ abstract class AbstractGenericManager implements GenericManagerInterface
      */
     abstract public function getLabel();
 
-    public function getPagination($page, $route, $maxPerPage)
+    public function getPagination($request, $page, $route, $maxPerPage, $count = null)
     {
+        $pageCount = null === $count ? ceil($this->count() / $maxPerPage) : ceil($count / $maxPerPage);
         return array(
             'page' => $page,
             'route' => $route,
-            'pages_count' => ceil($this->count() / $maxPerPage),
+            'pages_count' => $pageCount,
+            'route_params' => $request,
         );
     }
 }
