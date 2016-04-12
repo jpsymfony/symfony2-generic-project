@@ -37,9 +37,17 @@ class ActorManager extends AbstractGenericManager implements ActorManagerInterfa
     /**
      * @inheritdoc
      */
-    public function getFilteredActors($motcle ='', $limit = 20, $offset = 0)
+    public function getResultFilterPaginated($motcle ='', $limit = 20, $offset = 0)
     {
         return $this->repository->getResultFilterPaginated($motcle, $limit, $offset);
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function getResultFilterCount($requestVal)
+    {
+        return $this->repository->getResultFilterCount($requestVal);
     }
 
     /**

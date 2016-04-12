@@ -32,7 +32,8 @@
 	<p><a href="{{ path('actor_new') }}">{{ 'acteur.ajouter'|trans }}</a><p>
 		{% endif %}
 </div>
-
-<div style="text-align: center">
-	{% include '@AppPortal/Pagination/pagination.html.twig' with {'pagination' : pagination} %}
-</div>
+{% if pagination is defined and pagination is not null %}
+	<div style="text-align: center">
+		{% include '@AppPortal/Pagination/pagination.html.twig' with {'pagination' : pagination} %}
+	</div>
+{% endif %}

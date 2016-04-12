@@ -17,7 +17,7 @@ use Symfony\Component\HttpFoundation\Response;
 class MovieController extends Controller
 {
     /**
-     * @Route("/movies/page/{page}", name="movie_list", defaults={"page" = 1})
+     * @Route("/movies/{page}", name="movie_list", defaults={"page" = 1})
      * @Template("@AppPortal/Movie/list.html.twig")
      * @param Request $request
      * @param integer $page
@@ -25,9 +25,16 @@ class MovieController extends Controller
      */
     public function listAction(Request $request, $page)
     {
-        $maxMoviesPerPage = $this->container->getParameter('app_portal.max_movies_per_page');
-        $movies = $this->getMovieManager()->getFilteredMovies($maxMoviesPerPage, ($page - 1) * $maxMoviesPerPage);
-        $pagination = $this->getMovieManager()->getPagination($request->query->all(), $page, 'movie_list', $maxMoviesPerPage);
+        if ($page < 1) {
+            $page = 1;
+        }
+
+        $requestVal = $request->query->all();
+        $limit = $this->container->getParameter('app_portal.max_movies_per_page');
+
+        $movies = $this->getMovieManager()->getResultFilterPaginated(current($requestVal), $limit, ($page - 1) * $limit);
+        $nbFilteredMovies = $this->getMovieManager()->getResultFilterCount(current($requestVal));
+        $pagination = $this->getMovieManager()->getPagination($requestVal, $page, 'movie_list', $limit, $nbFilteredMovies);
 
         return [
             'movies' => $movies,
@@ -124,37 +131,9 @@ class MovieController extends Controller
         return $this->render('@AppPortal/Movie/partials/formFilter.html.twig', ['form' => $form->createView()]);
     }
 
-    /**
-     * @Route("/movies/search", name="movie_search")
-     * @Template("@AppPortal/Movie/list.html.twig")
-     * @param Request $request
-     * @return array
-     */
-    public function listSearchAction(Request $request)
-    {
-        $page = $request->query->has('page') ? ($request->query->get('page') > 1 ? $request->query->get('page') : 1) : 1;
-        $requestVal = $request->query->all();
-        $limit = $this->container->getParameter('app_portal.max_movies_per_page');
-        $offset = ($page - 1) * $limit;
-
-        $movies = $this->getMovieRepository()->getResultFilterPaginated(current($requestVal), $limit, $offset);
-        $nbFilteredMovies = $this->getMovieRepository()->getResultFilterCount(current($requestVal));
-        $pagination = $this->getMovieManager()->getPagination($requestVal, $page, 'movie_search', $limit, $nbFilteredMovies);
-
-        return [
-            'movies' => $movies,
-            'pagination' => $pagination,
-        ];
-    }
-
     public function getMovieFormHandler()
     {
         return $this->container->get('app_portal.movie.form.handler');
-    }
-
-    public function getMovieRepository()
-    {
-        return $this->get('app_portal.movie.repository');
     }
 
     public function getMovieManager()
