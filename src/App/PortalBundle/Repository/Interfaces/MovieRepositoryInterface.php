@@ -13,11 +13,4 @@ interface MovieRepositoryInterface
     public function getResultFilterPaginated($requestVal, $limit = 20, $offset = 0);
 
     public function getQueryResultFilter($requestVal);
-
-    /**
-     * @param int $limit
-     * @param int $offset
-     * @return array of movies
-     */
-    public function getMovies($limit = 20, $offset = 0);
 }

@@ -15,7 +15,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 class ActorController extends Controller
 {
     /**
-     * @Route("/actors/page/{page}", name="actors_list", defaults={"page" = 1}, options={"expose"=true})
+     * @Route("/actors/{page}", name="actors_list", defaults={"page" = 1}, options={"expose"=true})
      * @Template("@AppPortal/Actor/list.html.twig")
      * @param Request $request
      * @param integer $page
@@ -23,12 +23,12 @@ class ActorController extends Controller
      */
     public function listAction(Request $request, $page)
     {
-        $limit = $this->container->getParameter('app_portal.max_actors_per_page');
         $motcle = $request->query->get('motcle');
-        $nbFilteredActors = $this->get('app_portal.actor.repository')->getResultFilterCount($motcle);
+        $limit = $this->container->getParameter('app_portal.max_actors_per_page');
+        $nbFilteredActors = $this->getActorManager()->getResultFilterCount($motcle);
 
         $data = [
-            'actors' => $this->getActorManager()->getFilteredActors($motcle, $limit, ($page - 1) * $limit),
+            'actors' => $this->getActorManager()->getResultFilterPaginated($motcle, $limit, ($page - 1) * $limit),
             'displayActorsFound' => true,
             'pagination' => $this->getActorManager()->getPagination($request->query->all(), $page, 'actors_list', $limit, $nbFilteredActors),
             'nbFilteredActors' => $nbFilteredActors

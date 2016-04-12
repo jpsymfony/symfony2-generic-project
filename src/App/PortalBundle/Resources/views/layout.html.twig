@@ -4,7 +4,7 @@
     <div class="container">
         <div class="header">
             <ul class="nav nav-pills pull-right">
-                <li class="{% block active_accueil %}{% endblock %}"><a id="homepage" href="{{ path('homepage') }}">{{ 'menu.accueil' | trans }}</a></li>
+                <li class="{% block active_accueil %}{% endblock %}"><a href="{{ path('homepage') }}" id="homepage" >{{ 'menu.accueil' | trans }}</a></li>
                 <li class="{% block active_movies %}{% endblock %}"><a href="{{ path('movie_list') }}" id="movies">{{ 'menu.films' | trans }}</a></li>
                 <li class="{% block active_actors %}{% endblock %}"><a href="{{ path('actors_list') }}" id="actors">{{ 'menu.acteurs' | trans }}</a></li>
                 <li class="{% block active_contact %}{% endblock %}"><a href="{{ path('contact') }}" id="contact">{{ 'menu.contact' | trans }}</a></li>

@@ -20,9 +20,15 @@ interface ActorManagerInterface extends GenericManagerInterface
     /**
      * @param int $limit
      * @param int $offset
-     * @return Pagerfanta
+     * @return array of actors
      */
-    public function getFilteredActors($limit = 20, $offset = 0);
+    public function getResultFilterPaginated($limit = 20, $offset = 0);
+
+    /**
+     * @param $requestVal
+     * @return integer
+     */
+    public function getResultFilterCount($requestVal);
 
     /**
      * @return FormInterface

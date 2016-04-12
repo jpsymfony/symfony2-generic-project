@@ -28,8 +28,7 @@ class MovieManager extends AbstractGenericManager implements MovieManagerInterfa
     protected $router;
 
     /**
-     * MovieManager constructor.
-     * @param MovieRepositoryInterface $repository
+     * @inheritdoc
      */
     public function __construct(MovieRepositoryInterface $repository)
     {
@@ -39,18 +38,29 @@ class MovieManager extends AbstractGenericManager implements MovieManagerInterfa
     /**
      * @inheritdoc
      */
-    public function getFilteredMovies($limit = 20, $offset = 0)
+    public function getResultFilterPaginated($requestVal, $limit = 20, $offset = 0)
     {
-        return $this->repository->getMovies($limit, $offset);
+        return $this->repository->getResultFilterPaginated($requestVal, $limit, $offset);
     }
 
+    /**
+     * @inheritdoc
+     */
+    public function getResultFilterCount($requestVal)
+    {
+        return $this->repository->getResultFilterCount($requestVal);
+    }
+
+    /**
+     * @inheritdoc
+     */
     public function getMovieSearchForm(Movie $movie)
     {
         return $this->formFactory->create(
             $this->searchFormType,
             $movie,
             [
-                'action' => $this->router->generate('movie_search'),
+                'action' => $this->router->generate('movie_list'),
                 'method' => 'GET',
             ]
         );

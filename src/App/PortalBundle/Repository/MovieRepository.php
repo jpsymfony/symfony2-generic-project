@@ -87,17 +87,4 @@ class MovieRepository extends AbstractGenericRepository implements MovieReposito
 
         return $qb;
     }
-
-    /**
-     * @inheritdoc
-     */
-    public function getMovies($limit = 20, $offset = 0)
-    {
-        $qb = $this->getBuilder('f');
-
-        $qb->setFirstResult($offset)
-            ->setMaxResults($limit);
-
-        return $qb->getQuery()->getResult();
-    }
 }

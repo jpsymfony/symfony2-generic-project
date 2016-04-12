@@ -23,6 +23,11 @@ class ActorRepository extends AbstractGenericRepository implements ActorReposito
      */
     public function getResultFilterPaginated($motcle, $limit = 20, $offset = 0)
     {
+        $limit = (int) $limit;
+        if ($limit <= 0) {
+            throw new \LogicException('$limit must be greater than 0.');
+        }
+
         $qb = $this->getQueryResultFilter($motcle);
 
         $qb->orderBy('a.lastName', 'ASC');
@@ -42,23 +47,5 @@ class ActorRepository extends AbstractGenericRepository implements ActorReposito
             ->setParameter('motcle', '%' . $motcle . '%');
 
         return $qb;
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function getActors($limit = 20, $offset = 0)
-    {
-        $limit = (int) $limit;
-        if ($limit <= 0) {
-            throw new \LogicException('$limit must be greater than 0.');
-        }
-        
-        $qb = $this->getBuilder('a');
-
-        $qb->setFirstResult($offset)
-            ->setMaxResults($limit);
-
-        return $qb->getQuery()->getResult();
     }
 }
