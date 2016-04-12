@@ -43,9 +43,9 @@ class MovieRepository extends AbstractGenericRepository implements MovieReposito
             $isReleaseDateFrom = !empty($requestVal['releaseDateFrom']);
             $isReleaseDateTo = !empty($requestVal['releaseDateTo']);
 
-            $viewTranformer = new DatedmYToDateYmdViewTransformer();
-            $releaseDateFrom = $viewTranformer->reverseTransform($requestVal['releaseDateFrom']);
-            $releaseDateTo = $viewTranformer->reverseTransform($requestVal['releaseDateTo']);
+            $viewTransformer = new DatedmYToDateYmdViewTransformer();
+            $releaseDateFrom = $viewTransformer->reverseTransform($requestVal['releaseDateFrom']);
+            $releaseDateTo = $viewTransformer->reverseTransform($requestVal['releaseDateTo']);
 
             foreach ($requestVal as $key => $val) {
                 if (!empty($requestVal[$key])) {
