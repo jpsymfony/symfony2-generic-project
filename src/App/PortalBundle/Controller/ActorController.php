@@ -23,6 +23,10 @@ class ActorController extends Controller
      */
     public function listAction(Request $request, $page)
     {
+        if ($page < 1) {
+            $page = 1;
+        }
+
         $motcle = $request->query->get('motcle');
         $limit = $this->container->getParameter('app_portal.max_actors_per_page');
         $nbFilteredActors = $this->getActorManager()->getResultFilterCount($motcle);
