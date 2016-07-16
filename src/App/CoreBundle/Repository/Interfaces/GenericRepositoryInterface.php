@@ -43,6 +43,11 @@ interface GenericRepositoryInterface
     /**
      * @param $entity
      */
+    public function find($entity);
+
+    /**
+     * @param $entity
+     */
     public function remove($entity);
 
     /**
