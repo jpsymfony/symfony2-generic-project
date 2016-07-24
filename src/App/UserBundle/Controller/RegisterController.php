@@ -1,12 +1,4 @@
 <?php
-/*
- * This file is part of the Symfony package.
- *
- * (c) Fabien Potencier <fabien@symfony.com>
- *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
- */
 
 namespace App\UserBundle\Controller;
 
@@ -33,7 +25,7 @@ class RegisterController extends Controller
      */
     public function registerAction(Request $request)
     {
-        $form = $this->createForm(new RegistrationType(), new Registration());
+        $form = $this->createForm(RegistrationType::class, new Registration());
 
         if ($this->getRegistrationFormHandler()->handle($form, $request)) {
             $this->addFlash('success', 'Your account has been created. An email has been sent to you.');
@@ -50,6 +42,6 @@ class RegisterController extends Controller
      */
     protected function getRegistrationFormHandler()
     {
-        return $this->container->get('app_user.registration.handler');
+        return $this->get('app_user.registration.handler');
     }
 }

@@ -15,12 +15,13 @@ class AppKernel extends Kernel
             new Symfony\Bundle\SwiftmailerBundle\SwiftmailerBundle(),
             new Doctrine\Bundle\DoctrineBundle\DoctrineBundle(),
             new Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle(),
+
             new Stof\DoctrineExtensionsBundle\StofDoctrineExtensionsBundle(),
             new Symfony\Bundle\AsseticBundle\AsseticBundle(),
-            new Genemu\Bundle\FormBundle\GenemuFormBundle(),
             new FOS\JsRoutingBundle\FOSJsRoutingBundle(),
-            new Avalanche\Bundle\ImagineBundle\AvalancheImagineBundle(),
             new FOS\UserBundle\FOSUserBundle(),
+            new Genemu\Bundle\FormBundle\GenemuFormBundle(),
+            new Avalanche\Bundle\ImagineBundle\AvalancheImagineBundle(),
 
             new App\PortalBundle\AppPortalBundle(),
             new App\CoreBundle\AppCoreBundle(),

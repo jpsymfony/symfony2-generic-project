@@ -1,9 +1,6 @@
-parameters:
-    app_portal.email_blackList.validator.class: App\PortalBundle\Validator\Constraints\EmailBlackListValidator
-
 services:
     app_portal.email_blackList_validator:
-        class: "%app_portal.email_blackList.validator.class%"
+        class: App\PortalBundle\Validator\Constraints\EmailBlackListValidator
         calls:
             - [ setBlackList, [ "%mail_blacklist%" ] ]
         tags:

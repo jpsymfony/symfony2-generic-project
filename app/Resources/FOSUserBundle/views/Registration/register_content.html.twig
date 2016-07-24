@@ -18,7 +18,7 @@
         
             {% trans_default_domain 'FOSUserBundle' %}
 
-            <form action="{{ path('fos_user_registration_register') }}" {{ form_enctype(form) }} method="POST" class="fos_user_registration_register" novalidate>
+            {{ form_start(form, {'method': 'post', 'action': path('fos_user_registration_register'), 'attr': {'class': 'fos_user_registration_register'}}) }}
                 <div id="fos_user_registration_form">
                     <p>
                         {{ form_label(form.email, 'Email') }}  
@@ -44,6 +44,6 @@
                     </div>
                     {{ form_rest(form) }}
                 </div>
-            </form>
+            {{ form_end(form) }}
     </div> <!-- End .content-box-content -->
 </div> <!-- End .content-box -->

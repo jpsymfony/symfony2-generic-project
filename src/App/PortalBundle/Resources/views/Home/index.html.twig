@@ -5,7 +5,6 @@
 {% block active_accueil %}active{% endblock %}
 
 {% block content %}
-
     <h3>{{ 'acteur.top.jeunes'|trans }}</h3>
     {{ render(controller('AppPortalBundle:Actor:top', {'max': 3, 'displayActorsFound': displayActorsFound})) }}
 

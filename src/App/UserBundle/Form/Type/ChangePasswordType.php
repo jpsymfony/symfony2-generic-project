@@ -3,6 +3,8 @@
 namespace App\UserBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\PasswordType;
+use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormError;
 use Symfony\Component\Form\FormEvent;
@@ -30,10 +32,10 @@ class ChangePasswordType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('oldPassword', 'password', ['required' => false, 'label' => 'user.change_password.old_password' ])
-            ->add('newPassword', 'repeated', [
+            ->add('oldPassword', PasswordType::class, ['required' => false, 'label' => 'user.change_password.old_password' ])
+            ->add('newPassword', RepeatedType::class, [
                 'required' => false,
-                'type' => 'password',
+                'type' => PasswordType::class,
                 'first_options' => [
                     'label' => 'user.change_password.new_password',
                 ],

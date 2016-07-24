@@ -6,9 +6,4 @@ use App\PortalBundle\Repository\HashTagRepository;
 
 interface HashTagManagerInterface extends GenericManagerInterface
 {
-    /**
-     * HashTagManager constructor.
-     * @param HashTagRepository $repository
-     */
-    public function __construct(HashTagRepository $repository);
 }

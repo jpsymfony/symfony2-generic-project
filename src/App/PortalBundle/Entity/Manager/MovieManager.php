@@ -2,6 +2,7 @@
 namespace App\PortalBundle\Entity\Manager;
 
 use App\CoreBundle\Entity\Manager\AbstractGenericManager;
+use App\CoreBundle\Repository\AbstractGenericRepository;
 use App\PortalBundle\Entity\Manager\Interfaces\ManagerInterface;
 use App\PortalBundle\Entity\Manager\Interfaces\MovieManagerInterface;
 use App\PortalBundle\Entity\Movie;
@@ -30,9 +31,9 @@ class MovieManager extends AbstractGenericManager implements MovieManagerInterfa
     /**
      * @inheritdoc
      */
-    public function __construct(MovieRepositoryInterface $repository)
+    public function __construct(AbstractGenericRepository $repository)
     {
-        $this->repository = $repository;
+        parent::__construct($repository);
     }
 
     /**
@@ -69,7 +70,7 @@ class MovieManager extends AbstractGenericManager implements MovieManagerInterfa
     /**
      * @inheritdoc
      */
-    public function setSearchFormType(FormTypeInterface $searchFormType)
+    public function setSearchFormType($searchFormType)
     {
         $this->searchFormType = $searchFormType;
         return $this;

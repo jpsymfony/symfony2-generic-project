@@ -4,15 +4,10 @@
            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
 
-    <parameters>
-        <parameter key="app_user.send_confirmation_mail_listener.class">App\UserBundle\EventListener\SendConfirmationMailListener</parameter>
-        <parameter key="app_user.send_request_password_mail_listener.class">App\UserBundle\EventListener\SendRequestPasswordMailListener</parameter>
-    </parameters>
-
     <services>
         <service id="app_user.send_confirmation_mail_listener"
-                 class="%app_user.send_confirmation_mail_listener.class%">
-            <argument type="service" id="mailer"/>
+                 class="App\UserBundle\EventListener\SendConfirmationMailListener">
+            <argument type="service" id="app_core.mailer_service"/>
             <argument type="service" id="twig" />
             <argument>AppUserBundle:Mail:confirmation_mail.html.twig</argument>
             <argument>%email_from%</argument>
@@ -20,8 +15,8 @@
         </service>
 
         <service id="app_user.send_request_password_mail_listener"
-                 class="%app_user.send_request_password_mail_listener.class%">
-            <argument type="service" id="mailer"/>
+                 class="App\UserBundle\EventListener\SendRequestPasswordMailListener">
+            <argument type="service" id="app_core.mailer_service"/>
             <argument type="service" id="twig" />
             <argument type="service" id="router" />
             <argument type="service" id="security.csrf.token_generator" />

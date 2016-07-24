@@ -1,14 +1,14 @@
 {% block _app_portal_contacttype_knowledge_row %}
     {% spaceless %}
         <div class="form-group{% if not valid %} has-error{% endif %}">
-            <div class="{{ block('form_label_class') }}"><strong>{{ 'contact.center_discover'|trans() }}</strong></div>
+            <div class="{{ block('form_label_class') }}"><strong>{{ 'contact.knowledge'|trans() }}</strong></div>
             <div class="{{ block('form_group_class') }}">
                 {{ form_widget(form) }}
                 {{ form_errors(form) }}
             </div>
         </div>
     {% endspaceless %}
-{% endblock _app_portal_contacttype_knowledge_row %}
+{% endblock %}
 
 {% block _app_portal_contacttype_other_row %}
     <div class="form-group{% if (not compound or force_error|default(false)) and not valid %} has-error{% endif %}">
@@ -17,8 +17,8 @@
             {{- form_widget(form) -}}
             {{- form_errors(form) -}}
         </div>
-        {##}</div>
-{% endblock _app_portal_contacttype_other_row %}
+    </div>
+{% endblock%}
 
 {% block form_errors -%}
     {% if errors|length > 0 -%}

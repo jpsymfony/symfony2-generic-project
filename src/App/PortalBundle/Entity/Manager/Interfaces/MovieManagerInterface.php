@@ -12,12 +12,6 @@ use Symfony\Component\Routing\RouterInterface;
 interface MovieManagerInterface extends GenericManagerInterface
 {
     /**
-     * MovieManager constructor.
-     * @param MovieRepositoryInterface $repository
-     */
-    public function __construct(MovieRepositoryInterface $repository);
-
-    /**
      * @param int $limit
      * @param int $offset
      * @return array of movies
@@ -37,10 +31,10 @@ interface MovieManagerInterface extends GenericManagerInterface
     public function getMovieSearchForm(Movie $movie);
 
     /**
-     * @param FormTypeInterface $searchFormType
+     * @param string $searchFormType
      * @return MovieManagerInterface
      */
-    public function setSearchFormType(FormTypeInterface $searchFormType);
+    public function setSearchFormType($searchFormType);
 
     /**
      * @param FormFactoryInterface $formFactory

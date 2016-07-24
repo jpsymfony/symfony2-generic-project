@@ -3,6 +3,8 @@
 namespace App\PortalBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -10,8 +12,8 @@ class ActorSearchFormType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('motcle', 'text', array('label' => 'motcle'))
-                ->add('Rechercher', 'submit', array(
+        $builder->add('motcle', TextType::class, array('label' => 'motcle'))
+                ->add('Rechercher', SubmitType::class, array(
                             'attr' => ['class' => 'btn btn-lg btn-primary btn-block'],
                             'label' => 'rechercher'
                 ));

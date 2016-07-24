@@ -44,12 +44,13 @@ class UpdateMovieFormHandlerStrategy extends AbstractMovieFormHandlerStrategy
     {
         // we put image in the MovieType constructor to fill value when the form is loaded
         $this->form = $this->formFactory->create(
-            new MovieType($movie->getImage()),
+            MovieType::class,
             $movie,
             [
                 'action' => $this->router->generate('movie_edit', ['id' => $movie->getId()]),
                 'method' => 'PUT',
                 'hashtags_hidden' => false,
+                'image' => $movie->getImage()
             ]
         );
 

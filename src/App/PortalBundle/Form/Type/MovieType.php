@@ -3,9 +3,15 @@
 namespace App\PortalBundle\Form\Type;
 
 use App\CoreBundle\Form\DataTransformer\TextToDateTimeDataTransformer;
-use App\PortalBundle\Entity\Image;
+use App\PortalBundle\Entity\Manager\Interfaces\MovieManagerInterface;
 use App\PortalBundle\Entity\Movie;
+use Doctrine\ORM\EntityRepository;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -14,32 +20,33 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 class MovieType extends AbstractType
 {
     /**
-     * @var Image
+     *
+     * @var MovieManagerInterface $handler
      */
-    private $image;
+    private $handler;
 
-    public function __construct(Image $image = null)
+    /**
+     * @param MovieManagerInterface $movieManager
+     */
+    public function __construct(MovieManagerInterface $movieManager)
     {
-        if (null !== $image) {
-            $this->image = $image;
-        }
+        $this->handler = $movieManager;
     }
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('id', 'hidden')
-            ->add('title', 'text', array('label' => 'film.titre'))
-            ->add('description', 'textarea', array('label' => 'film.description'))
+            ->add('id', HiddenType::class)
+            ->add('title', TextType::class, array('label' => 'film.titre'))
+            ->add('description', TextareaType::class, array('label' => 'film.description'))
             // if an image has previously been uploaded, we populate the movie object with database values
-            ->add('image', new ImageType(), array('data' => $this->image))
+            ->add('image', ImageType::class, array('data' => $options['image']))
             ->add(
                 $builder->create(
-                    'releasedAt', 'text',
+                    'releasedAt', TextType::class,
                     array(
-                        'attr' => array('class' => 'datepicker'),
+                        'attr' => array('class' => 'datepicker', 'readonly' => true),
                         'label' => 'film.dateSortie',
-                        'read_only' => true,
                     )
                 )
                     ->addModelTransformer(new TextToDateTimeDataTransformer())
@@ -71,10 +78,10 @@ class MovieType extends AbstractType
             ));
 
         if (!empty($options) && isset($options['hashtags_hidden']) && !$options['hashtags_hidden']) {
-            $builder->add('hashTags', 'hashtags');
+            $builder->add('hashTags', HashTagCollectionType::class);
         }
 
-        $builder->add('Valider', 'submit', array(
+        $builder->add('Valider', SubmitType::class, array(
             'attr' => ['class' => 'btn btn-primary btn-lg btn-block'],
             'label' => 'valider'
         ));
@@ -89,10 +96,19 @@ class MovieType extends AbstractType
                     throw new \RuntimeException('Movie instance required.');
                 }
 
-                // if no image in database and no file uploaded, we set image attribute to null
-                if (null === $this->image && null === $event->getForm()->getData()->getImage()->getFile()) {
+                $dbMovie = null;
+                if (null !== $data->getId()) {
+                    $dbMovie = $this->handler->find($data->getId());
+                }
+
+                // if movie creation or no image in database for updated movie AND no file uploaded, we set image attribute to null
+                if ((null === $dbMovie || null === $dbMovie->getImage()->getId()) &&
+                    null === $event->getForm()->getData()->getImage()->getFile()
+                ) {
                     $data->setImage(null);
                 }
+
+
             }
         );
     }
@@ -107,6 +123,7 @@ class MovieType extends AbstractType
         $resolver->setDefaults(array(
                 'data_class' => 'App\PortalBundle\Entity\Movie',
                 'hashtags_hidden' => true,
+                'image' => null,
         ));
     }
 }

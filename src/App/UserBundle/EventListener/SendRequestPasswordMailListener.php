@@ -2,6 +2,8 @@
 
 namespace App\UserBundle\EventListener;
 
+use App\CoreBundle\Services\Interfaces\MailerServiceInterface;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Twig_Environment;
 use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\Security\Csrf\TokenGenerator\TokenGeneratorInterface;
@@ -11,9 +13,9 @@ use App\UserBundle\Entity\Manager\UserManagerInterface;
 class SendRequestPasswordMailListener
 {
     /**
-     * @var \Swift_Mailer
+     * @var MailerServiceInterface $mailerService
      */
-    protected $mailer;
+    protected $mailerService;
 
     /**
      * @var \Twig_Environment
@@ -48,16 +50,16 @@ class SendRequestPasswordMailListener
     protected $from;
 
     /**
-     * @param \Swift_Mailer $mailer
+     * @param MailerServiceInterface $mailerService
      * @param Twig_Environment $templating
      * @param $template
      * @param $from
      */
-    public function __construct(\Swift_Mailer $mailer, Twig_Environment $templating, RouterInterface $router,
+    public function __construct(MailerServiceInterface $mailerService, Twig_Environment $templating, RouterInterface $router,
                                 TokenGeneratorInterface $tokenGenerator, UserManagerInterface $userManager, $template,
                                 $from)
     {
-        $this->mailer = $mailer;
+        $this->mailerService = $mailerService;
         $this->templating = $templating;
         $this->router = $router;
         $this->tokenGenerator = $tokenGenerator;
@@ -75,19 +77,16 @@ class SendRequestPasswordMailListener
         $token = $this->tokenGenerator->generateToken();
         $this->userManager->updateConfirmationTokenUser($user, $token);
 
-        $message = \Swift_Message::newInstance()
-            ->setCharset('UTF-8')
-            ->setSubject($this->templating->loadTemplate($this->template)->renderBlock('subject', []))
-            ->setFrom($this->from)
-            ->setTo($user->getEmail())
-            ->setBody($this->templating->loadTemplate($this->template)->renderBlock('body',
+        $this->mailerService->sendMail(
+            $this->from,
+            $user->getEmail(),
+            $this->templating->loadTemplate($this->template)->renderBlock('subject', []),
+            $this->templating->loadTemplate($this->template)->renderBlock('body',
                 [
-                'username' => $user->getUsername(),
-                'request_link' => $this->router->generate('reset_password',
-                    ['token' => $token], true)
-            ])
+                    'username' => $user->getUsername(),
+                    'request_link' => $this->router->generate('reset_password',
+                        ['token' => $token], UrlGeneratorInterface::ABSOLUTE_URL)
+                ])
         );
-
-        $this->mailer->send($message);
     }
 }

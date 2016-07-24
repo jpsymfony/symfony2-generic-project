@@ -30,7 +30,7 @@ class MovieController extends Controller
         }
 
         $requestVal = $request->query->all();
-        $limit = $this->container->getParameter('app_portal.max_movies_per_page');
+        $limit = $this->getParameter('app_portal.max_movies_per_page');
 
         $movies = $this->getMovieManager()->getResultFilterPaginated(current($requestVal), $limit, ($page - 1) * $limit);
         $nbFilteredMovies = $this->getMovieManager()->getResultFilterCount(current($requestVal));
@@ -109,7 +109,7 @@ class MovieController extends Controller
         $this->getMovieManager()->remove($movie);
         $this->addFlash('success', $this->get('translator')->trans('film.supprime', ['%title%' => $movie->getTitle()]));
 
-        return new RedirectResponse($this->container->get('router')->generate('movie_list'));
+        return new RedirectResponse($this->get('router')->generate('movie_list'));
     }
 
     /**
@@ -133,7 +133,7 @@ class MovieController extends Controller
 
     public function getMovieFormHandler()
     {
-        return $this->container->get('app_portal.movie.form.handler');
+        return $this->get('app_portal.movie.form.handler');
     }
 
     public function getMovieManager()

@@ -56,14 +56,13 @@ menu:
       choisir_langue: Choisir la langue
 
 contact:
-    suggestion_newsletter: Avez-vous des compléments d'informations dont vous voudriez nous faire part ? Par exemple mobilité réduite,<br/>problèmes d'audition ou de vue, difficultés en station assise...
-    center_discover: Comment avez-vous connu notre site ?
+    knowledge: Comment avez-vous connu notre site ?
     internet.knowledge: Recherche sur internet
     facebook.knowledge: Facebook
     pubpapier.knowledge: Publicité papier
     boucheaoreille.knowledge: Bouche à oreille
-    newspaper: Presse
-    network: Réseaux sociaux
+    newspaper.knowledge: Presse
+    network.knowledge: Réseaux sociaux
     autre.knowledge: Autre
     first_name: Prénom
     last_name: Nom
@@ -71,6 +70,5 @@ contact:
     email: Adresse mail
     additional_information: Renseignements complémentaires
     validation_button: envoyer
-    pub_papier: prospectus
     message_subject: Message de %name%
     autre: Autre
