@@ -2,9 +2,11 @@
 namespace App\PortalBundle\Entity\Manager;
 
 use App\CoreBundle\Entity\Manager\AbstractGenericManager;
+use App\CoreBundle\Repository\AbstractGenericRepository;
 use App\PortalBundle\Entity\Manager\Interfaces\ActorManagerInterface;
 use App\PortalBundle\Entity\Manager\Interfaces\ManagerInterface;
 use App\PortalBundle\Repository\ActorRepository;
+use App\PortalBundle\Repository\Interfaces\ActorRepositoryInterface;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\Form\FormTypeInterface;
 use Symfony\Component\Routing\RouterInterface;
@@ -29,9 +31,9 @@ class ActorManager extends AbstractGenericManager implements ActorManagerInterfa
     /**
      * @inheritdoc
      */
-    public function __construct(ActorRepository $repository)
+    public function __construct(AbstractGenericRepository $repository)
     {
-        $this->repository = $repository;
+        parent::__construct($repository);
     }
 
     /**
@@ -69,7 +71,7 @@ class ActorManager extends AbstractGenericManager implements ActorManagerInterfa
     /**
      * @inheritdoc
      */
-    public function setSearchFormType(FormTypeInterface $searchFormType)
+    public function setSearchFormType($searchFormType)
     {
         $this->searchFormType = $searchFormType;
         return $this;

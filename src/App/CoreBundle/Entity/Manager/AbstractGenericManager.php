@@ -4,7 +4,6 @@ namespace App\CoreBundle\Entity\Manager;
 
 use App\CoreBundle\Entity\Manager\Interfaces\GenericManagerInterface;
 use App\CoreBundle\Repository\AbstractGenericRepository;
-use Pagerfanta\Pagerfanta;
 
 abstract class AbstractGenericManager implements GenericManagerInterface
 {
@@ -12,6 +11,14 @@ abstract class AbstractGenericManager implements GenericManagerInterface
      * @var AbstractGenericRepository $repository
      */
     protected $repository;
+
+    /**
+     * @inheritdoc
+     */
+    public function __construct(AbstractGenericRepository $repository)
+    {
+        $this->repository = $repository;
+    }
 
     /**
      * @inheritdoc

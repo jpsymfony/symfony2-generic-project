@@ -2,6 +2,7 @@
 
 namespace App\UserBundle\Controller;
 
+use App\UserBundle\Form\Type\ChangePasswordType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -20,7 +21,7 @@ class ChangePasswordController extends Controller
     public function changePasswordAction(Request $request)
     {
         $data = new ChangePassword($this->getUser());
-        $form = $this->createForm('change_password_form', $data);
+        $form = $this->createForm(ChangePasswordType::class, $data);
 
         if ($this->getChangePasswordFormHandler()->handle($form, $request)) {
             $this->addFlash('success', 'The password has been changed successfully.');
@@ -37,6 +38,6 @@ class ChangePasswordController extends Controller
      */
     protected function getChangePasswordFormHandler()
     {
-        return $this->container->get('app_user.change_password.handler');
+        return $this->get('app_user.change_password.handler');
     }
 }

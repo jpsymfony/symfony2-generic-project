@@ -3,11 +3,14 @@
 namespace App\UserBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\PasswordType;
+use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
-use Symfony\Component\HttpFoundation\Request;
 use App\UserBundle\Entity\Password\ResetPassword;
 use App\UserBundle\Entity\Manager\UserManagerInterface;
 
@@ -21,14 +24,14 @@ class ResetPasswordType extends AbstractType
 
     /**
      *
-     * @var Request $request
+     * @var RequestStack $request
      */
     private $request;
 
     /**
      * @param UserManagerInterface $userManager
      */
-    public function __construct(UserManagerInterface $userManager, Request $request)
+    public function __construct(UserManagerInterface $userManager, RequestStack $request)
     {
         $this->handler = $userManager;
         $this->request = $request;
@@ -36,10 +39,10 @@ class ResetPasswordType extends AbstractType
     
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('password', 'repeated', array(
+        $builder->add('password', RepeatedType::class, array(
             'first_name'  => 'password',
             'second_name' => 'confirm',
-            'type'        => 'password',
+            'type'        => PasswordType::class,
             'first_options' => [
                 'label' => 'user.reset_password.new_password',
             ],
@@ -47,7 +50,7 @@ class ResetPasswordType extends AbstractType
                 'label' => 'user.reset_password.repeat_new_password',
             ]
         ));
-        $builder->add('Reset Password', 'submit', array(
+        $builder->add('Reset Password', SubmitType::class, array(
             'attr' => ['class' => 'btn btn-primary btn-lg btn-block'],
             'label' => 'user.reset_password.button'
         ));
@@ -59,7 +62,7 @@ class ResetPasswordType extends AbstractType
                 if (!$data instanceof ResetPassword) {
                     throw new \RuntimeException('ResetPassword instance required.');
                 }
-                $token = $this->request->query->get('token');
+                $token = $this->request->getCurrentRequest()->get('token');
 
                 if (!$token) {
                    throw new \Exception('Incorrect Token.');

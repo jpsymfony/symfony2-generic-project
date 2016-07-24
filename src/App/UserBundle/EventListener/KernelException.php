@@ -9,6 +9,7 @@ use Symfony\Bundle\FrameworkBundle\Routing\Router;
 use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Symfony\Component\HttpKernel\HttpKernelInterface;
+use Symfony\Component\Security\Core\Exception\InsufficientAuthenticationException;
 
 class KernelException
 {
@@ -43,7 +44,11 @@ class KernelException
         // You get the exception object from the received event
         $exception = $event->getException();
 
-        if ($exception instanceof AccessDeniedHttpException || $exception instanceof AccessDeniedException) {
+        if (
+            $exception instanceof AccessDeniedHttpException ||
+            $exception instanceof AccessDeniedException ||
+            $exception instanceof InsufficientAuthenticationException
+        ) {
             $this->session->getFlashBag()->add('error', $exception->getMessage());
             $url = $this->router->generate($this->urlRedirectionException);
             $event->setResponse(new RedirectResponse($url));

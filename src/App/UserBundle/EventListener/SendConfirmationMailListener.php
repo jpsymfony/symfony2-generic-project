@@ -2,14 +2,15 @@
 
 namespace App\UserBundle\EventListener;
 
+use App\CoreBundle\Services\Interfaces\MailerServiceInterface;
 use App\UserBundle\Event\UserDataEvent;
 
 class SendConfirmationMailListener
 {
     /**
-     * @var \Swift_Mailer
+     * @var MailerServiceInterface $mailerService
      */
-    protected $mailer;
+    protected $mailerService;
 
     /**
      * @var \Twig_Environment
@@ -27,14 +28,14 @@ class SendConfirmationMailListener
     protected $from;
 
     /**
-     * @param \Swift_Mailer $mailer
+     * @param MailerServiceInterface $mailerService
      * @param \Twig_Environment $templating
      * @param $template
      * @param $from
      */
-    public function __construct(\Swift_Mailer $mailer, \Twig_Environment $templating, $template, $from)
+    public function __construct(MailerServiceInterface $mailerService, \Twig_Environment $templating, $template, $from)
     {
-        $this->mailer = $mailer;
+        $this->mailerService = $mailerService;
         $this->templating = $templating;
         $this->template = $template;
         $this->from = $from;
@@ -45,16 +46,13 @@ class SendConfirmationMailListener
      */
     public function onNewAccountCreated(UserDataEvent $event)
     {
-        $message = \Swift_Message::newInstance()
-            ->setCharset('UTF-8')
-            ->setSubject($this->templating->loadTemplate($this->template)->renderBlock('subject', []))
-            ->setFrom($this->from)
-            ->setTo($event->getUser()->getEmail())
-            ->setBody($this->templating->loadTemplate($this->template)->renderBlock('body', [
-                    'username' => $event->getUser()->getUsername()
-                ])
-            );
-
-        $this->mailer->send($message);
+        $this->mailerService->sendMail(
+            $this->from,
+            $event->getUser()->getEmail(),
+            $this->templating->loadTemplate($this->template)->renderBlock('subject', []),
+            $this->templating->loadTemplate($this->template)->renderBlock('body', [
+                'username' => $event->getUser()->getUsername()
+            ])
+        );
     }
 } 

@@ -2,6 +2,7 @@
 
 namespace App\PortalBundle\Controller;
 
+use App\PortalBundle\Form\Type\ContactType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
@@ -17,7 +18,7 @@ class ContactController extends Controller
      */
     public function indexAction(Request $request)
     {
-        $form = $this->get('form.factory')->create('app_portal_contacttype', new Contact());
+        $form = $this->get('form.factory')->create(ContactType::class, new Contact());
 
         if ($this->getRequestContactFormHandler()->handle($form, $request)) {
             $this->addFlash('success', 'Merci pour votre message.');
@@ -34,6 +35,6 @@ class ContactController extends Controller
      */
     protected function getRequestContactFormHandler()
     {
-        return $this->container->get('app_portal.request_contact.handler');
+        return $this->get('app_portal.request_contact.handler');
     }
 }

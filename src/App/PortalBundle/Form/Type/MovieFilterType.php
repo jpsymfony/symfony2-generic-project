@@ -3,6 +3,7 @@
 namespace App\PortalBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Doctrine\ORM\EntityRepository;
@@ -13,13 +14,13 @@ class MovieFilterType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-                ->add('title', 'text', array('label' => 'film.titre'))
+                ->add('title', TextType::class, array('label' => 'film.titre'))
                 ->add('category', EntityType::class, array(
                     'class' => 'App\PortalBundle\Entity\Category',
                     'multiple' => false,
                     'required' => false,
                     'label' => 'film.categorie',
-                    'empty_value' => 'film.categories.toutes',
+                    'placeholder' => 'film.categories.toutes',
                     'query_builder' => function (EntityRepository $er) {
                         return $er->createQueryBuilder('c')
                             ->orderBy('c.title', 'ASC');
@@ -30,7 +31,7 @@ class MovieFilterType extends AbstractType
                     'multiple' => true,
                     'required' => false,
                     'label' => 'film.acteurs',
-                    'empty_value' => 'film.acteurs.tous',
+                    'placeholder' => 'film.acteurs.tous',
                     'query_builder' => function (EntityRepository $er) {
                         return $er->createQueryBuilder('a')
                             ->orderBy('a.lastName', 'ASC');
@@ -41,29 +42,27 @@ class MovieFilterType extends AbstractType
                     'multiple' => true,
                     'required' => false,
                     'label' => 'film.hashtags',
-                    'empty_value' => 'film.prix.tous',
+                    'placeholder' => 'film.prix.tous',
                     'query_builder' => function (EntityRepository $er) {
                         return $er->createQueryBuilder('p')
                             ->orderBy('p.name', 'ASC');
                     },
                 ))
-                ->add('description', 'text', array(
+                ->add('description', TextType::class, array(
                     'label' => 'film.description',
                 ))
-                ->add('releaseDateFrom', 'text',
+                ->add('releaseDateFrom', TextType::class,
                     array(
-                        'attr' => array('class' => 'datepicker'),
+                        'attr' => array('class' => 'datepicker', 'readonly' => true),
                         'label' => 'film.dateSortieDebut',
                         'mapped' => false,
-                        'read_only' => true,
                     )
                 )
-                ->add('releaseDateTo', 'text',
+                ->add('releaseDateTo', TextType::class,
                     array(
-                        'attr' => array('class' => 'datepicker'),
+                        'attr' => array('class' => 'datepicker', 'readonly' => true),
                         'label' => 'film.dateSortieFin',
                         'mapped' => false,
-                        'read_only' => true,
                     )
                 );
     }

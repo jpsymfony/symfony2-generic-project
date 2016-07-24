@@ -9,24 +9,24 @@
     </div> <!-- End .content-box-header -->
 
     <div class="content-box-content">
-            {% trans_default_domain 'FOSUserBundle' %}
+        {% trans_default_domain 'FOSUserBundle' %}
 
-            <form action="{{ path('fos_user_resetting_reset', {'token': token}) }}" {{ form_enctype(form) }} method="POST" class="fos_user_resetting_reset" novalidate>
-                <p>
-                    {{ form_label(form.plainPassword.first, 'New Password') }}
-                    {{ form_widget(form.plainPassword.first, { 'attr': {'class': 'text-input small-input validate[required]'} }) }}
-                    <div class="notification error png_bg">
-                        <div>{{ form_errors(form.plainPassword.first) }}</div>
-                    </div>
-                </p>
-                <p>
-                    {{ form_label(form.plainPassword.second, 'Verification') }}
-                    {{ form_widget(form.plainPassword.second, { 'attr': {'class': 'text-input small-input validate[required]'} }) }}
-                </p>
-                <div>
-                    <input type="submit" value="{{ 'resetting.reset.submit'|trans }}" class="button" />
+        {{ form_start(form, { 'action': path('fos_user_resetting_reset', {'token': token}), 'attr': { 'class': 'fos_user_resetting_reset' } }) }}
+            <p>
+                {{ form_label(form.plainPassword.first, 'New Password') }}
+                {{ form_widget(form.plainPassword.first, { 'attr': {'class': 'text-input small-input validate[required]'} }) }}
+                <div class="notification error png_bg">
+                    <div>{{ form_errors(form.plainPassword.first) }}</div>
                 </div>
-                {{ form_rest(form) }}
-            </form>
+            </p>
+            <p>
+                {{ form_label(form.plainPassword.second, 'Verification') }}
+                {{ form_widget(form.plainPassword.second, { 'attr': {'class': 'text-input small-input validate[required]'} }) }}
+            </p>
+            <div>
+                <input type="submit" value="{{ 'resetting.reset.submit'|trans }}" class="button" />
+            </div>
+            {{ form_rest(form) }}
+        {{ form_end(form) }}
     </div> <!-- End .content-box-content -->
 </div> <!-- End .content-box -->

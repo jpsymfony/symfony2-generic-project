@@ -28,7 +28,7 @@ class ActorController extends Controller
         }
 
         $motcle = $request->query->get('motcle');
-        $limit = $this->container->getParameter('app_portal.max_actors_per_page');
+        $limit = $this->getParameter('app_portal.max_actors_per_page');
         $nbFilteredActors = $this->getActorManager()->getResultFilterCount($motcle);
 
         $data = [
@@ -39,7 +39,7 @@ class ActorController extends Controller
         ];
 
         if ($request->isXmlHttpRequest()) {
-            return $this->container->get('templating')->renderResponse('@AppPortal/Actor/partials/actors.html.twig', $data);
+            return $this->get('templating')->renderResponse('@AppPortal/Actor/partials/actors.html.twig', $data);
         }
 
         return array_merge($data, ['form' => $this->getActorManager()->getActorSearchForm()->createView()]);
@@ -93,7 +93,7 @@ class ActorController extends Controller
         $this->getActorManager()->remove($actor);
         $this->addFlash('success', $this->get('translator')->trans('acteur.supprime', ['%actor%' => $actor]));
 
-        return new RedirectResponse($this->container->get('router')->generate('actors_list'));
+        return new RedirectResponse($this->get('router')->generate('actors_list'));
     }
 
     public function getActorFormHandler()

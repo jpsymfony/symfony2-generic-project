@@ -3,6 +3,7 @@
 namespace App\PortalBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -20,7 +21,7 @@ class HashTagCollectionType extends AbstractType
     {
         $resolver->setDefaults(
             array(
-                'entry_type' => 'app_portal_hashtag',
+                'entry_type' => HashTagType::class,
                 'allow_add' => true,
                 'allow_delete' => true,
                 'max_hashtag_limit' => $this->configMaxLimitHashTag,
@@ -43,7 +44,7 @@ class HashTagCollectionType extends AbstractType
 
     public function getParent()
     {
-        return 'collection';
+        return CollectionType::class;
     }
 
     public function getName()

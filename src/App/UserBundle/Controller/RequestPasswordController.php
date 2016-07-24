@@ -2,6 +2,7 @@
 
 namespace App\UserBundle\Controller;
 
+use App\UserBundle\Form\Type\RequestPasswordType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -19,7 +20,7 @@ class RequestPasswordController extends Controller
      */
     public function requestPasswordAction(Request $request)
     {
-        $form = $this->createForm('request_password_form', new RequestPassword());
+        $form = $this->createForm(RequestPasswordType::class, new RequestPassword());
 
         if ($this->getRequestPasswordFormHandler()->handle($form, $request)) {
             $this->addFlash('success', 'A mail has been sent to your mailbox to reset your password.');
@@ -36,6 +37,6 @@ class RequestPasswordController extends Controller
      */
     protected function getRequestPasswordFormHandler()
     {
-        return $this->container->get('app_user.request_password.handler');
+        return $this->get('app_user.request_password.handler');
     }
 }

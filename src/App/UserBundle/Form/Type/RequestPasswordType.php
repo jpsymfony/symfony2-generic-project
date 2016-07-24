@@ -3,6 +3,7 @@
 namespace App\UserBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\FormError;
@@ -29,7 +30,7 @@ class RequestPasswordType extends AbstractType
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('identifier', 'text', array('label' => 'user.reset_password.identifier'));
+        $builder->add('identifier', TextType::class, array('label' => 'user.reset_password.identifier'));
 
         $builder->addEventListener(
             FormEvents::POST_SUBMIT,

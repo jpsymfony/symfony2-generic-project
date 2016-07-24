@@ -1,6 +1,7 @@
 <?php
 namespace App\PortalBundle\Entity\Manager;
 
+use App\CoreBundle\Services\Interfaces\MailerServiceInterface;
 use App\PortalBundle\Entity\Contact;
 use App\PortalBundle\Entity\Manager\Interfaces\ContactManagerInterface;
 use App\PortalBundle\Entity\Manager\Interfaces\ManagerInterface;
@@ -39,16 +40,25 @@ class ContactManager implements ContactManagerInterface, ManagerInterface
     protected $to;
 
     /**
-     * @inheritdoc
+     * @var MailerServiceInterface
      */
-    public function __construct(\Swift_Mailer $mailer, \Twig_Environment $templating, TranslatorInterface $translator, $template, $from, $to)
+    protected $mailerService;
+
+    /**
+     * @param MailerServiceInterface $mailerService
+     * @param \Twig_Environment $templating
+     * @param $template
+     * @param $from
+     * @param $to
+     */
+    public function __construct(MailerServiceInterface $mailerService, \Twig_Environment $templating, TranslatorInterface $translator, $template, $from, $to)
     {
-        $this->mailer = $mailer;
         $this->templating = $templating;
         $this->template = $template;
         $this->translator = $translator;
         $this->from = $from;
         $this->to = $to;
+        $this->mailerService = $mailerService;
     }
 
     /**
@@ -56,16 +66,12 @@ class ContactManager implements ContactManagerInterface, ManagerInterface
      */
     public function sendMail(Contact $data)
     {
-        $message = \Swift_Message::newInstance()
-            ->setCharset('UTF-8')
-            ->setSubject($this->translator->trans('contact.message_subject', ['%name%' => $data]))
-            ->setFrom($this->from)
-            ->setTo($this->to)
-            ->setBody($this->templating->render($this->template, ['data' => $data])
-            )
-            ->setContentType('text/html');
-
-        $this->mailer->send($message);
+        $this->mailerService->sendMail(
+            $this->from,
+            $this->to,
+            $this->translator->trans('contact.message_subject', ['%name%' => $data]),
+            $this->templating->render($this->template, ['data' => $data])
+        );
     }
 
     /**

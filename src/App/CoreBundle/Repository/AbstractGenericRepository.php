@@ -6,9 +6,6 @@ use App\CoreBundle\Repository\Interfaces\GenericRepositoryInterface;
 use Symfony\Component\Translation\Exception\NotFoundResourceException;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Query;
-use Doctrine\ORM\QueryBuilder;
-use Pagerfanta\Adapter\DoctrineORMAdapter;
-use Pagerfanta\Pagerfanta;
 
 abstract class AbstractGenericRepository extends EntityRepository implements GenericRepositoryInterface
 {
@@ -112,22 +109,5 @@ abstract class AbstractGenericRepository extends EntityRepository implements Gen
         }
 
         return $entities;
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function paginate(QueryBuilder $qb, $limit = 20, $offset = 0)
-    {
-        $limit = (int) $limit;
-        if ($limit <= 0) {
-            throw new \LogicException('$limit must be greater than 0.');
-        }
-
-        $pager = new Pagerfanta(new DoctrineORMAdapter($qb));
-        $pager->setMaxPerPage((int) $limit);
-        $pager->setCurrentPage(ceil(($offset + 1) / $limit));
-
-        return $pager;
     }
 }

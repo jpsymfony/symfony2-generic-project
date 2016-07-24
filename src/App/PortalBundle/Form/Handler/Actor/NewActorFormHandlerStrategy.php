@@ -55,7 +55,7 @@ class NewActorFormHandlerStrategy extends AbstractActorFormHandlerStrategy
 
     public function createForm(Actor $actor)
     {
-        $this->form = $this->formFactory->create(new ActorType(), $actor, array(
+        $this->form = $this->formFactory->create(ActorType::class, $actor, array(
             'action' => $this->router->generate('actor_new'),
             'method' => 'POST',
         ));

@@ -23,16 +23,16 @@ class LanguageController extends Controller
 
         if (null !== $language) {
             // On enregistre la langue en session
-            $this->container->get('request')->setLocale($language);
+            $this->get('request_stack')->getCurrentRequest()->setLocale($language);
         }
 
         // on tente de rediriger vers la page d’origine
-        $url = $this->container->get('request')->headers->get('referer');
+        $url = $this->get('request_stack')->getCurrentRequest()->headers->get('referer');
 
         if (empty($url)) {
-            $url = $this->container->get('router')->generate('homepage');
+            $url = $this->get('router')->generate('homepage');
         } else {
-            if (!stristr($url, $this->get('request')->getHttpHost())) {
+            if (!stristr($url, $this->get('request_stack')->getCurrentRequest()->getHttpHost())) {
                 $this->createAccessDeniedException('Attack!!');
             }
         }

@@ -2,6 +2,7 @@
 
 namespace App\UserBundle\Controller;
 
+use App\UserBundle\Form\Type\ResetPasswordType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -21,7 +22,7 @@ class ResetPasswordController extends Controller
     public function requestPasswordAction(Request $request)
     {
         try {
-            $form = $this->createForm('reset_password_form', new ResetPassword());
+            $form = $this->createForm(ResetPasswordType::class, new ResetPassword());
 
             if ($this->getResetPasswordFormHandler()->handle($form, $request)) {
                 $this->addFlash('success', 'Your password has been resetted. You can login now.');
@@ -43,6 +44,6 @@ class ResetPasswordController extends Controller
      */
     protected function getResetPasswordFormHandler()
     {
-        return $this->container->get('app_user.reset_password.handler');
+        return $this->get('app_user.reset_password.handler');
     }
 }

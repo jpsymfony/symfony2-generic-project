@@ -28,10 +28,11 @@ class NewMovieFormHandlerStrategy extends AbstractMovieFormHandlerStrategy
 
     public function createForm(Movie $movie)
     {
-        $this->form = $this->formFactory->create(new MovieType(), $movie, array(
+        $this->form = $this->formFactory->create(MovieType::class, $movie, array(
             'action' => $this->router->generate('movie_new'),
             'method' => 'POST',
             'hashtags_hidden' => false,
+            'image' => null,
         ));
 
         return $this->form;

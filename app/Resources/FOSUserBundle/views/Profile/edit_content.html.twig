@@ -18,7 +18,7 @@
         
             {% trans_default_domain 'FOSUserBundle' %}
 
-            <form action="{{ path('fos_user_profile_edit') }}" {{ form_enctype(form) }} method="POST" class="fos_user_profile_edit" novalidate>
+            {{ form_start(form, { 'action': path('fos_user_profile_edit'), 'attr': { 'class': 'fos_user_profile_edit' } }) }}
                 <div id="fos_user_profile_form">
                     <p>
                         {{ form_label(form.username, 'Username *') }}  
@@ -39,6 +39,6 @@
                     </div>
                     {{ form_rest(form) }}
                 </div>
-            </form>
+            {{ form_end(form) }}
     </div> <!-- End .content-box-content -->
 </div> <!-- End .content-box -->
