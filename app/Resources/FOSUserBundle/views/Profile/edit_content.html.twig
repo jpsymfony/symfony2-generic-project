@@ -21,15 +21,15 @@
             {{ form_start(form, { 'action': path('fos_user_profile_edit'), 'attr': { 'class': 'fos_user_profile_edit' } }) }}
                 <div id="fos_user_profile_form">
                     <p>
-                        {{ form_label(form.username, 'Username *') }}  
+                        {{ form_label(form.username, 'profile.show.username') }}
                         {{ form_widget(form.username, { 'attr': {'class': 'text-input small-input validate[required]'} }) }}
                     </p>
                     <p>
-                        {{ form_label(form.email, 'Email *') }}  
+                        {{ form_label(form.email, 'profile.show.email') }}
                         {{ form_widget(form.email, { 'attr': {'class': 'text-input small-input validate[required]'} }) }}
                     </p>
                     <p>
-                        {{ form_label(form.current_password, 'Current Password *') }}
+                        {{ form_label(form.current_password, 'form.current_password') }}
                         {{ form_widget(form.current_password, { 'attr': {'class': 'text-input small-input validate[required]'} }) }}
                         {{ form_errors(form.current_password) }}
                         

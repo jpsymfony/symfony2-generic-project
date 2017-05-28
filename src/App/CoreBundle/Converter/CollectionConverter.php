@@ -3,6 +3,7 @@
 namespace App\CoreBundle\Converter;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+use Symfony\Component\DependencyInjection\Exception\BadMethodCallException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Doctrine\Common\Persistence\ManagerRegistry;
@@ -50,43 +51,49 @@ class CollectionConverter implements \Sensio\Bundle\FrameworkExtraBundle\Request
      * @throws \InvalidArgumentException When route attributes are missing
      * @throws NotFoundHttpException     When object not found
      */
-    public function apply(Request $request, ParamConverter $configuration)
-    {
-        // http://stfalcon.com/en/blog/post/symfony2-custom-paramconverter
-        // http://stackoverflow.com/questions/10904759/symfony2-and-paramconverters
-        $name    = $configuration->getName();
-        $options = $configuration->getOptions();
-        $managerClassName = '';
-        $dir = 'ASC';
-        
-        $max = $request->attributes->get('max', null);
-        
-        $orderby = "";
-        if (!empty($options['orderby'])) {
-            $orderby = $options['orderby'];
-        }
+	public function apply(Request $request, ParamConverter $configuration)
+	{
+		// http://stfalcon.com/en/blog/post/symfony2-custom-paramconverter
+		// http://stackoverflow.com/questions/10904759/symfony2-and-paramconverters
+		$name    = $configuration->getName();
+		$options = $configuration->getOptions();
+		$managerClassName = '';
+		$dir = 'ASC';
 
-        if (!empty($options['dir'])) {
-            $dir = $options['dir'];
-        }
-        
-        try {
-            $managerClassName = $options['manager'];
-        } catch (\Exception $e) {
-            throw new NotFoundHttpException(sprintf('%s service manager option not found.', $managerClassName));
-        }
+		$max = $request->attributes->get('max', null);
 
-        try {
-            $result = $this->container->get($managerClassName)->all("object", $max, $orderby, $dir);
-            $collection = new ArrayCollection($result);
-        } catch (\Exception $e) {
-            throw new NotFoundHttpException(sprintf('%s service manager not found.', $managerClassName));
-        }
-        
-        if (!($collection instanceof ArrayCollection)) {
-            throw new NotFoundHttpException(sprintf('%s objects not found.', $name));
-        }
+		$orderby = "";
+		if (!empty($options['orderby'])) {
+			$orderby = $options['orderby'];
+		}
 
-        $request->attributes->set($name, $collection);
-    }
+		if (!empty($options['dir'])) {
+			$dir = $options['dir'];
+		}
+
+		try {
+			$managerClassName = $options['manager'];
+		} catch (\Exception $e) {
+			throw new \InvalidArgumentException(sprintf('%s service manager option empty.', $managerClassName));
+		}
+
+		try {
+			$manager = $this->container->get($managerClassName);
+		} catch (\Exception $e) {
+			throw new NotFoundHttpException(sprintf('%s service manager not found.', $managerClassName));
+		}
+
+		try {
+			$result = $manager->all("object", $max, $orderby, $dir);
+			$collection = new ArrayCollection($result);
+		} catch (\Exception $e) {
+			throw new BadMethodCallException(sprintf('%s service manager method all not found.', $managerClassName));
+		}
+
+		if (!($collection instanceof ArrayCollection)) {
+			throw new NotFoundHttpException(sprintf('%s objects not found.', $name));
+		}
+
+		$request->attributes->set($name, $collection);
+	}
 }

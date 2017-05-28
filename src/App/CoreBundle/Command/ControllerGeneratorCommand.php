@@ -116,7 +116,7 @@ class ControllerGeneratorCommand extends ContainerAwareCommand
         // On génère le contenu du controleur
         $twig = $this->getContainer()->get('templating');
 
-        $controller_code = $twig->render('controllerCommand/controller.php.twig',
+        $controller_code = $twig->render('@AppCore/controllerCommand/controller.php.twig',
             array(
                 'controller' => $controller,
                 'baseController' => $baseController,

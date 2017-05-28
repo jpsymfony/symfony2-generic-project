@@ -35,6 +35,18 @@ interface GenericManagerInterface
     public function find($entity);
 
     /**
+     * Finds entities by a set of criteria.
+     *
+     * @param array      $criteria
+     * @param array|null $orderBy
+     * @param int|null   $limit
+     * @param int|null   $offset
+     *
+     * @return array The objects.
+     */
+    public function findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null);
+
+    /**
      * @param $entity
      * @param bool $persist
      * @param bool $flush
